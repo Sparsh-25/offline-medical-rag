@@ -1,0 +1,20 @@
+{
+  "doc_id": "nccn_breast_v2_2026",
+  "title": "NCCN Clinical Practice Guidelines in Oncology (NCCN Guidelines)",
+  "pub_year": null,
+  "pub_month": null,
+  "source_type": "guideline",
+  "journal": null,
+  "doi": null,
+  "guideline_version": "Version 2.2026",
+  "cancer_type": "breast_cancer",
+  "cancer_subtype": null,
+  "population": null,
+  "line_of_therapy": "all",
+  "drug": null,
+  "drug_class": null,
+  "notes": "These guidelines provide recommendations for the management of breast cancer.",
+  "_needs_review": false,
+  "_tier": 0,
+  "_llm_confidence": 1.0
+}

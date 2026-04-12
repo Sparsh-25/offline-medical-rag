@@ -1,0 +1,10 @@
+pypdfium2>=5.7.0
+biopython>=1.87
+requests>=2.33.1
+PyYAML>=6.0.3
+certifi>=2026.0.0
+Pillow>=10.4.0
+groq>=1.1.0
+# google-genai>=0.1.0   # optional — only if switching to Gemini backend
+# For local inference (Tier 2+): install Ollama separately
+# brew install ollama && ollama pull llama3.1

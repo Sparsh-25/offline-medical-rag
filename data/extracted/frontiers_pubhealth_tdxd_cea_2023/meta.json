@@ -1,0 +1,20 @@
+{
+  "doc_id": "frontiers_pubhealth_tdxd_cea_2023",
+  "title": "Cost-effectiveness analysis of trastuzumab deruxtecan in patients with HER2-low advanced breast cancer based on DESTINY-Breast04",
+  "pub_year": 2023,
+  "pub_month": 6,
+  "source_type": "rct",
+  "journal": "Frontiers in Public Health",
+  "doi": "10.3389/fpubh.2023.1049947",
+  "guideline_version": null,
+  "cancer_type": "breast_cancer",
+  "cancer_subtype": null,
+  "population": "patients with HER2-low metastatic breast cancer",
+  "line_of_therapy": "second_line",
+  "drug": "trastuzumab deruxtecan",
+  "drug_class": "antibody-drug conjugate",
+  "notes": "Trastuzumab deruxtecan is not a cost-effective treatment option for HER2-low metastatic breast cancer from the perspective of the Chinese healthcare system.",
+  "_needs_review": false,
+  "_tier": 0,
+  "_llm_confidence": 0.9
+}

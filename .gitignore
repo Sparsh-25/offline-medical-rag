@@ -1,0 +1,25 @@
+# ── Secrets (NEVER commit) ─────────────────────────────────────────────
+.secrets/
+
+# ── Python ─────────────────────────────────────────────────────────────
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Data (PDFs are large; extracted JSONs can be committed if desired) ──
+data/raw/           # raw PDFs — too large for git
+index/              # FAISS/BM25 index binaries
+
+# ── macOS ──────────────────────────────────────────────────────────────
+.DS_Store
+
+# ── IDE ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp

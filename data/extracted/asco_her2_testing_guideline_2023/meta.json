@@ -1,0 +1,20 @@
+{
+  "doc_id": "asco_her2_testing_guideline_2023",
+  "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+  "pub_year": 2023,
+  "pub_month": 8,
+  "source_type": "guideline",
+  "journal": "Journal of Clinical Oncology",
+  "doi": "10.1200/jco.22.02864",
+  "guideline_version": null,
+  "cancer_type": "breast_cancer",
+  "cancer_subtype": null,
+  "population": null,
+  "line_of_therapy": "all",
+  "drug": null,
+  "drug_class": null,
+  "notes": "This guideline update affirms prior HER2 reporting recommendations and offers a new HER2 testing reporting comment.",
+  "_needs_review": false,
+  "_tier": 0,
+  "_llm_confidence": 1.0
+}

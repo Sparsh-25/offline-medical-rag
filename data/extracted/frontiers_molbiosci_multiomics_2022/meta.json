@@ -1,0 +1,20 @@
+{
+  "doc_id": "frontiers_molbiosci_multiomics_2022",
+  "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+  "pub_year": 2022,
+  "pub_month": 4,
+  "source_type": "review",
+  "journal": "Frontiers in Molecular Biosciences",
+  "doi": "10.3389/fmolb.2022.783494",
+  "guideline_version": null,
+  "cancer_type": "breast_cancer",
+  "cancer_subtype": null,
+  "population": "Breast cancer (BC) affects one in eight females globally.",
+  "line_of_therapy": null,
+  "drug": null,
+  "drug_class": null,
+  "notes": "This review discusses therapeutic resistance associated with breast cancer and techniques used for its management.",
+  "_needs_review": false,
+  "_tier": 0,
+  "_llm_confidence": 0.9
+}

@@ -1,0 +1,44 @@
+paths:
+  raw:         data/raw/
+  extracted:   data/extracted/
+  chunks:      data/chunks/chunks.jsonl
+  faiss_index: index/faiss.index
+  bm25_index:  index/bm25.pkl
+
+api:
+  # ── Secrets go in .secrets/secrets.yaml (gitignored) ──────────
+  # DO NOT put real API keys in this file.
+  # See .secrets/secrets.yaml.example for the format.
+  entrez_email: "your@email.com"   # override in .secrets/secrets.yaml
+
+  # LLM backend: "groq" (cloud, 14,400 req/day free) | "ollama" (local, unlimited)
+  llm_backend: "groq"
+
+  groq:
+    # api_key set in .secrets/secrets.yaml or GROQ_API_KEY env var
+    model: "llama-3.1-8b-instant"     # 14,400 req/day free
+    # model: "llama-3.3-70b-versatile" # 1,000 req/day free — higher quality
+
+  ollama:
+    base_url: "http://localhost:11434"
+    model:    "llama3.1"              # brew install ollama && ollama pull llama3.1
+
+extraction:
+  export_figures:    true
+  export_tables:     true
+  image_resolution:  150              # dpi for figure PNGs
+
+chunking:
+  split_on:        ["H1", "H2", "H3"]
+  min_chunk_tokens: 80
+  max_chunk_tokens: 512
+  overlap_tokens:   0
+
+embedding:
+  model:      BAAI/bge-base-en-v1.5
+  batch_size: 32
+  device:     cpu
+
+recency:
+  baseline_year: 2015                 # weight 0.5 at or before this
+  peak_year:     2024                 # weight 1.0 at or after this

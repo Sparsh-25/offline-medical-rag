@@ -1,0 +1,20 @@
+{
+  "doc_id": "monaleesa2_subanalysis_2018",
+  "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+  "pub_year": 2018,
+  "pub_month": 2,
+  "source_type": "rct",
+  "journal": "Breast Cancer Research and Treatment",
+  "doi": "10.1007/s10549-017-4518-8",
+  "guideline_version": null,
+  "cancer_type": "breast_cancer",
+  "cancer_subtype": null,
+  "population": "Postmenopausal women with HR+, HER2- advanced breast cancer and no prior systemic therapy for advanced disease",
+  "line_of_therapy": "first_line",
+  "drug": "ribociclib",
+  "drug_class": "CDK4/6 inhibitor",
+  "notes": "Ribociclib plus letrozole improved progression-free survival vs placebo plus letrozole and was well tolerated in postmenopausal women with HR+, HER2- de novo advanced breast cancer.",
+  "_needs_review": false,
+  "_tier": 0,
+  "_llm_confidence": 1.0
+}
