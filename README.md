@@ -47,7 +47,7 @@ When you run `python src/meta_builder.py`:
 
 ## 🛠️ The Target Schema
 
-```json
+json
 {
   "doc_id": "monaleesa2_subanalysis_2018",
   "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer",
@@ -110,7 +110,7 @@ When you run `python src/meta_builder.py`:
 
 ## 🛠️ The Target Schema
 
-```json
+json
 {
   "doc_id": "monaleesa2_subanalysis_2018",
   "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer",
