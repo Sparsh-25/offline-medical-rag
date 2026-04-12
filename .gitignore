@@ -23,3 +23,5 @@ index/              # FAISS/BM25 index binaries
 .vscode/
 .idea/
 *.swp
+
+data/
