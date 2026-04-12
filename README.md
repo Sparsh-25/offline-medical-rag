@@ -60,23 +60,19 @@ When you run `python src/meta_builder.py`:
   "_needs_review": false
 }
 
-Here is a comprehensive, professional README.md for your project repository. It is written to clearly explain the complex engineering decisions to your professors or future hiring managers.
 
-You can copy and paste this directly into your repository.
-
-Markdown
-# Oncology RAG Metadata Pipeline (Phase 0)
+### Oncology RAG Metadata Pipeline (Phase 0)
 
 > A stateful, defensive data ingestion pipeline for building highly accurate Retrieval-Augmented Generation (RAG) systems in the medical domain.
 
-## ⚠️ The Problem: Why Standard RAG Fails in Healthcare
+### ⚠️ The Problem: Why Standard RAG Fails in Healthcare
 Standard RAG pipelines dump raw PDF text into a vector database. In oncology, this is dangerous. If a user asks for "first-line treatments for HER2-low breast cancer," a naive vector search might retrieve a 10-year-old retrospective study instead of the 2024 ASCO Guideline, simply because of keyword overlap.
 
 To solve this, we must tag every text chunk with **Clinical Semantic Metadata** (e.g., `cancer_subtype`, `drug_focus`, `source_type`). 
 * **The Catch:** Public APIs (PubMed, CrossRef) do not provide granular clinical metadata.
 * **The Danger:** Large Language Models (LLMs) can extract this data from text, but they are prone to hallucinations (e.g., misclassifying a database review as a Randomized Controlled Trial).
 
-## 💡 The Solution: "Trust Boundaries" Architecture
+### 💡 The Solution: "Trust Boundaries" Architecture
 This pipeline solves the metadata extraction problem using a **3-Phase Defensive Architecture**. It isolates deterministic factual data from probabilistic AI predictions, ensuring 0% hallucination in structural metadata.
 
 ### Phase 1: Deterministic Anchors (The "Robot")
