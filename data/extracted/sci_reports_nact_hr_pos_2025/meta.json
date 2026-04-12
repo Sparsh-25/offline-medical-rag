@@ -3,18 +3,23 @@
   "title": "Long-term survival outcomes of neoadjuvant chemotherapy in stage II-III HR+/HER2- breast cancer",
   "pub_year": 2025,
   "pub_month": 8,
-  "source_type": "review",
+  "source_type": "retrospective",
   "journal": "Scientific Reports",
   "doi": "10.1038/s41598-025-14012-0",
   "guideline_version": null,
-  "cancer_type": "breast_cancer",
-  "cancer_subtype": null,
-  "population": "21,299 stage II-III HR+/HER2- breast cancer patients from the SEER database (2010-2021)",
+  "cancer_type": "Breast",
+  "cancer_subtype": [
+    "HR+",
+    "HER2-"
+  ],
+  "population": null,
   "line_of_therapy": "neoadjuvant",
-  "drug": null,
+  "drug_focus": [
+    "neoadjuvant chemotherapy"
+  ],
   "drug_class": null,
   "notes": "Neoadjuvant chemotherapy in stage II-III HR+/HER2- breast cancer is associated with inferior long-term survival outcomes compared to adjuvant chemotherapy.",
   "_needs_review": false,
-  "_tier": 0,
-  "_llm_confidence": 0.9
+  "_llm_confidence": 0.95,
+  "_conflicts": []
 }

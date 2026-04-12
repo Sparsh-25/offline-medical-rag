@@ -14,13 +14,10 @@ Phase 3 (Defensive Merge):
   Rule 2: LLM may only FILL null / [] offline fields.
   Rule 3: Any offline↔LLM conflict is logged in `_conflicts` + sets `_needs_review`.
   Rule 4: `_needs_review` = True if any conflict OR confidence < 0.85.
-  Rule 5: `_tier` always computed deterministically from final `source_type`.
-
 Schema v2 changes vs v1:
   - drug_focus    : list[str]   (was drug: str)
   - cancer_subtype: list[str]   (was str | null)
   - cancer_type   : "Breast"    (fixed, not snake_case)
-  - _tier         : int 1-5
   - _conflicts    : list[dict]  (logged field-level conflicts)
 """
 
@@ -85,20 +82,8 @@ Entrez.email  = API_CFG.get("entrez_email", "your@email.com")
 # SCHEMA v2.0
 # ═══════════════════════════════════════════════════════════════════════
 
-TIER_MAP: dict[str, int] = {
-    "guideline":     1,
-    "meta_analysis": 2,
-    "rct":           3,
-    "mechanism":     4,
-    "review":        4,
-    "retrospective": 5,
-}
-VALID_SOURCE_TYPES = set(TIER_MAP.keys())
+VALID_SOURCE_TYPES = {"guideline", "meta_analysis", "rct", "retrospective", "mechanism", "review"}
 LIST_FIELDS        = {"cancer_subtype", "drug_focus"}  # always list[str]
-
-
-def _compute_tier(source_type: Optional[str]) -> Optional[int]:
-    return TIER_MAP.get((source_type or "").lower())
 
 
 def _enforce_type(field: str, value: Any) -> Any:
@@ -117,11 +102,7 @@ def _enforce_type(field: str, value: Any) -> Any:
         return []
     if field == "cancer_type":
         return "Breast"
-    if field == "_tier":
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            return None
+
     return value
 
 
@@ -143,7 +124,6 @@ def _blank_meta(doc_id: str) -> dict:
         "drug_class":        None,
         "notes":             None,
         "_needs_review":     True,
-        "_tier":             None,
         "_llm_confidence":   None,
         "_conflicts":        [],
     }
@@ -319,8 +299,8 @@ def fetch_pubmed_meta(pmid: str) -> dict:
         d = root.find(dp)
         if d is not None:
             y, m = d.find("Year"), d.find("Month")
-            if y: pub_year = int(y.text)
-            if m:
+            if y is not None: pub_year = int(y.text)
+            if m is not None:
                 try: pub_month = int(m.text)
                 except ValueError: pass
             break
@@ -368,7 +348,7 @@ def _infer_source_type(pub_types: list) -> Optional[str]:
 # ═══════════════════════════════════════════════════════════════════════
 # PHASE 2 — LLM SEMANTIC EXTRACTION
 # Prompt v2.0 per spec — fixes: lazy nulls, monotherapy bias,
-# study design hallucination, tier ignorance, ontology drift.
+# study design hallucination, ontology drift.
 # ═══════════════════════════════════════════════════════════════════════
 
 PROMPT_V2 = """\
@@ -380,9 +360,8 @@ For broad mechanism reviews covering the whole disease, output ["HR+", "HER2+", 
 2. Combination Therapy (`drug_focus`): Look for "plus", "and", "+". Capture ALL drugs. ALWAYS an array. If no specific drug studied, output [].
 3. Accurate Study Design (`source_type`): Do NOT hallucinate RCTs. Retrospective database analyses (SEER, registry, claims) are "retrospective". \
 Cost-effectiveness/economic models are "review". Valid values ONLY: ["guideline", "meta_analysis", "rct", "retrospective", "mechanism", "review"].
-4. Strict Tiering (`_tier`): Calculate from source_type — guideline=1, meta_analysis=2, rct=3, mechanism=4, review=4, retrospective=5.
-5. Population (`population`): Only specific trial inclusion criteria. No epidemiology. null if none.
-6. Ontology: `cancer_type` MUST always be exactly "Breast".
+4. Population (`population`): Only specific trial inclusion criteria. No epidemiology. null if none.
+5. Ontology: `cancer_type` MUST always be exactly "Breast".
 
 OUTPUT — respond with ONLY this JSON object, no markdown fences, no commentary:
 {{
@@ -395,7 +374,6 @@ OUTPUT — respond with ONLY this JSON object, no markdown fences, no commentary
   "drug_focus": ["array of drug names"],
   "drug_class": "string or null",
   "notes": "one sentence on clinical significance",
-  "_tier": integer,
   "_llm_confidence": float
 }}
 
@@ -462,7 +440,7 @@ def run_llm_extraction(pdf_text: str, abstract: Optional[str]) -> dict:
 # ═══════════════════════════════════════════════════════════════════════
 
 # Fields handled separately — never touched by the merge loop
-_SKIP_MERGE = {"doc_id", "_needs_review", "_tier", "_llm_confidence", "_conflicts"}
+_SKIP_MERGE = {"doc_id", "_needs_review", "_llm_confidence", "_conflicts"}
 
 
 def _is_empty(val: Any) -> bool:
@@ -500,8 +478,6 @@ def defensive_merge(offline: dict, llm: dict) -> dict:
                 conflicts.append({"field": field, "offline": off_val, "llm": llm_val})
             # offline value stays — no overwrite
 
-    # _tier always computed deterministically — never from LLM
-    offline["_tier"] = _compute_tier(offline.get("source_type"))
 
     # Review flag
     confidence = float(llm.get("_llm_confidence", 0.0))
@@ -598,9 +574,6 @@ def build_meta(
     elif not meta["doi"]:
         print("  [2] Entrez skipped — no DOI")
 
-    # Compute tier from offline source_type before LLM
-    if meta.get("source_type"):
-        meta["_tier"] = _compute_tier(meta["source_type"])
 
     # ── Phase 2: LLM ──────────────────────────────────────────────
     if use_llm:
@@ -664,7 +637,7 @@ def build_all(use_crossref=True, use_entrez=True, use_llm=True):
     for m in results:
         icon = "✓" if not m["_needs_review"] else "⚠"
         conf = m.get("_llm_confidence")
-        print(f"  {icon} {m['doc_id']}  conf={conf:.2f}  tier={m.get('_tier')}")
+        print(f"  {icon} {m['doc_id']}  conf={conf:.2f}")
         for f in ("source_type", "cancer_subtype", "drug_focus", "line_of_therapy"):
             print(f"      {f:<20}: {str(m.get(f, '—'))[:55]}")
         if m.get("_conflicts"):

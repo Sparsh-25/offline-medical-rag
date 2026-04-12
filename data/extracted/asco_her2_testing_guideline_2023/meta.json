@@ -5,16 +5,36 @@
   "pub_month": 8,
   "source_type": "guideline",
   "journal": "Journal of Clinical Oncology",
-  "doi": "10.1200/jco.22.02864",
+  "doi": "10.1200/JCO.22.02864",
   "guideline_version": null,
-  "cancer_type": "breast_cancer",
-  "cancer_subtype": null,
+  "cancer_type": "Breast",
+  "cancer_subtype": [
+    "HER2+",
+    "HER2-low"
+  ],
   "population": null,
   "line_of_therapy": "all",
-  "drug": null,
+  "drug_focus": [],
   "drug_class": null,
-  "notes": "This guideline update affirms prior HER2 reporting recommendations and offers a new HER2 testing reporting comment.",
-  "_needs_review": false,
-  "_tier": 0,
-  "_llm_confidence": 1.0
+  "notes": "Affirms prior HER2 reporting recommendations and offers a new HER2 testing reporting comment.",
+  "_needs_review": true,
+  "_llm_confidence": 0.9,
+  "_conflicts": [
+    {
+      "field": "title",
+      "offline": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+      "llm": "ASCO–College of American Pathologists Guideline Update"
+    },
+    {
+      "field": "cancer_subtype",
+      "offline": [
+        "HER2+",
+        "HER2-low"
+      ],
+      "llm": [
+        "HR+",
+        "HER2+"
+      ]
+    }
+  ]
 }
