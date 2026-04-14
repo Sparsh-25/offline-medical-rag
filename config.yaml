@@ -27,6 +27,7 @@ extraction:
   export_figures:    true
   export_tables:     true
   image_resolution:  150              # dpi for figure PNGs
+  save_docling_json: false            # lossless docling dict — 2-3MB/doc, debug only
 
 chunking:
   split_on:        ["H1", "H2", "H3"]

@@ -134,45 +134,45 @@ def _blank_meta(doc_id: str) -> dict:
 # ═══════════════════════════════════════════════════════════════════════
 
 OFFLINE_GROUND_TRUTH: dict[str, dict] = {
-    "nccn_breast_v2_2026": {
-        "source_type":    "guideline",
-        "line_of_therapy": "all",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HR+", "HER2+", "TNBC", "HER2-low"],
-    },
-    "asco_her2_testing_guideline_2023": {
-        "source_type":    "guideline",
-        "line_of_therapy": "all",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HER2+", "HER2-low"],
-    },
-    "monaleesa2_subanalysis_2018": {
-        "source_type":    "rct",
-        "line_of_therapy": "first_line",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HR+", "HER2-"],
-        "drug_focus":     ["ribociclib", "letrozole"],
-        "drug_class":     "CDK4/6 inhibitor",
-    },
-    "sci_reports_nact_hr_pos_2025": {
-        "source_type":    "retrospective",
-        "line_of_therapy": "neoadjuvant",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HR+", "HER2-"],
-    },
-    "frontiers_molbiosci_multiomics_2022": {
-        "source_type":    "review",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HR+", "HER2+", "TNBC"],
-    },
-    "frontiers_pubhealth_tdxd_cea_2023": {
-        "source_type":    "review",
-        "line_of_therapy": "second_line",
-        "cancer_type":    "Breast",
-        "cancer_subtype": ["HER2-low"],
-        "drug_focus":     ["trastuzumab deruxtecan"],
-        "drug_class":     "antibody-drug conjugate",
-    },
+    # "nccn_breast_v2_2026": {
+    #     "source_type":    "guideline",
+    #     "line_of_therapy": "all",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HR+", "HER2+", "TNBC", "HER2-low"],
+    # },
+    # "asco_her2_testing_guideline_2023": {
+    #     "source_type":    "guideline",
+    #     "line_of_therapy": "all",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HER2+", "HER2-low"],
+    # },
+    # "monaleesa2_subanalysis_2018": {
+    #     "source_type":    "rct",
+    #     "line_of_therapy": "first_line",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HR+", "HER2-"],
+    #     "drug_focus":     ["ribociclib", "letrozole"],
+    #     "drug_class":     "CDK4/6 inhibitor",
+    # },
+    # "sci_reports_nact_hr_pos_2025": {
+    #     "source_type":    "retrospective",
+    #     "line_of_therapy": "neoadjuvant",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HR+", "HER2-"],
+    # },
+    # "frontiers_molbiosci_multiomics_2022": {
+    #     "source_type":    "review",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HR+", "HER2+", "TNBC"],
+    # },
+    # "frontiers_pubhealth_tdxd_cea_2023": {
+    #     "source_type":    "review",
+    #     "line_of_therapy": "second_line",
+    #     "cancer_type":    "Breast",
+    #     "cancer_subtype": ["HER2-low"],
+    #     "drug_focus":     ["trastuzumab deruxtecan"],
+    #     "drug_class":     "antibody-drug conjugate",
+    # },
 }
 
 # PDF filename stem → clean doc_id
@@ -510,7 +510,22 @@ def build_meta(
     print(f"PDF   : {pdf_path.name}")
     print(f"doc_id: {doc_id}")
 
-    meta = _blank_meta(doc_id)
+    # ── State-aware idempotency check ─────────────────────────────
+    # If a verified meta.json already exists locally, treat it as ground
+    # truth and skip all extraction phases entirely.
+    # If an unverified draft exists, use it as the starting base so that
+    # any manually-edited fields are preserved across re-runs.
+    existing_path = (EXTRACTED_DIR / doc_id / "meta.json")
+    if existing_path.exists():
+        existing = json.loads(existing_path.read_text())
+        if existing.get("_needs_review") is False:
+            print(f"  [✓] Verified local ground truth found. Skipping extraction.")
+            return existing
+        else:
+            print(f"  [~] Unverified draft found. Using as base, re-running pipeline.")
+            meta = existing   # preserve any manually-edited fields
+    else:
+        meta = _blank_meta(doc_id)
 
     # ── Apply offline ground truth (highest priority) ─────────────
     truth = OFFLINE_GROUND_TRUTH.get(doc_id, {})
@@ -519,6 +534,7 @@ def build_meta(
             meta[k] = _enforce_type(k, v)
     if truth:
         print(f"  [GT] Ground truth: {list(truth.keys())}")
+
 
     # ── Phase 1a: PDF text ────────────────────────────────────────
     print("  [0] PDF text extraction...")

@@ -1,162 +1,189 @@
-# Oncology RAG Metadata Pipeline (Phase 0)
+# Oncology RAG — Metadata Ingestion Pipeline
 
-> A stateful, defensive data ingestion pipeline for building highly accurate Retrieval-Augmented Generation (RAG) systems in the medical domain.
-
-## ⚠️ The Problem: Why Standard RAG Fails in Healthcare
-Standard RAG pipelines dump raw PDF text into a vector database. In oncology, this is dangerous. If a user asks for "first-line treatments for HER2-low breast cancer," a naive vector search might retrieve a 10-year-old retrospective study instead of the 2024 ASCO Guideline, simply because of keyword overlap.
-
-To solve this, we must tag every text chunk with **Clinical Semantic Metadata** (e.g., `cancer_subtype`, `drug_focus`, `source_type`). 
-* **The Catch:** Public APIs (PubMed, CrossRef) do not provide granular clinical metadata.
-* **The Danger:** Large Language Models (LLMs) can extract this data from text, but they are prone to hallucinations (e.g., misclassifying a database review as a Randomized Controlled Trial).
-
-## 💡 The Solution: "Trust Boundaries" Architecture
-This pipeline solves the metadata extraction problem using a **3-Phase Defensive Architecture**. It isolates deterministic factual data from probabilistic AI predictions, ensuring 0% hallucination in structural metadata.
-
-### Phase 1: Deterministic Anchors (The "Robot")
-Before the AI is invoked, the pipeline establishes undeniable bibliographic facts.
-1. **PDF Parsing (`pypdfium2`):** Extracts text safely, handling ligatures and complex encodings. Regex isolates the DOI.
-2. **CrossRef & PubMed APIs:** Uses the DOI to fetch the official Title, Journal, Publication Year, and Abstract.
-* **Why:** Bibliographic data must be 100% accurate. Relying on APIs establishes a factual baseline that the LLM is not allowed to touch.
-
-### Phase 2: Semantic Extraction Engine (The "Intern")
-The pipeline passes the verified Abstract and first-page text to an LLM (via Groq API or local Ollama).
-* The LLM is restricted by a strict **System Prompt** enforcing clinical translation rules (e.g., translating "estrogen receptor" to `["HR+"]`).
-* It extracts arrays for `cancer_subtype`, `drug_focus`, and classifies the `source_type` (Guideline, RCT, Mechanism, etc.).
-* Output is forced into a strict JSON schema.
-
-### Phase 3: Defensive Merge & HITL Bootstrapping (The "Supervisor")
-The pipeline attempts to merge Phase 1 (Facts) with Phase 2 (AI Draft).
-* **Rule of Law:** The LLM is only permitted to fill `null` values. It is strictly forbidden from overwriting data acquired in Phase 1.
-* **Conflict Resolution:** If a conflict occurs, the deterministic data wins, the conflict is logged in a `_conflicts` array, and the document is flagged (`_needs_review: true`).
-* **Human-in-the-Loop (HITL):** If the pipeline relies heavily on the LLM (a "Cold Start" for a new paper), it flags the JSON for human review. A human quickly audits the JSON and changes `_needs_review: false`.
+**Offline medical literature ingestion for an Oncology RAG system.**  
+Extracts clinical metadata from PDFs using CrossRef, PubMed, and an LLM (Groq/Ollama), writing structured `meta.json` files used by the retrieval pipeline.
 
 ---
 
-## 🧠 Stateful Idempotency (The Database Loop)
-This pipeline acts as its own database. It is fully **state-aware** and **idempotent**.
+## How it works
 
-When you run `python src/meta_builder.py`:
-1. The script scans the `data/extracted/` directory.
-2. If it finds a `meta.json` where `_needs_review` is `false`, it recognizes that file as **Verified Ground Truth**.
-3. It instantly loads the file and skips the API and LLM phases entirely.
+```
+data/raw/*.pdf
+      │
+      ▼
+  [GT]  OFFLINE_GROUND_TRUTH  ──── hardcoded, highest authority (known papers)
+  [0]   PDF text + DOI regex  ──── always runs
+  [1]   CrossRef API          ──── title, journal, pub_year, pub_month
+  [2]   PubMed/Entrez API     ──── abstract, MeSH terms, publication type
+  [3]   LLM (Groq or Ollama)  ──── source_type, population, line_of_therapy, drugs
+      │
+      ▼
+ Defensive Merge  ──── Offline values NEVER overwritten by LLM
+      │                Conflicts logged in _conflicts + _needs_review = True
+      ▼
+data/extracted/<doc_id>/meta.json
+```
 
-**Why this matters:** * **Zero API Costs on Rebuilds:** You can rebuild your entire vector database in seconds for $0.
-* **Bootstrapping:** You only manually review an AI's output *once*. Once saved, that JSON becomes an immutable fact that defends against future AI hallucinations.
+### State-aware re-runs (idempotent)
+
+| Existing file state | Behaviour |
+|---|---|
+| No file yet | Full extraction runs |
+| `_needs_review: false` | File returned as-is — all phases skipped |
+| `_needs_review: true` | Existing values used as base; pipeline re-runs to fill nulls |
+
+Once you set `_needs_review: false` in a `meta.json`, it will **never be overwritten** by a re-run.
 
 ---
 
-## 🛠️ The Target Schema
+## Adding new papers
 
-json
-{
-  "doc_id": "monaleesa2_subanalysis_2018",
-  "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer",
-  "pub_year": 2018,
-  "source_type": "rct",
-  "cancer_type": "Breast",
-  "cancer_subtype": ["HR+", "HER2-"],
-  "line_of_therapy": "first_line",
-  "drug_focus": ["Ribociclib", "Letrozole"],
-  "_needs_review": false
+1. Drop the PDF into `data/raw/`
+2. Run `python -m src.meta_builder`
+
+The pipeline auto-detects all PDFs. For a new unknown paper it will:
+- Extract the DOI from the PDF text
+- Fetch title, journal, year from CrossRef
+- Look up the abstract on PubMed
+- Send the abstract to Groq to fill clinical fields
+
+**Optional — add a cleaner folder name** in `DOC_ID_MAP` (`src/meta_builder.py`):
+```python
+DOC_ID_MAP = {
+    "my-new-pdf-filename-stem": "clean_doc_id_2024",
 }
+```
 
-
-### Oncology RAG Metadata Pipeline (Phase 0)
-
-> A stateful, defensive data ingestion pipeline for building highly accurate Retrieval-Augmented Generation (RAG) systems in the medical domain.
-
-### ⚠️ The Problem: Why Standard RAG Fails in Healthcare
-Standard RAG pipelines dump raw PDF text into a vector database. In oncology, this is dangerous. If a user asks for "first-line treatments for HER2-low breast cancer," a naive vector search might retrieve a 10-year-old retrospective study instead of the 2024 ASCO Guideline, simply because of keyword overlap.
-
-To solve this, we must tag every text chunk with **Clinical Semantic Metadata** (e.g., `cancer_subtype`, `drug_focus`, `source_type`). 
-* **The Catch:** Public APIs (PubMed, CrossRef) do not provide granular clinical metadata.
-* **The Danger:** Large Language Models (LLMs) can extract this data from text, but they are prone to hallucinations (e.g., misclassifying a database review as a Randomized Controlled Trial).
-
-### 💡 The Solution: "Trust Boundaries" Architecture
-This pipeline solves the metadata extraction problem using a **3-Phase Defensive Architecture**. It isolates deterministic factual data from probabilistic AI predictions, ensuring 0% hallucination in structural metadata.
-
-### Phase 1: Deterministic Anchors (The "Robot")
-Before the AI is invoked, the pipeline establishes undeniable bibliographic facts.
-1. **PDF Parsing (`pypdfium2`):** Extracts text safely, handling ligatures and complex encodings. Regex isolates the DOI.
-2. **CrossRef & PubMed APIs:** Uses the DOI to fetch the official Title, Journal, Publication Year, and Abstract.
-* **Why:** Bibliographic data must be 100% accurate. Relying on APIs establishes a factual baseline that the LLM is not allowed to touch.
-
-### Phase 2: Semantic Extraction Engine (The "Intern")
-The pipeline passes the verified Abstract and first-page text to an LLM (via Groq API or local Ollama).
-* The LLM is restricted by a strict **System Prompt** enforcing clinical translation rules (e.g., translating "estrogen receptor" to `["HR+"]`).
-* It extracts arrays for `cancer_subtype`, `drug_focus`, and classifies the `source_type` (Guideline, RCT, Mechanism, etc.).
-* Output is forced into a strict JSON schema.
-
-### Phase 3: Defensive Merge & HITL Bootstrapping (The "Supervisor")
-The pipeline attempts to merge Phase 1 (Facts) with Phase 2 (AI Draft).
-* **Rule of Law:** The LLM is only permitted to fill `null` values. It is strictly forbidden from overwriting data acquired in Phase 1.
-* **Conflict Resolution:** If a conflict occurs, the deterministic data wins, the conflict is logged in a `_conflicts` array, and the document is flagged (`_needs_review: true`).
-* **Human-in-the-Loop (HITL):** If the pipeline relies heavily on the LLM (a "Cold Start" for a new paper), it flags the JSON for human review. A human quickly audits the JSON and changes `_needs_review: false`.
-
----
-
-## 🧠 Stateful Idempotency (The Database Loop)
-This pipeline acts as its own database. It is fully **state-aware** and **idempotent**.
-
-When you run `python src/meta_builder.py`:
-1. The script scans the `data/extracted/` directory.
-2. If it finds a `meta.json` where `_needs_review` is `false`, it recognizes that file as **Verified Ground Truth**.
-3. It instantly loads the file and skips the API and LLM phases entirely.
-
-**Why this matters:** * **Zero API Costs on Rebuilds:** You can rebuild your entire vector database in seconds for $0.
-* **Bootstrapping:** You only manually review an AI's output *once*. Once saved, that JSON becomes an immutable fact that defends against future AI hallucinations.
-
----
-
-## 🛠️ The Target Schema
-
-json
-{
-  "doc_id": "monaleesa2_subanalysis_2018",
-  "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer",
-  "pub_year": 2018,
-  "source_type": "rct",
-  "cancer_type": "Breast",
-  "cancer_subtype": ["HR+", "HER2-"],
-  "line_of_therapy": "first_line",
-  "drug_focus": ["Ribociclib", "Letrozole"],
-  "_needs_review": false
+**Optional — add hardcoded ground truth** for high-stakes known papers in `OFFLINE_GROUND_TRUTH`:
+```python
+OFFLINE_GROUND_TRUTH = {
+    "clean_doc_id_2024": {
+        "source_type":    "rct",
+        "cancer_subtype": ["HR+", "HER2-"],
+        "drug_focus":     ["drug_a", "drug_b"],
+    }
 }
-(Note: Schema enforces arrays for drugs and subtypes to handle combination therapies and multi-biomarker profiles.)
+```
+Ground truth values always win over the LLM. Use this for papers where guaranteed correctness is required.
 
-## 🚀 Setup & Usage
+---
 
-### 1. Environment Configuration
-Create a `.secrets/secrets.yaml` file to store your API keys:
+## Setup
+
+```bash
+git clone <repo>
+cd "Oncology Agent"
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+
+# Add your Groq API key (free at console.groq.com)
+cp .secrets/secrets.yaml.example .secrets/secrets.yaml
+# Edit .secrets/secrets.yaml and paste your key
+```
+
+---
+
+## Running
+
+```bash
+# Full pipeline — all PDFs in data/raw/
+python -m src.meta_builder
+
+# Single PDF
+python -m src.meta_builder --pdf data/raw/my_paper.pdf
+
+# Skip LLM (CrossRef + Entrez only — no API key needed)
+python -m src.meta_builder --no-llm
+```
+
+---
+
+## meta.json schema
+
+```json
+{
+  "doc_id":            "monaleesa2_subanalysis_2018",
+  "title":             "Ribociclib plus letrozole ...",
+  "pub_year":          2018,
+  "pub_month":         2,
+  "source_type":       "rct",
+  "journal":           "Breast Cancer Research and Treatment",
+  "doi":               "10.1007/s10549-017-4518-8",
+  "guideline_version": null,
+  "cancer_type":       "Breast",
+  "cancer_subtype":    ["HR+", "HER2-"],
+  "population":        "Postmenopausal women with HR+, HER2- advanced breast cancer ...",
+  "line_of_therapy":   "first_line",
+  "drug_focus":        ["ribociclib", "letrozole"],
+  "drug_class":        "CDK4/6 inhibitor",
+  "notes":             "MONALEESA-2 sub-analysis ...",
+  "_needs_review":     false,
+  "_llm_confidence":   1.0,
+  "_conflicts":        []
+}
+```
+
+| Field | Source | Notes |
+|---|---|---|
+| `source_type` | LLM → PubMed pub_types | `rct` `meta_analysis` `review` `guideline` `mechanism` `retrospective` |
+| `cancer_subtype` | LLM → offline GT | always `list[str]` — e.g. `["HR+", "HER2-"]` |
+| `drug_focus` | LLM → offline GT | always `list[str]` — captures combination therapies |
+| `_needs_review` | pipeline | `false` = verified and locked; `true` = needs human check |
+| `_conflicts` | defensive merge | fields where offline and LLM disagreed |
+
+---
+
+## LLM backends
+
+| Backend | Daily limit | Setup |
+|---|---|---|
+| Groq `llama-3.1-8b-instant` | 14,400 req/day free | Key in `.secrets/secrets.yaml` |
+| Groq `llama-3.3-70b-versatile` | 1,000 req/day free | Same key, change `model` in `config.yaml` |
+| Ollama (local, M1) | Unlimited | `brew install ollama && ollama pull llama3.1` |
+
+Switch backend in `config.yaml`:
 ```yaml
 api:
-  entrez_email: "your.email@university.edu"
-  llm_backend: "groq" # or "ollama" for local execution
-  groq:
-    api_key: "gsk_..."
-    model: "llama-3.1-8b-instant"
+  llm_backend: "ollama"   # or "groq"
+```
 
-### 2. File Structure
-Place your raw PDFs in the `data/raw/` folder so the script can locate them.
-```text
-project_root/
-├── data/
-│   ├── raw/                 # Drop medical PDFs here
-│   └── extracted/           # Pipeline generates folders & meta.json here
+---
+
+## GitHub hygiene
+
+```
+✅ config.yaml                     safe — no secrets
+✅ requirements.txt                safe
+✅ .gitignore                      safe
+✅ .secrets/secrets.yaml.example   safe — placeholder only
+✅ src/meta_builder.py             safe
+✅ data/extracted/*/meta.json      safe — no PII
+❌ .secrets/secrets.yaml           gitignored — real API key lives here
+❌ data/raw/*.pdf                  gitignored — too large
+❌ venv/                           gitignored
+❌ index/                          gitignored — binary FAISS/BM25
+```
+
+---
+
+## Project structure
+
+```
+Oncology Agent/
+├── config.yaml                  # pipeline config (no secrets)
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── .secrets/
+│   ├── secrets.yaml             # your API keys (gitignored)
+│   └── secrets.yaml.example     # safe template
 ├── src/
-│   └── meta_builder.py      # The pipeline script
-└── .secrets/
-
-
-3. Execution
-Run the batch builder to process all new PDFs in your raw directory:
-
-Bash
-python src/meta_builder.py
-To process a specific PDF entirely offline (skipping the LLM extraction):
-
-Bash
-python src/meta_builder.py --pdf data/raw/monaleesa2.pdf --no-llm
-
-4. The Human Audit
-After running the script, open your data/extracted/ directory. Any meta.json flagged with "_needs_review": true requires a quick visual audit. Correct any hallucinated clinical fields, set the flag to false, and save the file. Your metadata pipeline is now successfully bootstrapped and safely locked in.
+│   ├── meta_builder.py          # metadata extraction pipeline
+│   └── extract.py               # PDF chunking (next phase)
+├── data/
+│   ├── raw/                     # drop PDFs here (gitignored)
+│   └── extracted/
+│       └── <doc_id>/
+│           └── meta.json
+└── index/                       # FAISS + BM25 indexes (gitignored)
+```
