@@ -31,6 +31,8 @@ cfg   = yaml.safe_load((_ROOT / "config.yaml").read_text())
 RAW_DIR       = _ROOT / cfg["paths"]["raw"]
 EXTRACTED_DIR = _ROOT / cfg["paths"]["extracted"]
 EXTRACTION_CFG = cfg.get("extraction", {})
+FIG_MIN_W = EXTRACTION_CFG.get("figure_min_width",  250)   # px
+FIG_MIN_H = EXTRACTION_CFG.get("figure_min_height", 200)   # px
 
 # ── Use the same doc_id map as meta_builder so folders align ─────────────────
 # Maps PDF filename stem → clean doc_id (same as meta_builder.py DOC_ID_MAP)
@@ -133,15 +135,30 @@ def extract_document(
         )
         print(f"  Docling JSON → {json_path.name}")
 
-    # ── 3. Figures ────────────────────────────────────────────────
+    # ── 3. Figures (filtered + deduplicated) ───────────────────
     figures_saved = []
+    seen_hashes: set[bytes] = set()   # content-hash dedup within this doc
+
     for pic_idx, picture in enumerate(doc.pictures):
         try:
             img = picture.get_image(doc)
             if img is None:
                 continue
 
-            page_no = picture.prov[0].page_no if picture.prov else 0
+            # ── Size filter: skip logos, icons, thin banners ──
+            w, h = img.size
+            if w < FIG_MIN_W or h < FIG_MIN_H:
+                print(f"  Skip  {pic_idx:03d} ({w}x{h}) — too small")
+                continue
+
+            # ── Content dedup: skip identical images (repeated logos) ──
+            img_hash = img.tobytes()
+            if img_hash in seen_hashes:
+                print(f"  Skip  {pic_idx:03d} ({w}x{h}) — duplicate")
+                continue
+            seen_hashes.add(img_hash)
+
+            page_no  = picture.prov[0].page_no if picture.prov else 0
             filename = f"figure-{pic_idx:03d}-page-{page_no:03d}.png"
             img.save(fig_dir / filename, format="PNG")
 
@@ -149,10 +166,11 @@ def extract_document(
                 "index":        pic_idx,
                 "page":         page_no,
                 "filename":     filename,
-                "self_ref":     picture.self_ref,   # docling internal ID in MD placeholder
-                "caption_text": None,               # filled by caption.py
+                "size":         [w, h],
+                "self_ref":     picture.self_ref,
+                "caption_text": None,
             })
-            print(f"  Figure {pic_idx:03d} (p{page_no}) → {filename}")
+            print(f"  Figure {pic_idx:03d} (p{page_no}) {w}x{h} → {filename}")
 
         except Exception as e:
             print(f"  WARNING: figure {pic_idx} skipped — {e}")
