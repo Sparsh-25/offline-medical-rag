@@ -47,13 +47,15 @@ DOC_ID_MAP: dict[str, str] = {
 }
 
 
-def _stem_to_doc_id(stem: str) -> str:
-    """Return clean doc_id for a PDF stem, falling back to a sanitised stem."""
+def _get_doc_id(pdf_path: Path) -> str:
+    """Return clean doc_id for a PDF, incorporating an MD5 hash of its contents for true uniqueness."""
+    stem = pdf_path.stem
     if stem in DOC_ID_MAP:
         return DOC_ID_MAP[stem]
-    # Sanitise: replace non-alphanumeric runs with underscores, lowercase, truncate
-    import re
-    return re.sub(r"[^a-zA-Z0-9]+", "_", stem).strip("_").lower()[:60]
+    import re, hashlib
+    clean_stem = re.sub(r"[^a-zA-Z0-9]+", "_", stem).strip("_").lower()[:50]
+    content_hash = hashlib.md5(pdf_path.read_bytes()).hexdigest()[:8]
+    return f"{clean_stem}_{content_hash}"
 
 
 # ── Converter ────────────────────────────────────────────────────────────────
@@ -94,7 +96,7 @@ def extract_document(
             extraction_log.json      ← inventory of what was found
             <doc_id>.json            ← lossless docling dict (optional, config-gated)
     """
-    doc_id  = _stem_to_doc_id(pdf_path.stem)
+    doc_id  = _get_doc_id(pdf_path)
     doc_out = EXTRACTED_DIR / doc_id
     fig_dir = doc_out / "figures"
     log_path = doc_out / "extraction_log.json"
@@ -145,20 +147,35 @@ def extract_document(
             if img is None:
                 continue
 
+            page_no  = picture.prov[0].page_no if picture.prov else 0
+
             # ── Size filter: skip logos, icons, thin banners ──
             w, h = img.size
             if w < FIG_MIN_W or h < FIG_MIN_H:
                 print(f"  Skip  {pic_idx:03d} ({w}x{h}) — too small")
+                figures_saved.append({
+                    "index":        pic_idx,
+                    "page":         page_no,
+                    "filename":     None,
+                    "status":       "skipped",
+                    "self_ref":     picture.self_ref,
+                })
                 continue
 
             # ── Content dedup: skip identical images (repeated logos) ──
             img_hash = img.tobytes()
             if img_hash in seen_hashes:
                 print(f"  Skip  {pic_idx:03d} ({w}x{h}) — duplicate")
+                figures_saved.append({
+                    "index":        pic_idx,
+                    "page":         page_no,
+                    "filename":     None,
+                    "status":       "skipped",
+                    "self_ref":     picture.self_ref,
+                })
                 continue
             seen_hashes.add(img_hash)
 
-            page_no  = picture.prov[0].page_no if picture.prov else 0
             filename = f"figure-{pic_idx:03d}-page-{page_no:03d}.png"
             img.save(fig_dir / filename, format="PNG")
 
@@ -166,6 +183,7 @@ def extract_document(
                 "index":        pic_idx,
                 "page":         page_no,
                 "filename":     filename,
+                "status":       "saved",
                 "size":         [w, h],
                 "self_ref":     picture.self_ref,
                 "caption_text": None,
@@ -219,7 +237,7 @@ def extract_all(force: bool = False):
             all_logs.append(log)
         except Exception as e:
             print(f"  ERROR: {pdf_path.name} — {e}")
-            all_logs.append({"doc_id": _stem_to_doc_id(pdf_path.stem),
+            all_logs.append({"doc_id": _get_doc_id(pdf_path),
                              "pdf": str(pdf_path.relative_to(_ROOT)),
                              "status": "failed", "error": str(e)})
 

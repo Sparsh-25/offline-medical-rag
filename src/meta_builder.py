@@ -186,6 +186,16 @@ DOC_ID_MAP: dict[str, str] = {
     "s10549-017-4518-8":         "monaleesa2_subanalysis_2018",
 }
 
+def _get_doc_id(pdf_path: Path) -> str:
+    """Return clean doc_id for a PDF, incorporating an MD5 hash of its contents for true uniqueness."""
+    stem = pdf_path.stem
+    if stem in DOC_ID_MAP:
+        return DOC_ID_MAP[stem]
+    import re, hashlib
+    clean_stem = re.sub(r"[^a-zA-Z0-9]+", "_", stem).strip("_").lower()[:50]
+    content_hash = hashlib.md5(pdf_path.read_bytes()).hexdigest()[:8]
+    return f"{clean_stem}_{content_hash}"
+
 
 # ═══════════════════════════════════════════════════════════════════════
 # PHASE 1a — PDF TEXT EXTRACTION
@@ -504,7 +514,7 @@ def build_meta(
 ) -> dict:
     pdf_path = Path(pdf_path)
     if doc_id is None:
-        doc_id = re.sub(r"[^a-zA-Z0-9]+", "_", pdf_path.stem).strip("_").lower()[:60]
+        doc_id = _get_doc_id(pdf_path)
 
     print(f"\n{'='*60}")
     print(f"PDF   : {pdf_path.name}")
@@ -640,7 +650,7 @@ def build_all(use_crossref=True, use_entrez=True, use_llm=True):
 
     results = []
     for pdf in pdfs:
-        doc_id = DOC_ID_MAP.get(pdf.stem)
+        doc_id = _get_doc_id(pdf)
         meta   = build_meta(pdf, doc_id=doc_id, use_crossref=use_crossref,
                             use_entrez=use_entrez, use_llm=use_llm)
         save_meta(meta)
