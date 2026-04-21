@@ -179,6 +179,27 @@ def extract_document(
             filename = f"figure-{pic_idx:03d}-page-{page_no:03d}.png"
             img.save(fig_dir / filename, format="PNG")
 
+            # Capture Docling's extracted caption as context for the VLM.
+            # Docling ≥ 2.x uses picture.captions (List[RefItem]) instead of
+            # picture.caption (single object). Resolve each ref to get text.
+            docling_context = ""
+            for cap_ref in getattr(picture, "captions", []):
+                try:
+                    resolved = cap_ref.resolve(doc)
+                    text = getattr(resolved, "text", None) or ""
+                    docling_context += text.strip() + " "
+                except Exception:
+                    pass
+            # Fallback: try legacy API for older Docling installs
+            if not docling_context.strip():
+                try:
+                    legacy = getattr(picture, "caption", None)
+                    if legacy:
+                        docling_context = getattr(legacy, "text", "") or ""
+                except Exception:
+                    pass
+            docling_context = docling_context.strip()
+
             figures_saved.append({
                 "index":        pic_idx,
                 "page":         page_no,
@@ -186,6 +207,7 @@ def extract_document(
                 "status":       "saved",
                 "size":         [w, h],
                 "self_ref":     picture.self_ref,
+                "docling_context": docling_context,
                 "caption_text": None,
             })
             print(f"  Figure {pic_idx:03d} (p{page_no}) {w}x{h} → {filename}")
@@ -199,7 +221,7 @@ def extract_document(
 
     log = {
         "doc_id":        doc_id,
-        "pdf":           str(pdf_path.relative_to(_ROOT)),   # relative path — portable
+        "pdf":           str(pdf_path.resolve().relative_to(_ROOT.resolve())),   # relative path — portable
         "pages":         num_pages,
         "figures_found": len(figures_saved),
         "tables_found":  table_count,
