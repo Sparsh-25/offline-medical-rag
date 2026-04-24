@@ -5,6 +5,13 @@ PyYAML>=6.0.3
 certifi>=2026.0.0
 Pillow>=10.4.0
 groq>=1.1.0
+
+# ── embed.py dependencies ─────────────────────────────────────────
+sentence-transformers>=3.0.0   # BGE / SBERT embeddings
+faiss-cpu>=1.8.0               # FAISS HNSW dense index (use faiss-gpu on CUDA machines)
+rank-bm25>=0.2.2               # BM25 sparse index
+numpy>=1.26.0                  # numerical array ops
+
 # google-genai>=0.1.0   # optional — only if switching to Gemini backend
 # For local inference (Tier 2+): install Ollama separately
 # brew install ollama && ollama pull llama3.1

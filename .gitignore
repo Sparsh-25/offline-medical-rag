@@ -25,3 +25,5 @@ index/              # FAISS/BM25 index binaries
 *.swp
 
 data/
+
+index/
