@@ -12,6 +12,11 @@ faiss-cpu>=1.8.0               # FAISS HNSW dense index (use faiss-gpu on CUDA m
 rank-bm25>=0.2.2               # BM25 sparse index
 numpy>=1.26.0                  # numerical array ops
 
+# ── chunk.py dependencies ─────────────────────────────────────────
+transformers>=4.40.0           # real BGE tokenizer for count_tokens() — previously only a
+                                # transitive dependency via sentence-transformers; now imported
+                                # directly, so pinned explicitly (decisions.md D17 Fix 4)
+
 # google-genai>=0.1.0   # optional — only if switching to Gemini backend
 # For local inference (Tier 2+): install Ollama separately
 # brew install ollama && ollama pull llama3.1

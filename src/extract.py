@@ -158,6 +158,7 @@ def extract_document(
                     "page":         page_no,
                     "filename":     None,
                     "status":       "skipped",
+                    "skip_reason":  "too_small",
                     "self_ref":     picture.self_ref,
                 })
                 continue
@@ -171,6 +172,7 @@ def extract_document(
                     "page":         page_no,
                     "filename":     None,
                     "status":       "skipped",
+                    "skip_reason":  "duplicate",
                     "self_ref":     picture.self_ref,
                 })
                 continue

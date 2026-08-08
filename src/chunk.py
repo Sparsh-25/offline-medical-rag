@@ -4,8 +4,13 @@ import yaml
 from pathlib import Path
 from dataclasses import dataclass, asdict, field
 from typing import Optional
+from transformers import AutoTokenizer
 
 cfg = yaml.safe_load(open("config.yaml"))
+
+# Loaded once at import time (same tradeoff embed.py already accepts for its
+# SentenceTransformer) — real subword tokenization, not a word-count proxy.
+_tokenizer = AutoTokenizer.from_pretrained(cfg["embedding"]["model"])
 
 # ── Recency weight computation ────────────────────────────────────
 
@@ -77,8 +82,38 @@ def detect_content_type(text: str) -> str:
     return "prose"
 
 
-def rough_tokens(text: str) -> int:
-    return int(len(text.split()) * 1.3)
+def count_tokens(text: str) -> int:
+    return len(_tokenizer.encode(text, add_special_tokens=False))
+
+
+# ── Junk section filter — administrative sections with no clinical signal ──
+
+JUNK_SECTION_PATTERNS = re.compile(
+    r"^(author contributions?|references?|bibliography|funding|"
+    r"acknowledge?ments?|conflicts? of interest|competing interests?|"
+    r"data availability( statement)?|supplementary material(s)?|"
+    r"disclosures?)\b",
+    re.IGNORECASE,
+)
+
+
+def is_junk_section(heading: str) -> bool:
+    return bool(JUNK_SECTION_PATTERNS.match(heading.strip()))
+
+
+# ── Degenerate table noise filter ───────────────────────────────────
+#
+# Some Docling table exports produce a malformed separator row rendered with
+# pathologically wide column padding (a single `|----...----|` line, no real
+# cell content) — up to 4000+ chars/tokens of pure "-"/"|" noise that has no
+# \n\n, \n, or sentence boundary for subsplit() to split on. Not content —
+# filter it out rather than trying to split it.
+
+_NOISE_CHARS = re.compile(r"[\s\-|]")
+
+
+def is_degenerate_table_noise(text: str) -> bool:
+    return len(_NOISE_CHARS.sub("", text)) == 0
 
 
 # ── Header-aware splitter ─────────────────────────────────────────
@@ -106,25 +141,51 @@ def split_markdown_by_headers(md_text: str) -> list[dict]:
     return sections
 
 
-# ── Sub-split oversized sections on paragraph boundaries ──────────
+# ── Sub-split oversized sections: paragraph → line → sentence fallback ─────
 
-def subsplit(body: str, max_tokens: int) -> list[str]:
-    if rough_tokens(body) <= max_tokens:
-        return [body]
-
-    paragraphs = re.split(r'\n\n+', body)
-    chunks = []
+def _greedy_group(pieces: list[str], max_tokens: int, joiner: str) -> list[str]:
+    """Greedily accumulate pieces into groups that fit under max_tokens."""
+    groups = []
     current = ""
-    for para in paragraphs:
-        candidate = (current + "\n\n" + para).strip() if current else para
-        if rough_tokens(candidate) > max_tokens and current:
-            chunks.append(current.strip())
-            current = para
+    for piece in pieces:
+        candidate = (current + joiner + piece).strip() if current else piece
+        if count_tokens(candidate) > max_tokens and current:
+            groups.append(current.strip())
+            current = piece
         else:
             current = candidate
     if current.strip():
-        chunks.append(current.strip())
-    return chunks
+        groups.append(current.strip())
+    return groups
+
+
+def subsplit(body: str, max_tokens: int) -> list[str]:
+    if count_tokens(body) <= max_tokens:
+        return [body]
+
+    # 1st pass: paragraph boundaries (\n\n) — the best semantic boundary
+    # when the body has any.
+    chunks = _greedy_group(re.split(r'\n\n+', body), max_tokens, "\n\n")
+
+    # 2nd pass: anything still oversized has no blank lines to split on
+    # (e.g. a bullet list, one item per single \n) — fall back to lines.
+    by_line = []
+    for c in chunks:
+        if count_tokens(c) <= max_tokens:
+            by_line.append(c)
+        else:
+            by_line.extend(_greedy_group(c.split("\n"), max_tokens, "\n"))
+
+    # 3rd pass: last resort for a single oversized unbroken line —
+    # split on sentence boundaries.
+    final = []
+    for c in by_line:
+        if count_tokens(c) <= max_tokens:
+            final.append(c)
+        else:
+            final.extend(_greedy_group(re.split(r'(?<=[.!?])\s+', c), max_tokens, " "))
+
+    return final
 
 
 # ── Main chunker ──────────────────────────────────────────────────
@@ -150,7 +211,12 @@ def chunk_document(doc_id: str) -> list[Chunk]:
 
     chunks = []
     chunk_index = 0
-    h1 = h2 = h3 = None
+    # Fallback for documents with no level-1 `#` header at all (confirmed true for
+    # every doc in the current corpus) — a real `#` header, if one is ever
+    # encountered, still overrides this immediately below.
+    h1 = meta.get("title")
+    h2 = h3 = None
+    junk_level = None   # level of the junk section we're currently inside, or None
 
     # Approximate chars-per-page for page hint (rough)
     doc_char_len = len(md_text)
@@ -158,13 +224,24 @@ def chunk_document(doc_id: str) -> list[Chunk]:
     for sec in sections:
         level, heading, body = sec["level"], sec["heading"], sec["body"]
 
-        # Update header breadcrumb
+        # Exit the junk section once a same-or-higher-level, non-junk header appears
+        if junk_level is not None and level <= junk_level and not is_junk_section(heading):
+            junk_level = None
+        # Entering (or still inside, at a deeper level) a junk section
+        if is_junk_section(heading):
+            junk_level = level if junk_level is None else min(junk_level, level)
+
+        # Update header breadcrumb (kept accurate even while suppressed, so it's
+        # correct again the moment a real section resumes)
         if level == 1:
             h1, h2, h3 = heading, None, None
         elif level == 2:
             h2, h3 = heading, None
         elif level == 3:
             h3 = heading
+
+        if junk_level is not None:
+            continue   # administrative section — no clinical signal, don't index it
 
         if not body:
             continue
@@ -173,7 +250,10 @@ def chunk_document(doc_id: str) -> list[Chunk]:
         sub_bodies = subsplit(body, cfg["chunking"]["max_chunk_tokens"])
 
         for sub_body in sub_bodies:
-            tokens = rough_tokens(sub_body)
+            if is_degenerate_table_noise(sub_body):
+                continue
+
+            tokens = count_tokens(sub_body)
             if tokens < cfg["chunking"]["min_chunk_tokens"]:
                 continue
 

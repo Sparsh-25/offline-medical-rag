@@ -1,15 +1,22 @@
 """
-caption.py — Ollama/LLaVA figure captioning + clinical extraction pipeline
+caption.py — Ollama/VLM figure captioning pipeline
 ============================================================================
-Handles ALL oncology figure types:
-  Kaplan-Meier, Forest Plot, Bar/Line/Box/Scatter/Waterfall Charts,
-  Heatmaps, Tables, Flowcharts, CONSORT Diagrams, Biological Pathways,
-  Medical Imaging (IHC/Scans), Pie Charts, and Unknown types.
+Extracts a plain-language clinical summary (plus, where the figure is a
+table/flowchart/pathway diagram, a markdown fragment) from each figure and
+injects it into the document markdown so it becomes retrievable RAG content.
 
 Output per figure → RAG-ready markdown:
-  ![{rich clinical summary}](figures/filename.png)
-  <!-- FIGURE_METADATA: {structured JSON} -->
-  {enriched table / flowchart / pathway text if applicable}
+  ![{clinical summary}](figures/filename.png)
+  <!-- FIGURE_METADATA: {figure_id, figure_type, extraction_status} -->
+  {enriched markdown for tables / flowcharts / pathway diagrams, if applicable}
+
+Scope note: the extraction schema is intentionally minimal — only fields
+that are actually consumed downstream (the embeddable summary text) are
+requested from the VLM. Structured numeric extraction (hazard ratios,
+p-values, cohort sizes, etc.) was removed because nothing in the pipeline
+reads it back out yet (see decisions.md D10) — reintroduce it once a
+consumer (e.g. metadata-filtered retrieval, numeric self-verification)
+exists, ideally paired with a VLM capable of producing it reliably.
 """
 
 import json
@@ -19,8 +26,8 @@ import yaml
 import requests
 import base64
 from pathlib import Path
-from pydantic import BaseModel, Field, ValidationError
-from typing import Optional, List, Literal, Dict, Any
+from pydantic import BaseModel, ValidationError
+from typing import Optional, Any
 
 _ROOT = Path(__file__).parent.parent
 cfg   = yaml.safe_load((_ROOT / "config.yaml").read_text(encoding="utf-8"))
@@ -33,361 +40,71 @@ VLM_BASE_URL = _VLM_CFG.get("base_url", "http://localhost:11434")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1.  VLM PROMPT  (universal — type-specific rules embedded)
+# 1.  VLM PROMPT
 # ─────────────────────────────────────────────────────────────────────────────
 
 VLM_PROMPT = (
-    "You are a Clinical Oncology Figure Extraction AI. "
-    "Analyze the figure image and its surrounding text context to produce "
-    "a comprehensive, structured JSON extraction.\n\n"
+    "You are a Clinical Oncology Figure Extraction AI. Analyze this oncology figure "
+    "and its surrounding text context.\n\n"
 
     "Figure ID: {figure_id}\n"
     "Context (caption / surrounding paragraph): \"{docling_extracted_context}\"\n\n"
 
-    "══ STEP 1 — IDENTIFY ARCHETYPES ═══════════════════════════════════════\n"
-    "Choose ALL archetypes that apply (use exact names):\n"
-    "  Kaplan-Meier | Forest Plot | Bar Chart | Line Graph | Box Plot\n"
-    "  Scatter Plot | Heatmap | Table | Flowchart | CONSORT Diagram\n"
-    "  Biological Pathway | Medical Imaging | Pie Chart | Waterfall Plot | Other\n\n"
+    "Use BOTH the image and the text context. If they conflict, prefer the text. "
+    "Do not invent numbers that are not visible in the image or context.\n\n"
 
-    "══ STEP 2 — UNIVERSAL RULES ════════════════════════════════════════════\n"
-    "- Use BOTH image and text. If values conflict, ALWAYS prefer text.\n"
-    "- NEVER infer or calculate. Return null for any missing value.\n"
-    "- For every numeric metric return raw_value (exact string) AND numeric_value (float or null).\n"
-    "- If a value is visually estimated from axis/graph, set is_estimated: true.\n"
-    "- Extract ALL visible labels, legends, footnotes, and annotations.\n\n"
-
-    "══ STEP 3 — TYPE-SPECIFIC EXTRACTION RULES ═════════════════════════════\n\n"
-
-    "[KAPLAN-MEIER / SURVIVAL CURVES]\n"
-    "→ cohorts: name, N, role (treatment|control|overall)\n"
-    "→ hazard_ratio with 95% CI and p_value (log-rank)\n"
-    "→ data_points: median_OS / median_PFS / median_DFS per cohort with CI\n"
-    "→ data_points: at-risk counts at landmark timepoints\n"
-    "→ x_axis: time unit (months/years), y_axis: probability or % survival\n\n"
-
-    "[FOREST PLOTS]\n"
-    "→ data_points: each subgroup row — metric=subgroup label, value=HR[95%CI]\n"
-    "→ hazard_ratio: overall pooled estimate, confidence_interval: overall 95%CI\n"
-    "→ p_value: overall. Add heterogeneity stats (I², Q, p-het) as data_points\n\n"
-
-    "[BAR / COLUMN CHARTS]\n"
-    "→ data_points: each bar — metric=category, value=numeric, unit=y-axis units\n"
-    "→ Include error bars in value string e.g. '45.2 ± 3.1' or '45.2 (42.0-48.4)'\n"
-    "→ statistical_annotations: significance markers between groups e.g. '* group_A vs group_B'\n\n"
-
-    "[LINE GRAPHS]\n"
-    "→ data_points: key inflection/endpoint values per series — metric=series+timepoint, value=y\n"
-    "→ x_axis + y_axis labels and units\n"
-    "→ trend direction (increasing/decreasing/plateau) in summary\n\n"
-
-    "[BOX / VIOLIN PLOTS]\n"
-    "→ data_points per group: metric=group, value=median (Q1–Q3), unit if available\n"
-    "→ statistical_annotations: pairwise comparisons e.g. 'p=0.03: groupA vs groupB'\n\n"
-
-    "[SCATTER PLOTS]\n"
-    "→ data_points: correlation coefficient R or R², trend equation if shown\n"
-    "→ x_axis + y_axis labels, units, and value ranges\n"
-    "→ key clusters or outlier groups in summary\n\n"
-
-    "[HEATMAPS]\n"
-    "→ table_headers: column labels (up to 10)\n"
-    "→ table_rows: up to 10 most informative rows with cell values\n"
-    "→ data_points: top 5 extreme cells — metric='row_col', value=cell_value\n"
-    "→ color scale meaning in summary\n\n"
-
-    "[TABLES]\n"
-    "→ table_headers: ALL column header strings\n"
-    "→ table_rows: ALL rows — row_label + values dict {column: cell_value}\n"
-    "→ data_points: 3-5 most clinically important cells as a summary highlight\n"
-    "→ Include footnote markers (*, †, ‡) in the cell values\n\n"
-
-    "[FLOWCHARTS / CONSORT / TRIAL DESIGN DIAGRAMS]\n"
-    "→ flow_steps: EVERY box sequentially — label, count (int or null), step_type\n"
-    "  step_type options: enrollment | screened | excluded | randomized | allocated\n"
-    "                     treated | follow-up | analyzed | lost | discontinued\n"
-    "→ cohorts: each randomized arm with N\n"
-    "→ data_points: total_enrolled, total_randomized, total_analyzed per arm\n\n"
-
-    "[BIOLOGICAL PATHWAYS / MECHANISM DIAGRAMS]\n"
-    "→ key_entities: ALL named receptors, ligands, kinases, TFs, downstream targets\n"
-    "→ drug_targets: any drug names or targets highlighted\n"
-    "→ pathway_relations: source → target with interaction\n"
-    "  interaction options: activates | inhibits | phosphorylates | upregulates\n"
-    "                       downregulates | binds | cleaves | recruits | ubiquitinates\n"
-    "→ Oncogenic vs tumor-suppressor context in summary\n\n"
-
-    "[MEDICAL IMAGING — IHC / SCANS]\n"
-    "→ data_points: biomarker, staining_intensity (0–3+ or H-score), clinical_classification\n"
-    "→ key_entities: tissue type, stain/modality name, treatment timepoint\n"
-    "→ scale bar value if shown in summary\n\n"
-
-    "══ STEP 4 — OUTPUT FORMAT ══════════════════════════════════════════════\n"
-    "Return ONLY the JSON below. No markdown fences, no explanations.\n"
-    "summary MUST be 3-4 sentences: (a) what the figure shows, (b) key numeric finding, "
-    "(c) clinical implication.\n"
-    "clinical_relevance: one concise sentence on why this finding matters.\n\n"
+    "Return ONLY the JSON object below. No markdown fences, no explanations.\n"
     "{\n"
     '  "figure_id": "string",\n'
-    '  "archetypes": ["string"],\n'
-    '  "figure_type_confidence": "high|medium|low",\n'
-    '  "title": "string or null",\n'
-    '  "x_axis": {"label": "string or null", "unit": "string or null"},\n'
-    '  "y_axis": {"label": "string or null", "unit": "string or null"},\n'
-    '  "cohorts": [{"name": "string", "role": "treatment|control|overall|unknown", "n": integer_or_null}],\n'
-    '  "hazard_ratio": {"raw_value": "string", "numeric_value": float_or_null, "confidence": "high|medium|low", "is_estimated": false},\n'
-    '  "p_value": {"raw_value": "string", "numeric_value": float_or_null, "confidence": "high|medium|low", "is_estimated": false},\n'
-    '  "confidence_interval": {"raw_value": "string", "lower": float_or_null, "upper": float_or_null, "confidence_level": 0.95},\n'
-    '  "data_points": [{"metric": "string", "value": "string", "unit": "string or null", "cohort": "string or null"}],\n'
-    '  "table_headers": ["string"],\n'
-    '  "table_rows": [{"row_label": "string", "values": {"column_name": "cell_value"}}],\n'
-    '  "flow_steps": [{"label": "string", "count": integer_or_null, "step_type": "string or null"}],\n'
-    '  "key_entities": ["string"],\n'
-    '  "drug_targets": ["string"],\n'
-    '  "pathway_relations": [{"source": "string", "target": "string", "interaction": "string or null"}],\n'
-    '  "statistical_annotations": ["string"],\n'
-    '  "summary": "string",\n'
-    '  "clinical_relevance": "string or null"\n'
+    '  "figure_type": "one short label, e.g. Kaplan-Meier, Forest Plot, Bar Chart, '
+    'Line Graph, Table, Flowchart, CONSORT Diagram, Biological Pathway, Medical Imaging, Other",\n'
+    '  "summary": "3-4 sentences: (a) what the figure shows, (b) key numeric finding if visible '
+    '(e.g. hazard ratio, p-value, median survival, cohort sizes), (c) clinical implication",\n'
+    '  "clinical_relevance": "one concise sentence on why this finding matters, or null",\n'
+    '  "enriched_text": "ONLY if this figure is a table, flowchart/CONSORT diagram, or biological '
+    'pathway diagram: the extracted content as GitHub-flavored markdown (a table, a numbered flow '
+    'list, or an entity/relation list). Otherwise null."\n'
     "}\n"
 )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2.  PYDANTIC SCHEMA — full universal schema for all figure types
+# 2.  PYDANTIC SCHEMA
+#
+# Deliberately minimal — only fields the pipeline actually consumes today.
+# See decisions.md D10 for why structured numeric fields (hazard_ratio,
+# p_value, cohorts, data_points, etc.) were removed rather than kept unused.
 # ─────────────────────────────────────────────────────────────────────────────
-
-class ExtractedMetric(BaseModel):
-    raw_value:     Optional[str]   = None
-    numeric_value: Optional[float] = None
-    confidence:    str             = "high"
-    is_estimated:  bool            = False
-
-class ConfidenceInterval(BaseModel):
-    raw_value:        Optional[str]   = None
-    lower:            Optional[float] = None
-    upper:            Optional[float] = None
-    confidence_level: float           = 0.95
-
-class AxisInfo(BaseModel):
-    label: Optional[str] = None
-    unit:  Optional[str] = None
-
-class Cohort(BaseModel):
-    name: str
-    role: Literal["treatment", "control", "overall", "unknown"] = "unknown"
-    n:    Optional[int] = None
-
-class ClinicalDataPoint(BaseModel):
-    metric: str
-    value:  Optional[str] = None
-    unit:   Optional[str] = None
-    cohort: Optional[str] = None
-
-class TableRow(BaseModel):
-    row_label: str
-    values:    Dict[str, str] = Field(default_factory=dict)
-
-class FlowStep(BaseModel):
-    label:     str
-    count:     Optional[int] = None
-    step_type: Optional[str] = None
-
-class PathwayRelation(BaseModel):
-    source:      str
-    target:      str
-    interaction: Optional[str] = None
 
 class VisualExtraction(BaseModel):
-    figure_id:              str
-    archetypes:             List[str]             = Field(default_factory=list)
-    figure_type_confidence: str                   = "high"
-    title:                  Optional[str]          = None
-    x_axis:                 Optional[AxisInfo]     = None
-    y_axis:                 Optional[AxisInfo]     = None
-    cohorts:                List[Cohort]           = Field(default_factory=list)
-    hazard_ratio:           Optional[ExtractedMetric]     = None
-    p_value:                Optional[ExtractedMetric]     = None
-    confidence_interval:    Optional[ConfidenceInterval]  = None
-    data_points:            List[ClinicalDataPoint]       = Field(default_factory=list)
-    table_headers:          List[str]             = Field(default_factory=list)
-    table_rows:             List[TableRow]        = Field(default_factory=list)
-    flow_steps:             List[FlowStep]        = Field(default_factory=list)
-    key_entities:           List[str]             = Field(default_factory=list)
-    drug_targets:           List[str]             = Field(default_factory=list)
-    pathway_relations:      List[PathwayRelation] = Field(default_factory=list)
-    statistical_annotations:List[str]             = Field(default_factory=list)
-    summary:                str                   = ""
-    clinical_relevance:     Optional[str]          = None
+    figure_id:          str
+    figure_type:        str            = "Other"
+    summary:            str            = ""
+    clinical_relevance: Optional[str]  = None
+    enriched_text:      Optional[str]  = None   # markdown, only for tables/flowcharts/pathways
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3.  SAFE VALIDATORS  — post-Pydantic numeric corrections
-# ─────────────────────────────────────────────────────────────────────────────
-
-def safe_validate_hr(metric: Optional[ExtractedMetric]) -> Optional[ExtractedMetric]:
-    if metric and metric.numeric_value is not None:
-        if metric.numeric_value <= 0:
-            metric.numeric_value = None
-            metric.confidence = "low"
-    return metric
-
-def safe_validate_p_value(metric: Optional[ExtractedMetric]) -> Optional[ExtractedMetric]:
-    if metric and metric.numeric_value is not None:
-        if not (0.0 <= metric.numeric_value <= 1.0):
-            metric.numeric_value = None
-            metric.confidence = "low"
-    return metric
-
-def safe_validate_ci(ci: Optional[ConfidenceInterval]) -> Optional[ConfidenceInterval]:
-    if ci and ci.raw_value:
-        try:
-            clean = (
-                ci.raw_value
-                  .replace("\u2013", " ").replace("\u2014", " ")
-                  .replace("-", " ").replace("to", " ").replace(",", ".")
-            )
-            nums = re.findall(r"(\d*\.?\d+)", clean)
-            if len(nums) >= 2:
-                lo, hi = float(nums[-2]), float(nums[-1])
-                if lo < hi:
-                    ci.lower, ci.upper = lo, hi
-                else:
-                    ci.lower = ci.upper = None
-            else:
-                ci.lower = ci.upper = None
-        except Exception:
-            ci.lower = ci.upper = None
-    return ci
-
-def apply_safe_validations(extraction: VisualExtraction) -> VisualExtraction:
-    extraction.hazard_ratio      = safe_validate_hr(extraction.hazard_ratio)
-    extraction.p_value           = safe_validate_p_value(extraction.p_value)
-    extraction.confidence_interval = safe_validate_ci(extraction.confidence_interval)
-    return extraction
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 4.  METADATA BUILDER  — DB-friendly dict for structured RAG filtering
+# 3.  METADATA BUILDER  — small tag dict embedded alongside each caption
 # ─────────────────────────────────────────────────────────────────────────────
 
 def build_metadata(extraction: VisualExtraction) -> dict:
-    archetypes_lower = {a.lower() for a in extraction.archetypes}
-
-    metadata: dict = {
-        "figure_id":               extraction.figure_id,
-        "archetypes":              extraction.archetypes,
-        "figure_type_confidence":  extraction.figure_type_confidence,
-        "title":                   extraction.title,
-        "cohorts":                 [c.name for c in extraction.cohorts],
-        "cohort_sizes":            {c.name: c.n for c in extraction.cohorts if c.n},
-        "metrics":                 list({dp.metric for dp in extraction.data_points if dp.metric}),
-        "key_entities":            extraction.key_entities,
-        "drug_targets":            extraction.drug_targets,
-        "has_statistical_tests":   len(extraction.statistical_annotations) > 0,
-        # booleans for fast filter
-        "is_survival_curve":  bool(archetypes_lower & {"kaplan-meier", "km", "survival curve"}),
-        "is_forest_plot":     "forest plot" in archetypes_lower,
-        "is_table":           "table" in archetypes_lower,
-        "is_flowchart":       bool(archetypes_lower & {"flowchart", "consort diagram", "consort", "trial design"}),
-        "is_pathway":         bool(archetypes_lower & {"biological pathway", "pathway", "mechanism"}),
-        "is_imaging":         "medical imaging" in archetypes_lower,
+    return {
+        "figure_id":   extraction.figure_id,
+        "figure_type": extraction.figure_type,
     }
-
-    # ── Hazard ratio ─────────────────────────────────────────────
-    if extraction.hazard_ratio and extraction.hazard_ratio.numeric_value is not None:
-        hr = extraction.hazard_ratio.numeric_value
-        metadata["hazard_ratio"] = hr
-        metadata["has_hr"]       = True
-        metadata["hr_benefit"]   = hr < 1.0
-    else:
-        metadata["has_hr"] = False
-
-    # ── P-value ──────────────────────────────────────────────────
-    if extraction.p_value and extraction.p_value.numeric_value is not None:
-        p = extraction.p_value.numeric_value
-        metadata["p_value"]       = p
-        metadata["is_significant"] = p < 0.05
-    else:
-        metadata["is_significant"] = False
-
-    # ── Confidence interval ──────────────────────────────────────
-    if extraction.confidence_interval and extraction.confidence_interval.lower is not None:
-        ci = extraction.confidence_interval
-        metadata["ci_range"] = [ci.lower, ci.upper]
-        metadata["ci_width"] = round(ci.upper - ci.lower, 4)
-        if metadata.get("has_hr"):
-            metadata["is_statistically_significant"] = (
-                (ci.lower > 1.0) or (ci.upper < 1.0)
-            )
-
-    # ── Table dimensions ────────────────────────────────────────
-    if extraction.table_rows:
-        metadata["table_row_count"]    = len(extraction.table_rows)
-        metadata["table_column_count"] = len(extraction.table_headers)
-
-    # ── Flowchart patient counts ─────────────────────────────────
-    if extraction.flow_steps:
-        for step in extraction.flow_steps:
-            if step.step_type == "enrollment" and step.count:
-                metadata["total_enrolled"] = step.count
-            if step.step_type == "randomized" and step.count:
-                metadata["total_randomized"] = step.count
-            if step.step_type == "analyzed" and step.count:
-                metadata.setdefault("total_analyzed", step.count)
-
-    # ── Pathway richness ────────────────────────────────────────
-    if extraction.pathway_relations:
-        metadata["pathway_relation_count"] = len(extraction.pathway_relations)
-
-    return metadata
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5.  EXTRACTION STATUS TRACKER
+# 4.  EXTRACTION STATUS TRACKER
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_extraction_status(extraction: VisualExtraction) -> str:
-    archetypes_lower = {a.lower() for a in extraction.archetypes}
-
-    # Archetype category flags
-    is_quantitative = bool(archetypes_lower & {"kaplan-meier", "km", "survival curve", "forest plot"})
-    is_table        = "table" in archetypes_lower
-    is_flowchart    = bool(archetypes_lower & {"flowchart", "consort", "consort diagram", "trial design"})
-    is_pathway      = bool(archetypes_lower & {"biological pathway", "pathway", "mechanism"})
-
-    # Data presence flags
-    has_hr       = extraction.hazard_ratio and extraction.hazard_ratio.numeric_value is not None
-    has_p        = extraction.p_value and extraction.p_value.numeric_value is not None
-    has_points   = len(extraction.data_points) > 0
-    has_table    = len(extraction.table_rows) > 0 or len(extraction.table_headers) > 0
-    has_flow     = len(extraction.flow_steps) > 0
-    has_pathway  = len(extraction.key_entities) > 0 or len(extraction.pathway_relations) > 0
-    has_summary  = bool(extraction.summary.strip())
-
-    if is_quantitative:
-        if has_hr and has_p:
-            return "success"
-        if has_hr or has_p or has_points:
-            return "partial"
-        return "failed"
-
-    if is_table:
-        return "success" if has_table  else ("partial" if (has_points or has_summary) else "failed")
-
-    if is_flowchart:
-        return "success" if has_flow   else ("partial" if (has_points or has_summary) else "failed")
-
-    if is_pathway:
-        return "success" if has_pathway else ("partial" if has_summary else "failed")
-
-    # Generic: bar, line, box, scatter, heatmap, imaging, unknown
-    if has_points or has_summary:
-        return "success"
-    return "failed"
+    return "success" if extraction.summary.strip() else "failed"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 6.  JSON HEALER  — strips LLM conversational noise, isolates JSON object
+# 5.  JSON HEALER  — strips LLM conversational noise, isolates JSON object
 # ─────────────────────────────────────────────────────────────────────────────
 
 def heal_json(raw: str) -> str:
@@ -406,150 +123,43 @@ def heal_json(raw: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 7.  INPUT SANITISER  — cleans LLaVA type-coercion problems pre-Pydantic
+# 6.  INPUT SANITISER  — cleans VLM type-coercion problems pre-Pydantic
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _sanitise_llava_output(data: dict, figure_id: str) -> dict:
-    """Coerce raw LLaVA JSON into types Pydantic expects. Never raises."""
+    """Coerce raw VLM JSON into types Pydantic expects. Never raises."""
 
-    data["figure_id"] = figure_id          # always override — never trust LLM
+    data["figure_id"] = figure_id   # always override — never trust the model
 
-    # ── Simple list fields → default to [] ──────────────────────
-    for lf in ("archetypes", "cohorts", "data_points", "table_headers",
-                "table_rows", "flow_steps", "key_entities", "drug_targets",
-                "pathway_relations", "statistical_annotations"):
-        if not isinstance(data.get(lf), list):
-            data[lf] = []
+    ft = data.get("figure_type")
+    ft = ft.strip() if isinstance(ft, str) else None
+    # Guard against the model echoing the prompt's own instruction text back
+    # (observed live: "One short label, e.g. Kaplan-Meier, Forest Plot, ...")
+    # instead of picking a value from it — a real label is short; the
+    # instruction text is not.
+    if not ft or len(ft) > 40 or "e.g." in ft.lower():
+        ft = "Other"
+    data["figure_type"] = ft
 
-    # ── Dict-or-None fields → default to None ───────────────────
-    for df in ("hazard_ratio", "p_value", "confidence_interval", "x_axis", "y_axis"):
-        if not isinstance(data.get(df), (dict, type(None))):
-            data[df] = None
+    summary = data.get("summary")
+    if isinstance(summary, str):
+        data["summary"] = summary
+    else:
+        data["summary"] = str(summary) if summary is not None else ""
 
-    # ── String fields ────────────────────────────────────────────
-    for sf in ("summary", "title", "figure_type_confidence", "clinical_relevance"):
+    for sf in ("clinical_relevance", "enriched_text"):
         v = data.get(sf)
         if v is not None and not isinstance(v, str):
-            data[sf] = str(v)
-    if not isinstance(data.get("figure_type_confidence"), str):
-        data["figure_type_confidence"] = "high"
-
-    # ── Cohorts — must be list of dicts with valid 'role' ────────
-    valid_roles = {"treatment", "control", "overall", "unknown"}
-    clean_cohorts = []
-    for c in data["cohorts"]:
-        if not isinstance(c, dict) or not c.get("name"):
-            continue
-        if c.get("role") not in valid_roles:
-            c["role"] = "unknown"
-        if not isinstance(c.get("n"), (int, type(None))):
-            try:
-                c["n"] = int(float(str(c["n"]).replace(",", "")))
-            except (ValueError, TypeError):
-                c["n"] = None
-        clean_cohorts.append(c)
-    data["cohorts"] = clean_cohorts
-
-    # ── data_points — must have 'metric'; coerce value/unit/cohort to str ──
-    clean_dps = []
-    for dp in data["data_points"]:
-        if not isinstance(dp, dict) or not dp.get("metric"):
-            continue
-        for str_field in ("value", "unit", "cohort"):
-            v = dp.get(str_field)
-            if v is not None and not isinstance(v, str):
-                dp[str_field] = str(v)
-        clean_dps.append(dp)
-    data["data_points"] = clean_dps
-
-    # ── table_rows — must have 'row_label' and 'values' dict ────
-    # LLaVA sometimes returns cell values as int/float/None — coerce all to str.
-    clean_rows = []
-    for row in data["table_rows"]:
-        if not isinstance(row, dict):
-            continue
-        row.setdefault("row_label", "unknown")
-        vals = row.get("values")
-        if not isinstance(vals, dict):
-            row["values"] = {}
-        else:
-            row["values"] = {
-                k: (str(v) if v is not None else "") for k, v in vals.items()
-            }
-        clean_rows.append(row)
-    data["table_rows"] = clean_rows
-
-    # ── flow_steps — must have 'label' ──────────────────────────
-    clean_steps = []
-    for step in data["flow_steps"]:
-        if not isinstance(step, dict) or not step.get("label"):
-            continue
-        if not isinstance(step.get("count"), (int, type(None))):
-            try:
-                step["count"] = int(float(str(step["count"]).replace(",", "")))
-            except (ValueError, TypeError):
-                step["count"] = None
-        clean_steps.append(step)
-    data["flow_steps"] = clean_steps
-
-    # ── pathway_relations — must have source + target ────────────
-    data["pathway_relations"] = [
-        r for r in data["pathway_relations"]
-        if isinstance(r, dict) and r.get("source") and r.get("target")
-    ]
-
-    # ── List[str] fields — coerce every item to str, drop None ───
-    # LLaVA sometimes returns dicts, ints, or nested lists inside these.
-    for list_str_field in ("statistical_annotations", "drug_targets", "key_entities"):
-        raw = data.get(list_str_field, [])
-        if not isinstance(raw, list):
-            data[list_str_field] = []
-        else:
-            data[list_str_field] = [
-                str(item) for item in raw if item is not None
-            ]
-
-    # ── ExtractedMetric sub-objects — coerce str/float fields ────
-    # hazard_ratio / p_value have Optional[str] fields (confidence, method,
-    # raw_value) that LLaVA occasionally returns as numbers or booleans.
-    for metric_field in ("hazard_ratio", "p_value"):
-        m = data.get(metric_field)
-        if isinstance(m, dict):
-            for sf in ("raw_value", "confidence", "method"):
-                v = m.get(sf)
-                if v is not None and not isinstance(v, str):
-                    m[sf] = str(v)
-            nv = m.get("numeric_value")
-            if nv is not None and not isinstance(nv, (int, float)):
-                try:
-                    m["numeric_value"] = float(
-                        str(nv).replace(",", "").strip()
-                    )
-                except (ValueError, TypeError):
-                    m["numeric_value"] = None
-
-    # ── ConfidenceInterval — confidence_level must be float ──────
-    # LLaVA often returns "95%" or "0.95" instead of 95.0.
-    ci = data.get("confidence_interval")
-    if isinstance(ci, dict):
-        cl = ci.get("confidence_level")
-        if cl is not None and not isinstance(cl, (int, float)):
-            try:
-                cl_float = float(str(cl).strip().rstrip("%").strip())
-                if 0 < cl_float <= 1.0:   # 0.95 → 95.0
-                    cl_float *= 100
-                ci["confidence_level"] = cl_float
-            except (ValueError, TypeError):
-                ci["confidence_level"] = None
-        rv = ci.get("raw_value")
-        if rv is not None and not isinstance(rv, str):
-            ci["raw_value"] = str(rv)
+            v = str(v)
+        if isinstance(v, str) and v.strip().lower() in ("null", "none", ""):
+            v = None
+        data[sf] = v
 
     return data
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 8.  OLLAMA SERVER CHECK
+# 7.  OLLAMA SERVER CHECK
 # ─────────────────────────────────────────────────────────────────────────────
 
 def verify_ollama_server() -> bool:
@@ -577,7 +187,7 @@ def verify_ollama_server() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 9.  CORE VLM CALL
+# 8.  CORE VLM CALL
 # ─────────────────────────────────────────────────────────────────────────────
 
 def caption_image(
@@ -587,7 +197,7 @@ def caption_image(
     docling_context: str,
 ) -> Optional[VisualExtraction]:
     """
-    Send one figure to LLaVA via Ollama and return a validated VisualExtraction.
+    Send one figure to the VLM via Ollama and return a validated VisualExtraction.
     Returns None on any failure (never raises).
     """
     try:
@@ -598,8 +208,8 @@ def caption_image(
             encoded = base64.b64encode(fh.read()).decode("utf-8")
 
         # Use .replace() — NOT .format() — because the prompt contains JSON schema
-        # with curly braces like {column_name}, {label} etc. that .format() mistakes
-        # for format variables and raises KeyError.
+        # with curly braces that .format() mistakes for format variables and
+        # raises KeyError.
         prompt_text = (
             VLM_PROMPT
             .replace("{figure_id}", str(figure_id))
@@ -636,7 +246,7 @@ def caption_image(
             return None
 
         if not isinstance(data, dict):
-            print(f"    [WARN] LLaVA returned non-dict JSON for {img_path.name}")
+            print(f"    [WARN] VLM returned non-dict JSON for {img_path.name}")
             return None
 
         data = _sanitise_llava_output(data, figure_id)
@@ -649,7 +259,6 @@ def caption_image(
                 print(f"      {err['loc']} → {err['msg']}")
             return None
 
-        extraction = apply_safe_validations(extraction)
         return extraction
 
     except Exception as e:
@@ -658,69 +267,7 @@ def caption_image(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 10. ENRICHED TEXT BUILDER  — extra searchable text for tables / flowcharts / pathways
-# ─────────────────────────────────────────────────────────────────────────────
-
-def build_enriched_text(extraction_data: dict) -> str:
-    """
-    Convert structured extraction data into plain-text / markdown that the
-    RAG chunker can index and retrieve.  Only emitted for figure types that
-    carry tabular or sequential information (tables, flowcharts, pathways).
-    """
-    parts: list[str] = []
-    archetypes_lower = {a.lower() for a in extraction_data.get("archetypes", [])}
-
-    # ── Extracted Table → markdown table ─────────────────────────────────────
-    headers   = extraction_data.get("table_headers", [])
-    table_rows = extraction_data.get("table_rows", [])
-    if headers and table_rows:
-        parts.append("")
-        parts.append("| " + " | ".join(str(h) for h in headers) + " |")
-        parts.append("| " + " | ".join(["---"] * len(headers)) + " |")
-        for row in table_rows[:20]:           # cap at 20 rows
-            cells = [str(row.get("values", {}).get(h, "")) for h in headers]
-            parts.append("| " + " | ".join(cells) + " |")
-
-    # ── Flowchart / CONSORT → numbered list ──────────────────────────────────
-    flow_steps = extraction_data.get("flow_steps", [])
-    is_flowchart_doc = bool(archetypes_lower & {
-        "flowchart", "consort", "consort diagram", "trial design"
-    })
-    if flow_steps and is_flowchart_doc:
-        parts.append("")
-        parts.append("**Trial / Study Flow:**")
-        for step in flow_steps:
-            count_str = f" (n={step['count']:,})" if step.get("count") else ""
-            type_str  = f" [{step['step_type']}]"  if step.get("step_type") else ""
-            parts.append(f"- {step['label']}{count_str}{type_str}")
-
-    # ── Pathway relations → entity interaction list ───────────────────────────
-    relations  = extraction_data.get("pathway_relations", [])
-    entities   = extraction_data.get("key_entities", [])
-    drug_targets = extraction_data.get("drug_targets", [])
-    if relations or entities:
-        parts.append("")
-        if drug_targets:
-            parts.append(f"**Drug Targets:** {', '.join(drug_targets)}")
-        if entities:
-            parts.append(f"**Key Entities:** {', '.join(entities[:15])}")
-        if relations:
-            parts.append("**Key Interactions:**")
-            for rel in relations[:15]:
-                interaction = rel.get("interaction") or "→"
-                parts.append(f"- {rel['source']} {interaction} {rel['target']}")
-
-    # ── Statistical annotations ───────────────────────────────────────────────
-    annotations = extraction_data.get("statistical_annotations", [])
-    if annotations:
-        parts.append("")
-        parts.append("**Statistical Comparisons:** " + "; ".join(annotations[:8]))
-
-    return "\n".join(parts)
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 11. PLACEHOLDER FORMAT DETECTION
+# 9.  PLACEHOLDER FORMAT DETECTION
 # ─────────────────────────────────────────────────────────────────────────────
 
 def find_placeholder_pattern(md_text: str) -> str:
@@ -757,7 +304,27 @@ def find_placeholder_pattern(md_text: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 12. REPLACEMENT MAP BUILDER
+# 9b. GROUNDING CHECK — flag drug-codename-shaped entities not in the source doc
+#
+# Narrow, explainable mitigation for the fabrication mode confirmed in
+# decisions.md D14/D16: the VLM inventing a pharma codename (and an attached
+# claim) that appears nowhere in the source document. Not a general fact-
+# checker — deliberately scoped this narrow, see D16 for why.
+# ─────────────────────────────────────────────────────────────────────────────
+
+_DRUG_CODE_PATTERN = re.compile(r"\b[A-Z]{2,4}-?\d{3,6}\b")
+
+def _flag_ungrounded_entities(text: Optional[str], full_doc_text: str) -> list[str]:
+    """Codename-shaped tokens in `text` that don't appear anywhere in `full_doc_text`."""
+    if not text:
+        return []
+    candidates = set(_DRUG_CODE_PATTERN.findall(text))
+    doc_lower  = full_doc_text.lower()
+    return sorted(c for c in candidates if c.lower() not in doc_lower)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 10. REPLACEMENT MAP BUILDER
 # ─────────────────────────────────────────────────────────────────────────────
 
 def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
@@ -776,7 +343,9 @@ def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
         print("  No figures in extraction log")
         return {}
 
-    fig_dir         = doc_dir / "figures"
+    fig_dir       = doc_dir / "figures"
+    doc_md_path   = doc_dir / f"{doc_dir.name}.md"
+    full_doc_text = doc_md_path.read_text(encoding="utf-8") if doc_md_path.exists() else ""
     replacement_map = {}
 
     print(f"  Captioning {len(figures)} figures...")
@@ -797,6 +366,18 @@ def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
         fig_path = fig_dir / fig_info["filename"]
         if not fig_path.exists():
             print(f"    Missing: {fig_info['filename']} — skipping")
+            # Still need a map entry (even a no-op "remove" one) — its
+            # placeholder still exists in the markdown, and without a
+            # compensating entry every figure after it in this document
+            # would shift by one position under the sequential-fallback
+            # matcher in inject_captions_into_markdown() (see decisions.md D14).
+            replacement_map[fig_info["self_ref"]] = {
+                "action":          "remove",
+                "summary":         None,
+                "metadata":        None,
+                "filename":        None,
+                "extraction_data": None,
+            }
             continue
 
         print(f"    [{i+1}/{len(figures)}] {fig_info['filename']} ", end="", flush=True)
@@ -815,7 +396,16 @@ def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
             status                    = get_extraction_status(extraction)
             chunk_metadata["extraction_status"] = status
 
-            print(f"({elapsed:.1f}s) archetype={extraction.archetypes} status={status}")
+            grounding_flags = _flag_ungrounded_entities(
+                f"{extraction.summary} {extraction.clinical_relevance or ''}",
+                full_doc_text,
+            )
+            if grounding_flags:
+                chunk_metadata["grounding_flags"] = grounding_flags
+                print(f"    [WARN] Possibly fabricated entit{'y' if len(grounding_flags)==1 else 'ies'} "
+                      f"(not found in source document): {grounding_flags}")
+
+            print(f"({elapsed:.1f}s) type={extraction.figure_type} status={status}")
 
             replacement_map[fig_info["self_ref"]] = {
                 "summary":         extraction.summary,
@@ -836,7 +426,11 @@ def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
             print(f"({elapsed:.1f}s) status=failed — using fallback text")
             replacement_map[fig_info["self_ref"]] = {
                 "summary":         fallback_summary,
-                "metadata":        {"extraction_status": "failed"},
+                "metadata":        {
+                    "figure_id":         fig_info.get("self_ref", f"fig_{i}"),
+                    "figure_type":       "Other",
+                    "extraction_status": "failed",
+                },
                 "filename":        fig_info["filename"],
                 "extraction_data": None,
             }
@@ -847,7 +441,7 @@ def build_replacement_map(doc_dir: Path, server_online: bool) -> dict[str, Any]:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 13. MARKDOWN INJECTOR
+# 11. MARKDOWN INJECTOR
 # ─────────────────────────────────────────────────────────────────────────────
 
 def inject_captions_into_markdown(
@@ -859,8 +453,8 @@ def inject_captions_into_markdown(
     Replace every figure placeholder in the markdown with:
 
       ![{VLM clinical summary}](figures/{filename}.png)
-      <!-- FIGURE_METADATA: {structured JSON} -->
-      {enriched table / flow / pathway text if applicable}
+      <!-- FIGURE_METADATA: {figure_id, figure_type, extraction_status} -->
+      {enriched table / flow / pathway markdown, if the VLM provided it}
 
     Handles all 5 placeholder formats and is idempotent on re-runs.
     """
@@ -891,11 +485,15 @@ def inject_captions_into_markdown(
             if item is not None:
                 replacement_map[ref] = None
                 return item
-        # Sequential fallback
+        # Sequential fallback — no exact ref match, so this may pair the wrong
+        # caption with this placeholder. Logged so a mismatch is auditable
+        # instead of silently swapping captions between figures.
         for k in list(replacement_map.keys()):
             if replacement_map[k] is not None:
                 item = replacement_map[k]
                 replacement_map[k] = None
+                print(f"    [WARN] No exact ref match for {ref!r} — used next "
+                      f"unclaimed figure ({item.get('filename')}) instead")
                 return item
         return None
 
@@ -907,11 +505,15 @@ def inject_captions_into_markdown(
             if item and item.get("filename") == filename:
                 replacement_map[k] = None
                 return item
-        # Sequential fallback
+        # Sequential fallback — no exact filename match, so this may pair the
+        # wrong caption with this placeholder. Logged so a mismatch is auditable
+        # instead of silently swapping captions between figures.
         for k in list(replacement_map.keys()):
             if replacement_map[k] is not None:
                 item = replacement_map[k]
                 replacement_map[k] = None
+                print(f"    [WARN] No exact filename match for {filename!r} — used "
+                      f"next unclaimed figure ({item.get('filename')}) instead")
                 return item
         return None
 
@@ -930,12 +532,11 @@ def inject_captions_into_markdown(
             f"<!-- FIGURE_METADATA: {meta_json} -->"
         )
 
-        # Append enriched text for tables, flowcharts, pathways
+        # Append enriched markdown for tables, flowcharts, pathways — only
+        # present when the VLM actually produced it for this figure type.
         ext_data = item.get("extraction_data")
-        if ext_data:
-            enriched = build_enriched_text(ext_data)
-            if enriched:
-                output += enriched
+        if ext_data and ext_data.get("enriched_text"):
+            output += "\n" + ext_data["enriched_text"]
 
         replacements_made += 1
         return output
@@ -971,21 +572,6 @@ def inject_captions_into_markdown(
     )
 
     # ── Format 4: ![Figure from oncology document: …]( path ) ←── current Docling ─
-    def _replace_fallback_alt(m: re.Match) -> str:
-        fname = Path(m.group(2)).name
-        item  = _pop_item_by_filename(fname)
-        return _render(item, default_filename=fname) if item else m.group(0)
-
-    md_text = re.sub(
-        r"!\[Figure from oncology document[^\]]*\]\(([^)]+)\)",
-        lambda m: _replace_fallback_alt(
-            # re-wrap so group(2) = path (group(1) = alt-text)
-            type("_M", (), {"group": lambda self, i: [None, m.group(1), m.group(1)][i]})()
-        ) if False else m.group(0),   # placeholder — use guarded regex below
-        md_text,
-        flags=re.IGNORECASE,
-    )
-    # Correct approach — use a two-group regex
     def _replace_fallback_2g(m: re.Match) -> str:
         fname = Path(m.group(2)).name
         item  = _pop_item_by_filename(fname)
@@ -1021,7 +607,7 @@ def inject_captions_into_markdown(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 14. DOCUMENT-LEVEL ORCHESTRATION
+# 12. DOCUMENT-LEVEL ORCHESTRATION
 # ─────────────────────────────────────────────────────────────────────────────
 
 def caption_document(doc_id: str, server_online: bool) -> dict:
@@ -1041,6 +627,15 @@ def caption_document(doc_id: str, server_online: bool) -> dict:
         print("  No figures to caption — markdown unchanged")
         return {"doc_id": doc_id, "status": "no_figures"}
 
+    # Snapshot the "real" (non-removed) entry count BEFORE injection — the pop
+    # helpers inside inject_captions_into_markdown() null out every matched
+    # entry as a side effect, so counting after injection always yields 0
+    # once matching succeeds (this masked failures/successes alike until now).
+    real_entries = sum(
+        1 for v in replacement_map.values()
+        if v is not None and v.get("action") != "remove"
+    )
+
     md_text = md_path.read_text(encoding="utf-8")
     fmt     = find_placeholder_pattern(md_text)
     print(f"  Placeholder format: {fmt}")
@@ -1050,12 +645,6 @@ def caption_document(doc_id: str, server_online: bool) -> dict:
     )
     md_path.write_text(updated_md, encoding="utf-8")
 
-    # Count only entries that had actual content (not action=remove entries which
-    # are for skipped/tiny figures that never had a real placeholder in the markdown).
-    real_entries = sum(
-        1 for v in replacement_map.values()
-        if v is not None and v.get("action") != "remove"
-    )
     print(f"  Replaced {n_replaced}/{real_entries} content placeholders ({len(replacement_map)} total map entries)")
     unmatched = real_entries - n_replaced
     if unmatched > 0:
@@ -1081,10 +670,8 @@ def caption_document(doc_id: str, server_online: bool) -> dict:
                 f"<!-- FIGURE_METADATA: {meta_json} -->"
             )
             ext_data = item.get("extraction_data")
-            if ext_data:
-                enriched = build_enriched_text(ext_data)
-                if enriched:
-                    block += enriched
+            if ext_data and ext_data.get("enriched_text"):
+                block += "\n" + ext_data["enriched_text"]
             recovery.append(block)
             replacement_map[ref] = None
         updated_md += "".join(recovery)
@@ -1100,12 +687,27 @@ def caption_document(doc_id: str, server_online: bool) -> dict:
     }
 
 
-def caption_all():
-    ext_dir  = Path(cfg["paths"]["extracted"])
-    doc_dirs = sorted(
-        d for d in ext_dir.iterdir()
-        if d.is_dir() and not d.name.startswith("_")
-    )
+def caption_all(doc_ids: Optional[list[str]] = None):
+    """
+    Caption every document in data/extracted/, or only the doc_ids given.
+    Passing doc_ids lets you resume a partial/interrupted run (e.g. after
+    the process was killed) without re-captioning documents already done —
+    just pass the doc_ids that still need it.
+    """
+    ext_dir = Path(cfg["paths"]["extracted"])
+
+    if doc_ids:
+        doc_dirs = [ext_dir / d for d in doc_ids]
+        missing  = [d.name for d in doc_dirs if not d.is_dir()]
+        if missing:
+            print(f"ERROR: unknown doc_id(s), no folder in {ext_dir}: {missing}")
+            return
+    else:
+        doc_dirs = sorted(
+            d for d in ext_dir.iterdir()
+            if d.is_dir() and not d.name.startswith("_")
+        )
+
     if not doc_dirs:
         print(f"No documents found in {ext_dir}")
         return
@@ -1130,4 +732,12 @@ def caption_all():
 
 
 if __name__ == "__main__":
-    caption_all()
+    import argparse
+    p = argparse.ArgumentParser(description="caption.py — VLM figure captioning pipeline")
+    p.add_argument(
+        "--doc-id", action="append",
+        help="Caption only this doc_id (repeatable: --doc-id a --doc-id b). "
+             "Omit to caption every document in data/extracted/.",
+    )
+    args = p.parse_args()
+    caption_all(doc_ids=args.doc_id)
