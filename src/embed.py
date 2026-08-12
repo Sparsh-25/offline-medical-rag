@@ -100,9 +100,14 @@ ID_MAP_PATH = FAISS_PATH.parent / "id_map.json"     # index/id_map.json
 BGE_PASSAGE_PREFIX = ""   # BGE encodes passages WITHOUT the instruction prefix
                            # (only queries use the prefix at query time)
 
-# FAISS HNSW construction params — tune for speed vs recall trade-off
+# FAISS HNSW construction/search params — tune for speed vs recall trade-off
 HNSW_M = 32          # neighbours per node; 32 is a good default
 HNSW_EF_CONSTRUCTION = 200
+HNSW_EF_SEARCH = 64  # was previously unset (FAISS default 16) — a live recall
+                     # bug flagged in decisions.md D4, fixed here regardless
+                     # of which index type D22's comparison ultimately picks
+
+INDEX_TYPE = EMB_CFG.get("index_type", "hnsw")  # "flat" | "hnsw" — decisions.md D4/D22
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -138,17 +143,26 @@ def get_texts(chunks: list[dict]) -> list[str]:
 
 # ── Dense index ───────────────────────────────────────────────────────────────
 
-def build_dense_index(chunks: list[dict]) -> None:
+def build_dense_index(
+    chunks: list[dict],
+    index_type: str = INDEX_TYPE,
+    output_path: Path = FAISS_PATH,
+) -> None:
     """
-    Encode all chunks with the BGE model and persist a FAISS HNSW index.
+    Encode all chunks with the BGE model and persist a FAISS index.
 
-    Index type: IndexHNSWFlat with inner-product (IP) metric.
+    Index type: "flat" (IndexFlatIP, exact) or "hnsw" (IndexHNSWFlat,
+    approximate) per `index_type` — see decisions.md D4/D22 for the choice.
     Vectors are L2-normalised before insertion so IP == cosine similarity.
     """
+    if index_type not in ("flat", "hnsw"):
+        raise ValueError(f"index_type must be 'flat' or 'hnsw', got {index_type!r}")
+
     faiss      = _require("faiss",               "faiss-cpu")
     SentenceTransformer = _require("sentence_transformers", "sentence-transformers").SentenceTransformer
 
-    FAISS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    id_map_path = output_path.parent / "id_map.json"
 
     log.info(f"Loading embedding model: {MODEL_ID}  (device={DEVICE})")
     model = SentenceTransformer(MODEL_ID, device=DEVICE)
@@ -181,19 +195,29 @@ def build_dense_index(chunks: list[dict]) -> None:
         f"Unexpected embedding shape {embeddings.shape}, expected ({n}, {dim})"
     )
 
-    # Build HNSW index (in-memory, then serialised)
-    log.info(f"Building FAISS HNSW32 index  (M={HNSW_M}, efConstruction={HNSW_EF_CONSTRUCTION})")
-    index = faiss.IndexHNSWFlat(dim, HNSW_M, faiss.METRIC_INNER_PRODUCT)
-    index.hnsw.efConstruction = HNSW_EF_CONSTRUCTION
-    index.add(embeddings.astype(np.float32))
+    # Build the index (in-memory, then serialised)
+    t_build0 = time.time()
+    if index_type == "flat":
+        log.info("Building FAISS IndexFlatIP (exact search)")
+        index = faiss.IndexFlatIP(dim)
+        index.add(embeddings.astype(np.float32))
+    else:
+        log.info(f"Building FAISS HNSW32 index  (M={HNSW_M}, efConstruction={HNSW_EF_CONSTRUCTION}, "
+                  f"efSearch={HNSW_EF_SEARCH})")
+        index = faiss.IndexHNSWFlat(dim, HNSW_M, faiss.METRIC_INNER_PRODUCT)
+        index.hnsw.efConstruction = HNSW_EF_CONSTRUCTION
+        index.add(embeddings.astype(np.float32))
+        index.hnsw.efSearch = HNSW_EF_SEARCH  # previously unset — FAISS default of 16 (D4)
+    build_elapsed = time.time() - t_build0
+    log.info(f"Index build took {build_elapsed:.2f}s")
 
-    faiss.write_index(index, str(FAISS_PATH))
-    log.info(f"FAISS index saved → {FAISS_PATH}  ({FAISS_PATH.stat().st_size / 1e6:.1f} MB)")
+    faiss.write_index(index, str(output_path))
+    log.info(f"FAISS index saved → {output_path}  ({output_path.stat().st_size / 1e6:.1f} MB)")
 
     # Save int → chunk_id mapping (FAISS only knows row positions)
     id_map = {i: c["chunk_id"] for i, c in enumerate(chunks)}
-    ID_MAP_PATH.write_text(json.dumps(id_map, indent=2), encoding="utf-8")
-    log.info(f"ID map saved → {ID_MAP_PATH}  ({len(id_map):,} entries)")
+    id_map_path.write_text(json.dumps(id_map, indent=2), encoding="utf-8")
+    log.info(f"ID map saved → {id_map_path}  ({len(id_map):,} entries)")
 
     # ── Smoke test ────────────────────────────────────────────────────────────
     log.info("Smoke test: querying index with first chunk...")
@@ -249,6 +273,8 @@ def main() -> None:
     )
     parser.add_argument("--dense-only",  action="store_true", help="Skip BM25 index")
     parser.add_argument("--sparse-only", action="store_true", help="Skip FAISS index")
+    parser.add_argument("--index-type", choices=["flat", "hnsw"], default=None,
+                         help="Override config.yaml embedding.index_type for this run")
     args = parser.parse_args()
 
     if args.dense_only and args.sparse_only:
@@ -260,9 +286,11 @@ def main() -> None:
         log.error("No chunks found — run  python src/chunk.py  first.")
         sys.exit(1)
 
+    index_type = args.index_type or INDEX_TYPE
+
     if not args.sparse_only:
-        log.info("─── Dense Index (FAISS HNSW) ───────────────────────────────")
-        build_dense_index(chunks)
+        log.info(f"─── Dense Index (FAISS {index_type}) ───────────────────────────────")
+        build_dense_index(chunks, index_type=index_type)
 
     if not args.dense_only:
         log.info("─── Sparse Index (BM25) ────────────────────────────────────")

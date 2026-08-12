@@ -188,6 +188,68 @@ def subsplit(body: str, max_tokens: int) -> list[str]:
     return final
 
 
+# ── Figure block isolation ──────────────────────────────────────────
+#
+# detect_content_type() only sees a chunk's *starting* characters, so a
+# figure caption sharing a chunk with surrounding prose (the normal case —
+# most sections aren't big enough to trigger subsplit()) gets mistyped
+# "prose" even though the figure's full caption is right there in the
+# middle of it (decisions.md D17 Fix 6 / "Task 6"). Fix: pull each figure's
+# block out as its own chunk, unconditionally, before any size-based
+# splitting happens — so the caption is never diluted by unrelated prose,
+# and the prose is never diluted by the caption.
+#
+# Boundaries are found by exact string reconstruction from
+# extraction_log.json (mirroring caption.py's _render()), not by guessing
+# from surrounding whitespace — real Docling markdown doesn't reliably put
+# a blank line after a figure block, so a whitespace-boundary heuristic
+# would either cut enriched_text short or swallow unrelated adjacent text.
+
+def _load_figure_blocks(doc_dir: Path) -> list[str]:
+    """Reconstruct every figure's exact caption.py-rendered block text."""
+    log_path = doc_dir / "extraction_log.json"
+    if not log_path.exists():
+        return []
+    log = json.loads(log_path.read_text(encoding="utf-8"))
+    blocks = []
+    for fig_info in log.get("figures", []):
+        filename = fig_info.get("filename")
+        metadata = fig_info.get("extraction_metadata")
+        if fig_info.get("status") == "skipped" or not filename or not metadata:
+            continue
+        summary   = fig_info.get("caption_text") or f"Figure from oncology document: {Path(filename).stem}"
+        meta_json = json.dumps(metadata, ensure_ascii=False)
+        block = f"![{summary}](figures/{filename})\n<!-- FIGURE_METADATA: {meta_json} -->"
+        enriched = (fig_info.get("clinical_extraction") or {}).get("enriched_text")
+        if enriched:
+            block += "\n" + enriched
+        blocks.append(block)
+    return blocks
+
+
+def _split_out_figures(body: str, figure_blocks: list[str]) -> list[tuple[str, bool]]:
+    """Split body into (segment, is_figure) pieces at exact known figure-block spans."""
+    spans = []
+    for block in figure_blocks:
+        idx = body.find(block)
+        if idx != -1:
+            spans.append((idx, idx + len(block)))
+    if not spans:
+        return [(body, False)]
+
+    spans.sort()
+    segments = []
+    pos = 0
+    for start, end in spans:
+        if start > pos and body[pos:start].strip():
+            segments.append((body[pos:start], False))
+        segments.append((body[start:end], True))
+        pos = end
+    if pos < len(body) and body[pos:].strip():
+        segments.append((body[pos:], False))
+    return segments
+
+
 # ── Main chunker ──────────────────────────────────────────────────
 
 def chunk_document(doc_id: str) -> list[Chunk]:
@@ -208,6 +270,7 @@ def chunk_document(doc_id: str) -> list[Chunk]:
 
     # ── Walk sections ──────────────────────────────────────────
     sections = split_markdown_by_headers(md_text)
+    figure_blocks = _load_figure_blocks(doc_dir)   # once per document, not per section
 
     chunks = []
     chunk_index = 0
@@ -246,51 +309,57 @@ def chunk_document(doc_id: str) -> list[Chunk]:
         if not body:
             continue
 
-        # Sub-split if needed
-        sub_bodies = subsplit(body, cfg["chunking"]["max_chunk_tokens"])
+        # Isolate figure blocks from surrounding prose before any size-based
+        # splitting, so a figure is never merged into (or dilutes) prose text.
+        for seg_text, is_figure in _split_out_figures(body, figure_blocks):
 
-        for sub_body in sub_bodies:
-            if is_degenerate_table_noise(sub_body):
-                continue
+            sub_bodies = subsplit(seg_text, cfg["chunking"]["max_chunk_tokens"])
 
-            tokens = count_tokens(sub_body)
-            if tokens < cfg["chunking"]["min_chunk_tokens"]:
-                continue
+            for sub_body in sub_bodies:
+                if is_degenerate_table_noise(sub_body):
+                    continue
 
-            chunk = Chunk(
-                # identity
-                chunk_id=f"{doc_id}_chunk_{chunk_index:04d}",
-                doc_id=doc_id,
+                tokens = count_tokens(sub_body)
+                # A figure caption is a complete unit even when short (unlike a
+                # stray prose fragment) — never drop it for being under the
+                # stub-chunk floor.
+                if not is_figure and tokens < cfg["chunking"]["min_chunk_tokens"]:
+                    continue
 
-                # ── from meta.json — baked in at build time ──
-                title=meta.get("title"),
-                pub_year=pub_year,
-                pub_month=meta.get("pub_month"),
-                recency_weight=recency_weight,
-                source_type=meta.get("source_type"),
-                journal=meta.get("journal"),
-                doi=meta.get("doi"),
-                guideline_version=meta.get("guideline_version"),
-                cancer_type=meta.get("cancer_type"),
-                cancer_subtype=meta.get("cancer_subtype"),
-                population=meta.get("population"),
-                line_of_therapy=meta.get("line_of_therapy"),
-                drug_focus=meta.get("drug_focus"),
-                drug_class=meta.get("drug_class"),
+                chunk = Chunk(
+                    # identity
+                    chunk_id=f"{doc_id}_chunk_{chunk_index:04d}",
+                    doc_id=doc_id,
 
-                # ── from markdown structure ──────────────────
-                section_h1=h1,
-                section_h2=h2,
-                section_h3=h3,
-                content_type=detect_content_type(sub_body),
-                page_hint=None,   # filled below if extraction_log exists
+                    # ── from meta.json — baked in at build time ──
+                    title=meta.get("title"),
+                    pub_year=pub_year,
+                    pub_month=meta.get("pub_month"),
+                    recency_weight=recency_weight,
+                    source_type=meta.get("source_type"),
+                    journal=meta.get("journal"),
+                    doi=meta.get("doi"),
+                    guideline_version=meta.get("guideline_version"),
+                    cancer_type=meta.get("cancer_type"),
+                    cancer_subtype=meta.get("cancer_subtype"),
+                    population=meta.get("population"),
+                    line_of_therapy=meta.get("line_of_therapy"),
+                    drug_focus=meta.get("drug_focus"),
+                    drug_class=meta.get("drug_class"),
 
-                # ── content ──────────────────────────────────
-                chunk_text=sub_body,
-                token_count=tokens,
-            )
-            chunks.append(chunk)
-            chunk_index += 1
+                    # ── from markdown structure ──────────────────
+                    section_h1=h1,
+                    section_h2=h2,
+                    section_h3=h3,
+                    content_type=("figure_caption" if is_figure else detect_content_type(sub_body)),
+                    page_hint=None,   # filled below if extraction_log exists
+
+                    # ── content ──────────────────────────────────
+                    chunk_text=sub_body,
+                    token_count=tokens,
+                )
+                chunks.append(chunk)
+                chunk_index += 1
 
     # ── Best-effort page hints from extraction_log ─────────────
     # The log has figure positions; for prose we interpolate

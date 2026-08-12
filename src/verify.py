@@ -233,7 +233,7 @@ def check_embedding_sanity(chunks: list[dict], embeddings: np.ndarray) -> None:
 
 def check_dense_retrieval(
     chunks:    list[dict],
-    index:     Any,           # faiss.IndexHNSWFlat at runtime
+    index:     Any,           # faiss.IndexFlatIP at runtime (decisions.md D22)
     chunk_map: dict,
     model:     SentenceTransformer,
 ) -> None:
@@ -245,39 +245,72 @@ def check_dense_retrieval(
     path, or the BGE instruction prefix could be wrong. Running real clinical
     queries and checking which doc surfaces at rank-1 catches all of these.
 
+    Two kinds of check, both needed:
+    • Reachable queries (6, one per corpus doc) — should retrieve their target
+      document with a high score. Catches "retrieval doesn't work."
+    • Unreachable queries (3) — about real oncology topics that this 6-doc
+      corpus does not cover. Should score low / not confidently match anything.
+      Catches "retrieval falsely claims a match" (semantic over-triggering),
+      which a reachable-only test can never detect — it would look identical
+      to a reachable query returning a mediocre-but-plausible match.
+
     WHAT WE CHECK
     ─────────────
     • Top-3 results per query, with score and doc_id
-    • ✓/✗ whether the expected document appears in top-3
+    • Reachable: ✓/✗ whether the expected document appears in top-3
+    • Unreachable: ✓/⚠ whether the top-1 score stays below the confident-match
+      threshold (>0.5 — see below); a high score here is a false-positive risk
     • Score threshold: >0.5 is a good match for BGE-base with normalised vectors
+      (cosine similarity — vectors are L2-normalised, so FAISS inner product
+      *is* cosine similarity here, not a different metric)
     • Clinical coherence: the answer should make sense (e.g. ribociclib → MONALEESA-2)
 
     HOW TO INTERPRET
     ────────────────
-    A ✗ on every query usually means: wrong query encoding (missing BGE instruction
-    prefix), index built on different chunks than currently in chunks.jsonl, or
-    normalized flag not set consistently between index build and query time.
+    A ✗ on every reachable query usually means: wrong query encoding (missing BGE
+    instruction prefix), index built on different chunks than currently in
+    chunks.jsonl, or normalized flag not set consistently between index build and
+    query time. A ⚠ on an unreachable query means retrieval is over-confident on
+    out-of-corpus topics — worth investigating before trusting low scores elsewhere
+    as "no evidence found."
     """
     print("\n" + "=" * 60)
     print("CHECK 3: Dense retrieval smoke test")
     print("=" * 60)
 
-    # Update test_queries below to match YOUR actual doc_ids in meta.json
+    GOOD_MATCH_THRESHOLD = 0.5  # cosine similarity — see docstring
+
+    # 6 reachable queries (one per corpus document, full coverage) + 3
+    # unreachable queries (real oncology topics this corpus does not cover —
+    # negative controls, expected_fragment=None). Previously 3 of the
+    # "reachable" queries referenced doc_id fragments ("meta", "destiny",
+    # "waks") that don't exist anywhere in this project's 6-document corpus,
+    # making them fail regardless of retrieval quality (decisions.md D23).
     test_queries = [
-        # (query_text, expected_doc_id_substring)
+        # (query_text, expected_doc_id_substring_or_None)
         ("What is the median overall survival for ribociclib plus letrozole?",
          "monaleesa"),
         ("First-line treatment recommendation for HR positive HER2 negative metastatic breast cancer",
          "nccn"),
-        ("CDK4/6 inhibitor progression-free survival hazard ratio meta-analysis",
-         "meta"),
-        ("HER2-low trastuzumab deruxtecan progression-free survival",
-         "destiny"),
-        ("Breast cancer molecular subtypes luminal basal triple negative",
-         "waks"),
-        ("Pertuzumab trastuzumab HER2 positive adjuvant treatment",
+        ("Multi-omics biomarkers for precision medicine treatment selection in breast cancer",
+         "molbiosci"),
+        ("Cost-effectiveness of trastuzumab deruxtecan for HER2-low breast cancer",
+         "pubhealth"),
+        ("Neoadjuvant versus adjuvant chemotherapy timing and survival outcomes in HR positive breast cancer",
+         "sci_reports"),
+        ("HER2 immunohistochemistry IHC scoring criteria and FISH testing algorithm for breast cancer",
          "asco"),
+        # ── Unreachable (negative controls) — not covered by this corpus ──
+        ("Immune checkpoint inhibitor pembrolizumab response rate in non-small cell lung cancer",
+         None),
+        ("CAR-T cell therapy outcomes in relapsed acute lymphoblastic leukemia",
+         None),
+        ("Colorectal cancer screening guidelines and polypectomy surveillance intervals",
+         None),
     ]
+
+    reachable_pass = reachable_total = 0
+    unreachable_pass = unreachable_total = 0
 
     for query, expected_fragment in test_queries:
         q_emb = model.encode(
@@ -287,19 +320,39 @@ def check_dense_retrieval(
         )
         scores, indices = index.search(q_emb.astype(np.float32), k=3)
 
+        is_unreachable = expected_fragment is None
         print(f'\n  Query: "{query[:70]}"')
-        print(f"  Expected doc fragment: *{expected_fragment}*")
+        print(f"  Expected: {'*unreachable — should NOT confidently match*' if is_unreachable else f'*{expected_fragment}*'}")
+
+        top1_score = float(scores[0][0]) if len(scores[0]) else 0.0
+        if is_unreachable:
+            unreachable_total += 1
+            ok = top1_score < GOOD_MATCH_THRESHOLD
+            unreachable_pass += int(ok)
+            print(f"  {'✓' if ok else '⚠'} top-1 score={top1_score:.3f} "
+                  f"({'below' if ok else 'ABOVE'} the {GOOD_MATCH_THRESHOLD} confident-match threshold)")
+        else:
+            reachable_total += 1
+            top3_docs = [chunks[idx]["doc_id"] for idx in indices[0] if 0 <= idx < len(chunks)]
+            ok = any(expected_fragment.lower() in d.lower() for d in top3_docs)
+            reachable_pass += int(ok)
 
         for rank, (score, idx) in enumerate(zip(scores[0], indices[0])):
-            # Guard against FAISS -1 (no result — should not happen with HNSW but be safe)
+            # Guard against FAISS -1 (no result — should not happen with a full index but be safe)
             if idx < 0 or idx >= len(chunks):
                 print(f"  [{rank+1}] FAISS returned invalid index {idx} (index has {len(chunks)} vectors)")
                 continue
             chunk = chunks[idx]
-            hit = "✓" if expected_fragment.lower() in chunk["doc_id"].lower() else "✗"
+            if is_unreachable:
+                hit = "·"  # no expected doc to check against — informational only
+            else:
+                hit = "✓" if expected_fragment.lower() in chunk["doc_id"].lower() else "✗"
             print(f"  [{rank+1}] {hit} score={score:.3f}  doc={chunk['doc_id']}")
             print(f"       {chunk.get('section_h1')} › {chunk.get('section_h2')}")
             print(f"       {chunk['chunk_text'][:120]}…")
+
+    print(f"\n  ── Summary: reachable {reachable_pass}/{reachable_total} correct, "
+          f"unreachable {unreachable_pass}/{unreachable_total} correctly low-confidence ──")
 
 
 # ── Check 4: BM25 smoke test + RRF spot-check ────────────────────────────────

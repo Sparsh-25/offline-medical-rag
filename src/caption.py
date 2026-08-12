@@ -456,9 +456,20 @@ def inject_captions_into_markdown(
       <!-- FIGURE_METADATA: {figure_id, figure_type, extraction_status} -->
       {enriched table / flow / pathway markdown, if the VLM provided it}
 
-    Handles all 5 placeholder formats and is idempotent on re-runs.
+    Handles all 5 placeholder formats and is idempotent on re-runs. First-time
+    captioning matches bare <!-- image --> comments by explicit position;
+    re-running on an already-captioned document matches by exact filename
+    only (see decisions.md D20) — never by guessing.
     """
     replacements_made = 0
+
+    # ── Detect first-time vs. re-run, BEFORE any mutation ────────────────────
+    # A document that already has FIGURE_METADATA comments has been through
+    # this function before — its original <!-- image --> placeholders are
+    # already gone (consumed or deleted by that prior run), so there is
+    # nothing left to positionally match against. Re-runs rely on exact
+    # filename matching only (decisions.md D20).
+    already_captioned = bool(re.search(r"<!--\s*FIGURE_METADATA:", md_text))
 
     # ── Pre-pass: normalise previously-injected output → empty-alt ───────────
     # On re-runs the markdown already contains our output; strip it so Format 2
@@ -478,42 +489,17 @@ def inject_captions_into_markdown(
 
     # ── Helpers ───────────────────────────────────────────────────────────────
 
-    def _pop_item_by_ref(ref: Optional[str]) -> Optional[dict]:
-        """Consume and return a replacement_map entry by self_ref or sequentially."""
-        if ref:
-            item = replacement_map.get(ref)
-            if item is not None:
-                replacement_map[ref] = None
-                return item
-        # Sequential fallback — no exact ref match, so this may pair the wrong
-        # caption with this placeholder. Logged so a mismatch is auditable
-        # instead of silently swapping captions between figures.
-        for k in list(replacement_map.keys()):
-            if replacement_map[k] is not None:
-                item = replacement_map[k]
-                replacement_map[k] = None
-                print(f"    [WARN] No exact ref match for {ref!r} — used next "
-                      f"unclaimed figure ({item.get('filename')}) instead")
-                return item
-        return None
-
     def _pop_item_by_filename(filename: str) -> Optional[dict]:
-        """Consume and return a replacement_map entry matching filename."""
-        # Exact filename match first
+        """
+        Consume and return a replacement_map entry matching filename — exact
+        match only, no fallback. A figure that can't be exactly matched goes
+        to orphan-recovery (still retrievable, just appended) rather than
+        risk pairing the wrong caption with the wrong image via a guess.
+        """
         for k in list(replacement_map.keys()):
             item = replacement_map[k]
             if item and item.get("filename") == filename:
                 replacement_map[k] = None
-                return item
-        # Sequential fallback — no exact filename match, so this may pair the
-        # wrong caption with this placeholder. Logged so a mismatch is auditable
-        # instead of silently swapping captions between figures.
-        for k in list(replacement_map.keys()):
-            if replacement_map[k] is not None:
-                item = replacement_map[k]
-                replacement_map[k] = None
-                print(f"    [WARN] No exact filename match for {filename!r} — used "
-                      f"next unclaimed figure ({item.get('filename')}) instead")
                 return item
         return None
 
@@ -541,17 +527,40 @@ def inject_captions_into_markdown(
         replacements_made += 1
         return output
 
-    # ── Format 1: <!-- image ref: #/pictures/N --> ────────────────────────────
-    def _replace_html_comment(m: re.Match) -> str:
-        raw      = m.group(0)
-        ref_match = re.search(r"ref:\s*([^\s,>]+)", raw)
-        ref      = ref_match.group(1) if ref_match else None
-        item     = _pop_item_by_ref(ref)
-        return _render(item) if item else raw
+    # ── Format 1: bare <!-- image --> placeholders (first-time captioning only) ─
+    # Docling never emits a usable ref attribute (confirmed directly against its
+    # output — there is nothing to extract here), so there is no real ref to
+    # match against. On a FRESH document, the Nth placeholder corresponds
+    # exactly to the figure at index N in extraction_log.json — verified
+    # directly that extract.py's doc.pictures enumeration (which builds that
+    # log, skipped/filtered figures included) follows the same reading-order
+    # traversal Docling's markdown export uses. That positional correspondence
+    # only holds on a first-time run: once captioned, the placeholders are
+    # gone (consumed or deleted), so a re-run has nothing left to count and
+    # must not run this format at all (see already_captioned above).
+    if not already_captioned:
+        ordered_keys = list(replacement_map.keys())
+        position = 0
 
-    md_text = re.sub(
-        r"<!--\s*image[^>]*-->", _replace_html_comment, md_text, flags=re.IGNORECASE
-    )
+        def _replace_html_comment(m: re.Match) -> str:
+            nonlocal position
+            if position >= len(ordered_keys):
+                print(f"    [ERROR] More <!-- image --> placeholders in the markdown "
+                      f"than figures in extraction_log.json ({len(ordered_keys)}) — "
+                      f"document and log are out of sync; leaving the remainder "
+                      f"unmatched rather than guessing.")
+                return m.group(0)
+            key = ordered_keys[position]
+            position += 1
+            item = replacement_map.get(key)
+            if item is None:
+                return m.group(0)
+            replacement_map[key] = None
+            return _render(item)
+
+        md_text = re.sub(
+            r"<!--\s*image[^>]*-->", _replace_html_comment, md_text, flags=re.IGNORECASE
+        )
 
     # ── Format 2: ![]( path ) ── empty alt (and our pre-pass output) ─────────
     def _replace_empty_alt(m: re.Match) -> str:
