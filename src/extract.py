@@ -34,6 +34,39 @@ EXTRACTION_CFG = cfg.get("extraction", {})
 FIG_MIN_W = EXTRACTION_CFG.get("figure_min_width",  250)   # px
 FIG_MIN_H = EXTRACTION_CFG.get("figure_min_height", 200)   # px
 
+# ── Known PDF font-encoding glyph corruption ─────────────────────────────────
+# Some source PDFs use custom/subset fonts whose cmap tables can't be resolved
+# for a handful of symbol glyphs. Confirmed (decisions.md D28) that this exists
+# in the PDF's own text layer, before Docling touches it — verified via raw
+# pdfium text extraction — so no Docling backend/OCR setting can avoid it.
+# Forced full-page OCR *can* recover the correct symbols but was found to
+# silently drop table header/row-label cells instead — worse than this fix.
+# These codepoints have no legitimate use in English clinical text.
+_GLYPH_FIXES: dict[str, str] = {
+    "þ": "+",       # þ (thorn) — HIGH confidence: every instance was "+" (IHC 2þ, HR þ, A þ B)
+    "¼": "=",       # HIGH confidence: every instance was "=" in a stat (P ¼ 0.003, n ¼ 436) — 140 instances found
+    "\x00":   "−",  # NUL — HIGH confidence: always between digits in a difference/CI range
+    "\x06":   "±",  # HIGH confidence: single instance, a "day 1 (±3 days)" visit window
+    "\x15":   "≥",  # MEDIUM confidence: inferred from paired table-row context, not confirmed against source PDF
+    "\x14":   "<",        # MEDIUM confidence: same table, paired with \x15 above
+    "\x03":   "",         # stray artifact in an author-affiliation list — no clear intended character, stripped
+    "\x13":   "",         # stray artifact in an author-affiliation list — no clear intended character, stripped
+}
+# NOT fixed (deliberately): U+FFFD, €, and two Braille-pattern characters also
+# turned up in this corpus's author/affiliation/reference-citation text,
+# standing in for various German/Polish diacritics (é, ä, ü, ń). Left alone —
+# each corrupted codepoint maps to a *different* intended letter depending on
+# context, so a blind substitution risks being wrong, and the affected text
+# (author names, city names, references) carries no clinical/retrieval
+# significance for this project. See decisions.md D28.
+
+
+def _fix_known_glyph_corruption(text: str) -> str:
+    """Repair known PDF font-encoding corruption (see decisions.md D28). No-op if none present."""
+    for bad, good in _GLYPH_FIXES.items():
+        text = text.replace(bad, good)
+    return text
+
 # ── Use the same doc_id map as meta_builder so folders align ─────────────────
 # Maps PDF filename stem → clean doc_id (same as meta_builder.py DOC_ID_MAP)
 DOC_ID_MAP: dict[str, str] = {
@@ -44,6 +77,17 @@ DOC_ID_MAP: dict[str, str] = {
     "fmolb-09-783494":           "frontiers_molbiosci_multiomics_2022",
     "fpubh-11-1049947":          "frontiers_pubhealth_tdxd_cea_2023",
     "s10549-017-4518-8":         "monaleesa2_subanalysis_2018",
+    "ESMO Clinical Practice Guideline- Metastatic Breast Cancer_2026":
+        "esmo_metastatic_bc_guideline_2026",
+    "NCCN Guidelines Genetic:Familial High-Risk Assessment- Breast, Ovarian, Pancreatic, and Prostate_2026":
+        "nccn_genetic_familial_risk_v3_2026",
+    "Neoadjuvant pembrolizumab plus chemotherapy:adjuvant pembrolizumab for early-stage triple-negative breast cancer- quality-of-life results from the randomized KEYNOTE-522 study_2025":
+        "keynote522_tnbc_qol_2025",
+    "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1:2 and high-risk, early breast cancer_2022":
+        "olympia_brca_os_2022",
+    "destiny06_2025":            "destiny_breast06_2025",
+    'pubmed_meta_"CDK4:6 inhibitor_2023':
+        "cdk46i_meta_analysis_2023",
 }
 
 
@@ -124,6 +168,7 @@ def extract_document(
     md_text = doc.export_to_markdown(
         image_mode="placeholder",   # writes <!-- image --> placeholders for caption.py
     )
+    md_text = _fix_known_glyph_corruption(md_text)
     md_path = doc_out / f"{doc_id}.md"
     md_path.write_text(md_text, encoding="utf-8")
     print(f"  Markdown → {md_path.name}  ({len(md_text):,} chars)")

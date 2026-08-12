@@ -184,6 +184,17 @@ DOC_ID_MAP: dict[str, str] = {
     "fmolb-09-783494":           "frontiers_molbiosci_multiomics_2022",
     "fpubh-11-1049947":          "frontiers_pubhealth_tdxd_cea_2023",
     "s10549-017-4518-8":         "monaleesa2_subanalysis_2018",
+    "ESMO Clinical Practice Guideline- Metastatic Breast Cancer_2026":
+        "esmo_metastatic_bc_guideline_2026",
+    "NCCN Guidelines Genetic:Familial High-Risk Assessment- Breast, Ovarian, Pancreatic, and Prostate_2026":
+        "nccn_genetic_familial_risk_v3_2026",
+    "Neoadjuvant pembrolizumab plus chemotherapy:adjuvant pembrolizumab for early-stage triple-negative breast cancer- quality-of-life results from the randomized KEYNOTE-522 study_2025":
+        "keynote522_tnbc_qol_2025",
+    "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1:2 and high-risk, early breast cancer_2022":
+        "olympia_brca_os_2022",
+    "destiny06_2025":            "destiny_breast06_2025",
+    'pubmed_meta_"CDK4:6 inhibitor_2023':
+        "cdk46i_meta_analysis_2023",
 }
 
 def _get_doc_id(pdf_path: Path) -> str:

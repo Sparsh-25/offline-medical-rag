@@ -34,6 +34,11 @@ chunking:
   min_chunk_tokens: 80
   max_chunk_tokens: 512
   overlap_tokens:   0
+  # VLM-generated figure captions are excluded from the corpus for now — 5
+  # confirmed/likely fabrications found across 4 documents (decisions.md
+  # D14/D30/D33/D34/D35), no resolution yet on the VLM model choice (D7) or
+  # grounding-check gap. Flip back to true once that's resolved.
+  include_figure_captions: false
 
 embedding:
   model:      BAAI/bge-base-en-v1.5
@@ -44,6 +49,14 @@ embedding:
 recency:
   baseline_year: 2015                 # weight 0.5 at or before this
   peak_year:     2024                 # weight 1.0 at or after this
+
+retrieval:
+  mode:           rrf     # "dense" | "hybrid" (weighted score fusion) | "rrf" (rank fusion)
+  top_k:          5       # final results returned to the caller
+  candidate_pool: 20      # how many results each of dense/sparse pulls before fusion
+  rrf_k:          60      # RRF's rank-damping constant
+  hybrid_alpha:   0.5     # "hybrid" mode weight on dense score; sparse gets (1 - hybrid_alpha)
+  max_per_doc:    2       # diversity cap — prevents one large document dominating top_k
 
 vlm:
   # Ollama model used by caption.py for figure extraction.

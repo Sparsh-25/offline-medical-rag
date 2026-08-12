@@ -313,6 +313,13 @@ def chunk_document(doc_id: str) -> list[Chunk]:
         # splitting, so a figure is never merged into (or dilutes) prose text.
         for seg_text, is_figure in _split_out_figures(body, figure_blocks):
 
+            # VLM-generated figure captions are excluded from the corpus for
+            # now (decisions.md D14/D30/D33/D34/D35 — confirmed fabrications
+            # found in multiple documents). Dropped here, not merged back
+            # into prose, so the fabricated text isn't just relabeled.
+            if is_figure and not cfg["chunking"].get("include_figure_captions", True):
+                continue
+
             sub_bodies = subsplit(seg_text, cfg["chunking"]["max_chunk_tokens"])
 
             for sub_body in sub_bodies:
