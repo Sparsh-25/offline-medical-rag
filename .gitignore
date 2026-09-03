@@ -16,6 +16,9 @@ build/
 data/raw/           # raw PDFs — too large for git
 index/              # FAISS/BM25 index binaries
 
+# ── Logs ───────────────────────────────────────────────────────────────
+*.log
+
 # ── macOS ──────────────────────────────────────────────────────────────
 .DS_Store
 
@@ -27,3 +30,6 @@ index/              # FAISS/BM25 index binaries
 data/
 
 index/
+
+# ── Report drafting (personal, not part of the codebase) ────────────────
+technical-report/

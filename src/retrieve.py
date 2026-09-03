@@ -74,47 +74,93 @@ class Indexes:
     faiss_index:  faiss.Index
     bm25:         object
     bm25_id_map:  dict[int, str]    # BM25 row position -> chunk_id
-    model:        SentenceTransformer
+    architecture: str = "symmetric"                    # "symmetric" | "asymmetric" — decisions.md D53/D56
+    model:           Optional[SentenceTransformer] = None   # symmetric case: one model embeds both sides
+    query_model:     Optional[object] = None                # asymmetric case: transformers.AutoModel (query side)
+    query_tokenizer: Optional[object] = None                # asymmetric case: matching tokenizer
 
 
-_indexes: Optional[Indexes] = None
+_indexes_cache: dict[tuple, Indexes] = {}
 
 
-def load_indexes() -> Indexes:
-    """Load everything needed for retrieval once, then reuse on later calls."""
-    global _indexes
-    if _indexes is not None:
-        return _indexes
+def load_indexes(embedding_model: Optional[str] = None, index_dir: Optional[Path] = None) -> Indexes:
+    """
+    Load everything needed for retrieval once per (architecture, model, index_dir)
+    combination, then reuse on later calls.
 
-    for path in (FAISS_PATH, BM25_PATH, CHUNK_MAP_PATH, ID_MAP_PATH):
+    embedding_model / index_dir let eval/eval_retrieval.py point this at a
+    *symmetric* candidate embedding model's own faiss.index + id_map.json (built
+    by one of the eval/compare-embedding-models/<model>/build_index.py scripts)
+    instead of the live index — see decisions.md D46. Passing embedding_model
+    always means "symmetric", since that's the only shape these overrides were
+    built for; the live config's own architecture (symmetric or asymmetric) is
+    used whenever no override is given. BM25 and chunk_map.json are always read
+    from the live index/ dir: neither depends on the embedding model.
+    """
+    architecture = "symmetric" if embedding_model else EMB_CFG.get("architecture", "symmetric")
+    faiss_path = (index_dir / "faiss.index") if index_dir else FAISS_PATH
+    id_map_path = (index_dir / "id_map.json") if index_dir else ID_MAP_PATH
+
+    if architecture == "symmetric":
+        model_id = embedding_model or EMB_CFG["model"]
+    else:
+        model_id = EMB_CFG["model"]["query"]   # for cache key / logging only
+
+    cache_key = (architecture, model_id, str(faiss_path))
+    if cache_key in _indexes_cache:
+        return _indexes_cache[cache_key]
+
+    for path in (faiss_path, BM25_PATH, CHUNK_MAP_PATH, id_map_path):
         if not path.exists():
             raise FileNotFoundError(f"{path} not found. Run `python -m src.embed` first.")
 
     chunk_map = json.loads(CHUNK_MAP_PATH.read_text(encoding="utf-8"))
-    faiss_id_map = {int(k): v for k, v in json.loads(ID_MAP_PATH.read_text()).items()}
-    faiss_index = faiss.read_index(str(FAISS_PATH))
+    faiss_id_map = {int(k): v for k, v in json.loads(id_map_path.read_text()).items()}
+    faiss_index = faiss.read_index(str(faiss_path))
 
     with open(BM25_PATH, "rb") as fh:
         bm25_payload = pickle.load(fh)
 
-    model = SentenceTransformer(EMB_CFG["model"], device=EMB_CFG["device"])
+    if architecture == "symmetric":
+        model = SentenceTransformer(model_id, device=EMB_CFG["device"])
+        idx = Indexes(
+            chunk_map=chunk_map, faiss_id_map=faiss_id_map, faiss_index=faiss_index,
+            bm25=bm25_payload["bm25"], bm25_id_map=bm25_payload["id_map"],
+            architecture="symmetric", model=model,
+        )
+    else:
+        # Asymmetric dual-encoder (e.g. MedCPT): queries go through the
+        # Query-Encoder here; chunks were embedded with the *different*
+        # Article-Encoder at index-build time (src/embed.py) — see
+        # decisions.md D53/D56. No sentence-transformers support for either
+        # half, hence raw transformers + manual [CLS]-token pooling below.
+        from transformers import AutoModel, AutoTokenizer
+        query_tokenizer = AutoTokenizer.from_pretrained(model_id)
+        query_model     = AutoModel.from_pretrained(model_id)
+        query_model.eval()
+        idx = Indexes(
+            chunk_map=chunk_map, faiss_id_map=faiss_id_map, faiss_index=faiss_index,
+            bm25=bm25_payload["bm25"], bm25_id_map=bm25_payload["id_map"],
+            architecture="asymmetric", query_model=query_model, query_tokenizer=query_tokenizer,
+        )
 
-    _indexes = Indexes(
-        chunk_map=chunk_map,
-        faiss_id_map=faiss_id_map,
-        faiss_index=faiss_index,
-        bm25=bm25_payload["bm25"],
-        bm25_id_map=bm25_payload["id_map"],
-        model=model,
-    )
-    return _indexes
+    _indexes_cache[cache_key] = idx
+    return idx
 
 
 # ── Search ────────────────────────────────────────────────────────────────
 
 def dense_search(query: str, idx: Indexes, top_k: int) -> list[tuple[str, float]]:
     """FAISS dense search. Returns (chunk_id, cosine_score) pairs, best first."""
-    query_vector = idx.model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+    if idx.architecture == "symmetric":
+        query_vector = idx.model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+    else:
+        import torch
+        with torch.no_grad():
+            encoded = idx.query_tokenizer([query], truncation=True, padding=True, return_tensors="pt", max_length=64)
+            embed = idx.query_model(**encoded).last_hidden_state[:, 0, :]   # [CLS] token
+            embed = torch.nn.functional.normalize(embed, p=2, dim=1)
+            query_vector = embed.numpy()
     scores, positions = idx.faiss_index.search(query_vector.astype(np.float32), k=top_k)
 
     results = []
@@ -144,7 +190,11 @@ def reciprocal_rank_fusion(
     for results in (dense_results, sparse_results):
         for rank, (chunk_id, _) in enumerate(results):
             fused_scores[chunk_id] = fused_scores.get(chunk_id, 0.0) + 1.0 / (k + rank + 1)
-    return sorted(fused_scores.items(), key=lambda pair: pair[1], reverse=True)
+    # Tie-break by chunk_id so tied scores sort the same way on every run — see
+    # decisions.md D47 for why this matters (weighted_score_fusion below had a
+    # real non-determinism bug from an unordered tie-break; this mirrors the fix
+    # here too, even though plain dict/list iteration made this function safe).
+    return sorted(fused_scores.items(), key=lambda pair: (-pair[1], pair[0]))
 
 
 def weighted_score_fusion(
@@ -164,13 +214,21 @@ def weighted_score_fusion(
 
     dense_norm  = normalize(dense_results)
     sparse_norm = normalize(sparse_results)
-    all_chunk_ids = dense_norm.keys() | sparse_norm.keys()
+    # sorted(), not the raw set union: `a | b` on string keys iterates in an order
+    # that depends on Python's per-process hash seed (randomised by default), so
+    # ties in fused_scores below broke differently across separate runs of the
+    # exact same query — a real non-determinism bug found while comparing
+    # embedding models (decisions.md D47). Sorting here makes iteration order
+    # fixed regardless of hash seed.
+    all_chunk_ids = sorted(dense_norm.keys() | sparse_norm.keys())
 
     fused_scores = {
         chunk_id: alpha * dense_norm.get(chunk_id, 0.0) + (1 - alpha) * sparse_norm.get(chunk_id, 0.0)
         for chunk_id in all_chunk_ids
     }
-    return sorted(fused_scores.items(), key=lambda pair: pair[1], reverse=True)
+    # Tie-break by chunk_id (secondary key) so tied fused scores sort identically
+    # on every run, not just in the order they happened to land in the dict.
+    return sorted(fused_scores.items(), key=lambda pair: (-pair[1], pair[0]))
 
 
 # ── Diversity cap ─────────────────────────────────────────────────────────
@@ -208,9 +266,22 @@ def retrieve(
     mode: str = DEFAULT_MODE,
     candidate_pool: int = CANDIDATE_POOL,
     max_per_doc: int = MAX_PER_DOC,
+    rrf_k: int = RRF_K,
+    hybrid_alpha: float = HYBRID_ALPHA,
+    embedding_model: Optional[str] = None,
+    index_dir: Optional[Path] = None,
 ) -> list[dict]:
     """
     Retrieve the top_k most relevant chunks for a query.
+
+    rrf_k and hybrid_alpha are exposed here (not just as module constants)
+    so eval/eval_retrieval.py can sweep them per-call without touching
+    config.yaml — see decisions.md D40 for why those defaults were never
+    validated in the first place.
+
+    embedding_model and index_dir let eval/eval_retrieval.py run the same
+    sweep against a candidate embedding model's own index instead of the
+    live BGE-base one — see decisions.md D46.
 
     Each returned chunk is the full chunk_map.json record plus two extra
     keys: "score" (the ranking score — not comparable across modes) and
@@ -219,15 +290,15 @@ def retrieve(
     if mode not in VALID_MODES:
         raise ValueError(f"mode must be one of {VALID_MODES}, got {mode!r}")
 
-    idx = load_indexes()
+    idx = load_indexes(embedding_model=embedding_model, index_dir=index_dir)
 
     if mode == "dense":
         ranked = dense_search(query, idx, top_k=candidate_pool)
     else:
         dense  = dense_search(query, idx, top_k=candidate_pool)
         sparse = sparse_search(query, idx, top_k=candidate_pool)
-        ranked = reciprocal_rank_fusion(dense, sparse) if mode == "rrf" \
-            else weighted_score_fusion(dense, sparse)
+        ranked = reciprocal_rank_fusion(dense, sparse, k=rrf_k) if mode == "rrf" \
+            else weighted_score_fusion(dense, sparse, alpha=hybrid_alpha)
 
     top_results = cap_per_document(ranked, idx.chunk_map, max_per_doc, top_k)
 

@@ -41,7 +41,15 @@ chunking:
   include_figure_captions: false
 
 embedding:
-  model:      BAAI/bge-base-en-v1.5
+  # "symmetric" (default): one model embeds both queries and chunks (e.g. BAAI/bge-m3).
+  # "asymmetric": separate query/article encoders, e.g. MedCPT — chosen 2026-08-14
+  # over BGE-base/PubMedBERT/BGE-M3, see decisions.md D53/D55/D56.
+  architecture: asymmetric
+  model:
+    query:   ncbi/MedCPT-Query-Encoder
+    article: ncbi/MedCPT-Article-Encoder
+  # (symmetric example, kept for reference — see eval/compare-embedding-models/bge_m3/
+  # for how to reproduce this exact config: `model: BAAI/bge-m3`, no `architecture` line needed)
   batch_size: 32
   device:     cpu
   index_type: flat   # "flat" (IndexFlatIP, exact) | "hnsw" (IndexHNSWFlat, approximate) — see decisions.md D4/D22
@@ -51,12 +59,19 @@ recency:
   peak_year:     2024                 # weight 1.0 at or after this
 
 retrieval:
-  mode:           rrf     # "dense" | "hybrid" (weighted score fusion) | "rrf" (rank fusion)
+  mode:           hybrid  # "dense" | "hybrid" (weighted score fusion) | "rrf" (rank fusion) — see decisions.md D45
   top_k:          5       # final results returned to the caller
-  candidate_pool: 20      # how many results each of dense/sparse pulls before fusion
+  candidate_pool: 50      # how many results each of dense/sparse pulls before fusion — raised
+                           # from 20 for MedCPT specifically, see decisions.md D53/D55/D56
   rrf_k:          60      # RRF's rank-damping constant
   hybrid_alpha:   0.5     # "hybrid" mode weight on dense score; sparse gets (1 - hybrid_alpha)
-  max_per_doc:    2       # diversity cap — prevents one large document dominating top_k
+  max_per_doc:    5       # diversity cap — see decisions.md D44 (loosened from 2: recall/diversity tradeoff)
+  confidence_threshold: 0.647   # dense-mode cosine similarity "confident match" cutoff — see
+                                 # decisions.md D57 for the 4-tier calibration this came from (the
+                                 # lowest score among content-verified "partial/borderline" matches).
+                                 # Diagnostic use only (src/verify.py) — NOT wired into answer-time
+                                 # abstention logic yet; Tier 2 (generic oncology queries) showed this
+                                 # value still lets some genuinely-wrong matches through.
 
 vlm:
   # Ollama model used by caption.py for figure extraction.

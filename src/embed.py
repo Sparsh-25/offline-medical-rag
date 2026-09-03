@@ -8,7 +8,8 @@ What this script does
 ─────────────────────
 1. Reads  data/chunks/chunks.jsonl  produced by chunk.py.
 2. Dense path:
-   • Batch-encodes chunk_text with BAAI/bge-base-en-v1.5  (config: embedding.model).
+   • Batch-encodes chunk_text with the model set in config.yaml → embedding.model
+     (currently BAAI/bge-m3 — see decisions.md D52 for why, D22 for index type).
    • Applies the BGE instruction prefix for passage encoding.
    • Builds a FAISS HNSW32 index (cosine similarity via inner-product on
      unit-normalised vectors).
@@ -86,10 +87,14 @@ log = logging.getLogger(__name__)
 _ROOT = Path(__file__).resolve().parent.parent   # project root
 cfg = yaml.safe_load((_ROOT / "config.yaml").read_text())
 
-EMB_CFG   = cfg["embedding"]
-MODEL_ID  = EMB_CFG["model"]          # "BAAI/bge-base-en-v1.5"
+EMB_CFG      = cfg["embedding"]
+ARCHITECTURE = EMB_CFG.get("architecture", "symmetric")  # "symmetric" | "asymmetric" — decisions.md D53/D56
+MODEL_ID     = EMB_CFG["model"] if ARCHITECTURE == "symmetric" else None  # a string for symmetric;
+                                                                            # asymmetric reads model.article directly
 BATCH_SZ  = int(EMB_CFG["batch_size"])
 DEVICE    = EMB_CFG["device"]          # "cpu" | "cuda" | "mps"
+ASYMMETRIC_BATCH_SZ = 16   # smaller than BATCH_SZ: raw transformers here, no
+                           # sentence-transformers batching/memory optimisation
 
 CHUNKS_PATH = _ROOT / cfg["paths"]["chunks"]        # data/chunks/chunks.jsonl
 FAISS_PATH  = _ROOT / cfg["paths"]["faiss_index"]   # index/faiss.index
@@ -143,26 +148,9 @@ def get_texts(chunks: list[dict]) -> list[str]:
 
 # ── Dense index ───────────────────────────────────────────────────────────────
 
-def build_dense_index(
-    chunks: list[dict],
-    index_type: str = INDEX_TYPE,
-    output_path: Path = FAISS_PATH,
-) -> None:
-    """
-    Encode all chunks with the BGE model and persist a FAISS index.
-
-    Index type: "flat" (IndexFlatIP, exact) or "hnsw" (IndexHNSWFlat,
-    approximate) per `index_type` — see decisions.md D4/D22 for the choice.
-    Vectors are L2-normalised before insertion so IP == cosine similarity.
-    """
-    if index_type not in ("flat", "hnsw"):
-        raise ValueError(f"index_type must be 'flat' or 'hnsw', got {index_type!r}")
-
-    faiss      = _require("faiss",               "faiss-cpu")
+def _encode_symmetric(chunks: list[dict]) -> np.ndarray:
+    """Encode chunks with a single SentenceTransformer model (the default case)."""
     SentenceTransformer = _require("sentence_transformers", "sentence-transformers").SentenceTransformer
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    id_map_path = output_path.parent / "id_map.json"
 
     log.info(f"Loading embedding model: {MODEL_ID}  (device={DEVICE})")
     model = SentenceTransformer(MODEL_ID, device=DEVICE)
@@ -190,10 +178,81 @@ def build_dense_index(
     elapsed = time.time() - t0
     log.info(f"Encoding done in {elapsed:.1f}s  ({n/elapsed:.0f} chunks/s)")
 
-    # Sanity check
     assert embeddings.shape == (n, dim), (
         f"Unexpected embedding shape {embeddings.shape}, expected ({n}, {dim})"
     )
+    return embeddings
+
+
+def _encode_asymmetric(chunks: list[dict]) -> np.ndarray:
+    """
+    Encode chunks with an asymmetric dual-encoder model's Article-Encoder half
+    (e.g. MedCPT — config.yaml embedding.model.article). Queries at retrieval
+    time use the *different* Query-Encoder half (src/retrieve.py), which is why
+    this can't reuse _encode_symmetric's single-model logic.
+
+    Input is [title, chunk_text] pairs (the model was trained on PubMed
+    title+abstract pairs; `title` is the document title already on every
+    chunk, not invented content), pooled via the [CLS] token's last hidden
+    state and L2-normalised by hand — this model has no sentence-transformers
+    support and no built-in normalisation. Mirrors
+    eval/compare-embedding-models/medcpt/build_index.py, the working prototype
+    this was promoted from — see decisions.md D53/D56 for the full rationale.
+    """
+    torch = _require("torch", "torch")
+    tf    = _require("transformers", "transformers")
+
+    article_model_name = EMB_CFG["model"]["article"]
+    log.info(f"Loading Article-Encoder: {article_model_name}")
+    tokenizer = tf.AutoTokenizer.from_pretrained(article_model_name)
+    model     = tf.AutoModel.from_pretrained(article_model_name)
+    model.eval()
+
+    pairs = [[c.get("title") or "", c["chunk_text"]] for c in chunks]
+    n = len(pairs)
+    log.info(f"Embedding {n:,} chunks  (dim=768, batch={ASYMMETRIC_BATCH_SZ})")
+
+    t0 = time.time()
+    all_embeds = []
+    with torch.no_grad():
+        for i in range(0, n, ASYMMETRIC_BATCH_SZ):
+            batch = pairs[i : i + ASYMMETRIC_BATCH_SZ]
+            encoded = tokenizer(batch, truncation=True, padding=True, return_tensors="pt", max_length=512)
+            embeds = model(**encoded).last_hidden_state[:, 0, :]   # [CLS] token
+            embeds = torch.nn.functional.normalize(embeds, p=2, dim=1)
+            all_embeds.append(embeds.numpy())
+    embeddings = np.concatenate(all_embeds, axis=0)
+    elapsed = time.time() - t0
+    log.info(f"Encoding done in {elapsed:.1f}s  ({n/elapsed:.0f} chunks/s)")
+
+    assert embeddings.shape == (n, 768), f"Unexpected embedding shape {embeddings.shape}, expected ({n}, 768)"
+    return embeddings
+
+
+def build_dense_index(
+    chunks: list[dict],
+    index_type: str = INDEX_TYPE,
+    output_path: Path = FAISS_PATH,
+) -> None:
+    """
+    Encode all chunks and persist a FAISS index. Encoding path depends on
+    config.yaml embedding.architecture — "symmetric" (default) or
+    "asymmetric" (see _encode_symmetric / _encode_asymmetric above).
+
+    Index type: "flat" (IndexFlatIP, exact) or "hnsw" (IndexHNSWFlat,
+    approximate) per `index_type` — see decisions.md D4/D22 for the choice.
+    Vectors are L2-normalised before insertion so IP == cosine similarity.
+    """
+    if index_type not in ("flat", "hnsw"):
+        raise ValueError(f"index_type must be 'flat' or 'hnsw', got {index_type!r}")
+
+    faiss = _require("faiss", "faiss-cpu")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    id_map_path = output_path.parent / "id_map.json"
+
+    embeddings = _encode_symmetric(chunks) if ARCHITECTURE == "symmetric" else _encode_asymmetric(chunks)
+    n, dim = embeddings.shape
 
     # Build the index (in-memory, then serialised)
     t_build0 = time.time()

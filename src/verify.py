@@ -40,6 +40,45 @@ cfg   = yaml.safe_load((_ROOT / "config.yaml").read_text())
 
 EMB_CFG = cfg["embedding"]
 
+
+def build_encode_fn():
+    """
+    Returns a function query -> L2-normalised np.ndarray embedding, matching
+    config.yaml embedding.architecture ("symmetric": one SentenceTransformer
+    model, or "asymmetric": a MedCPT-style dual-encoder, using its Query-Encoder
+    half here — see decisions.md D53/D56).
+
+    Deliberately NOT imported from src.retrieve: this file's whole purpose is
+    to sanity-check retrieval with an independently-written code path, so a bug
+    in retrieve.py's own query-encoding wouldn't silently pass verify.py too.
+    """
+    architecture = EMB_CFG.get("architecture", "symmetric")
+    if architecture == "symmetric":
+        print(f"Loading embedding model: {EMB_CFG['model']}  (device={EMB_CFG['device']})")
+        model = SentenceTransformer(EMB_CFG["model"], device=EMB_CFG["device"])
+
+        def encode_fn(query: str) -> np.ndarray:
+            return model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+
+        return encode_fn
+
+    import torch
+    from transformers import AutoModel, AutoTokenizer
+    query_model_name = EMB_CFG["model"]["query"]
+    print(f"Loading Query-Encoder: {query_model_name}")
+    tokenizer = AutoTokenizer.from_pretrained(query_model_name)
+    model = AutoModel.from_pretrained(query_model_name)
+    model.eval()
+
+    def encode_fn(query: str) -> np.ndarray:
+        with torch.no_grad():
+            encoded = tokenizer([query], truncation=True, padding=True, return_tensors="pt", max_length=64)
+            embed = model(**encoded).last_hidden_state[:, 0, :]
+            embed = torch.nn.functional.normalize(embed, p=2, dim=1)
+            return embed.numpy()
+
+    return encode_fn
+
 # ── Absolute index paths ──────────────────────────────────────────────────────
 CHUNKS_PATH    = _ROOT / cfg["paths"]["chunks"]
 FAISS_PATH     = _ROOT / cfg["paths"]["faiss_index"]
@@ -235,7 +274,7 @@ def check_dense_retrieval(
     chunks:    list[dict],
     index:     Any,           # faiss.IndexFlatIP at runtime (decisions.md D22)
     chunk_map: dict,
-    model:     SentenceTransformer,
+    encode_fn,                # query: str -> np.ndarray, from build_encode_fn()
 ) -> None:
     """
     WHY THIS MATTERS
@@ -259,10 +298,12 @@ def check_dense_retrieval(
     • Top-3 results per query, with score and doc_id
     • Reachable: ✓/✗ whether the expected document appears in top-3
     • Unreachable: ✓/⚠ whether the top-1 score stays below the confident-match
-      threshold (>0.5 — see below); a high score here is a false-positive risk
-    • Score threshold: >0.5 is a good match for BGE-base with normalised vectors
-      (cosine similarity — vectors are L2-normalised, so FAISS inner product
-      *is* cosine similarity here, not a different metric)
+      threshold (config.yaml retrieval.confidence_threshold — see below); a
+      high score here is a false-positive risk
+    • Score threshold: calibrated via a 4-tier graduated query experiment
+      (decisions.md D57), not guessed — normalised vectors mean FAISS inner
+      product *is* cosine similarity here, not a different metric
+
     • Clinical coherence: the answer should make sense (e.g. ribociclib → MONALEESA-2)
 
     HOW TO INTERPRET
@@ -278,7 +319,9 @@ def check_dense_retrieval(
     print("CHECK 3: Dense retrieval smoke test")
     print("=" * 60)
 
-    GOOD_MATCH_THRESHOLD = 0.5  # cosine similarity — see docstring
+    # cosine similarity — see docstring. Value from config.yaml retrieval.confidence_threshold,
+    # calibrated in decisions.md D57 (was a guessed 0.5 before that — see D24).
+    GOOD_MATCH_THRESHOLD = cfg["retrieval"]["confidence_threshold"]
 
     # 6 reachable queries (one per corpus document, full coverage) + 3
     # unreachable queries (real oncology topics this corpus does not cover —
@@ -313,11 +356,7 @@ def check_dense_retrieval(
     unreachable_pass = unreachable_total = 0
 
     for query, expected_fragment in test_queries:
-        q_emb = model.encode(
-            [query],
-            normalize_embeddings=True,
-            convert_to_numpy=True,
-        )
+        q_emb = encode_fn(query)
         scores, indices = index.search(q_emb.astype(np.float32), k=3)
 
         is_unreachable = expected_fragment is None
@@ -362,7 +401,7 @@ def check_sparse_and_rrf(
     index:        Any,           # faiss.IndexHNSWFlat at runtime
     bm25_payload: dict,
     chunk_map:    dict,
-    model:        SentenceTransformer,
+    encode_fn,                   # query: str -> np.ndarray, from build_encode_fn()
 ) -> None:
     """
     WHY THIS MATTERS
@@ -395,7 +434,7 @@ def check_sparse_and_rrf(
         return [(id_map[int(i)], float(scores_arr[i])) for i in top_idxs]
 
     def dense_search(query: str, top_k: int = 10) -> list[tuple[str, float]]:
-        q_emb = model.encode([query], normalize_embeddings=True, convert_to_numpy=True)
+        q_emb = encode_fn(query)
         scores_arr, idxs = index.search(q_emb.astype(np.float32), k=top_k)
         results = []
         for j, idx in enumerate(idxs[0]):
@@ -443,15 +482,15 @@ def run_all_checks() -> None:
     chunks, index, bm25_payload, chunk_map, embeddings = load_all()
     print(f"  {len(chunks):,} chunks  |  FAISS ntotal={index.ntotal}  |  BM25 corpus={len(bm25_payload['id_map'])}")
 
-    # Load model ONCE — both check_dense_retrieval and check_sparse_and_rrf need it.
-    # Loading it twice wastes ~5 seconds and ~450 MB of RAM.
-    print(f"\nLoading embedding model: {EMB_CFG['model']}  (device={EMB_CFG['device']})")
-    model = SentenceTransformer(EMB_CFG["model"], device=EMB_CFG["device"])
+    # Build the query-encoding function ONCE — both check_dense_retrieval and
+    # check_sparse_and_rrf need it. Loading the model(s) twice wastes time/RAM.
+    print()
+    encode_fn = build_encode_fn()
 
     check_chunk_quality(chunks)
     check_embedding_sanity(chunks, embeddings)
-    check_dense_retrieval(chunks, index, chunk_map, model)
-    check_sparse_and_rrf(chunks, index, bm25_payload, chunk_map, model)
+    check_dense_retrieval(chunks, index, chunk_map, encode_fn)
+    check_sparse_and_rrf(chunks, index, bm25_payload, chunk_map, encode_fn)
 
     print("\n" + "=" * 60)
     print("Verification complete.")
