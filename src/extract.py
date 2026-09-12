@@ -16,13 +16,16 @@ Idempotency:
     Delete the folder (or just extraction_log.json) to force a re-run.
 """
 
+from __future__ import annotations
+
 import json
+import re
 from pathlib import Path
 
 import yaml
-from docling.datamodel.base_models import InputFormat
-from docling.datamodel.pipeline_options import PdfPipelineOptions
-from docling.document_converter import DocumentConverter, PdfFormatOption
+# docling is imported lazily inside build_converter() (it's only needed for actual
+# PDF conversion), so utilities like strip_org_boilerplate() / --clean-watermarks can
+# run in an environment without docling installed (e.g. the GPU box).
 
 # ── Config — always resolve relative to this file, not CWD ──────────────────
 _ROOT = Path(__file__).parent.parent
@@ -67,6 +70,42 @@ def _fix_known_glyph_corruption(text: str) -> str:
         text = text.replace(bad, good)
     return text
 
+
+# ── Publisher watermark / license boilerplate ───────────────────────────────
+# Some source PDFs stamp every page with header/footer boilerplate that Docling
+# then emits into the markdown. For NCCN this is a personalized watermark
+# ("Printed by <name> on <date>"), the copyright line, and the End-User License
+# clause ("...MAY NOT... use it with any artificial intelligence model or tool").
+# Docling rendered these as `##` headings, so they became the section label for
+# ~237 chunks and injected the reader's name + DRM text into the corpus (D62).
+#
+# Scope is deliberately NARROW — NCCN's watermark only. A survey of the other
+# publishers (ASCO, ESMO, Frontiers, journals) found their names appear almost
+# entirely inside legitimate reference citations and author affiliations, not as
+# page boilerplate — so a broader strip would delete real content (see decisions.md D62).
+_WATERMARK_PATTERNS = [
+    re.compile(r"PLEASE NOTE that use of this NCCN Content", re.IGNORECASE),
+    re.compile(r"Printed by .+ on \d{1,2}/\d{1,2}/\d{4}"),   # personalized print stamp (name-agnostic)
+    re.compile(r"Copyright ©\s*\d{4}\s*National Comprehensive Cancer Network", re.IGNORECASE),
+]
+
+
+def strip_org_boilerplate(text: str) -> tuple[str, int]:
+    """
+    Remove NCCN page watermark / license / copyright lines. Each matching line is
+    self-contained boilerplate (verified — no clinical text shares the line), so the
+    whole line is dropped. Returns (cleaned_text, lines_removed).
+    """
+    kept: list[str] = []
+    removed = 0
+    for line in text.splitlines():
+        if any(p.search(line) for p in _WATERMARK_PATTERNS):
+            removed += 1
+            continue
+        kept.append(line)
+    return "\n".join(kept), removed
+
+
 # ── Use the same doc_id map as meta_builder so folders align ─────────────────
 # Maps PDF filename stem → clean doc_id (same as meta_builder.py DOC_ID_MAP)
 DOC_ID_MAP: dict[str, str] = {
@@ -109,6 +148,10 @@ def build_converter() -> DocumentConverter:
     Build the Docling converter once and reuse across all documents.
     Models load into memory on first call (~30s on CPU, then instant).
     """
+    from docling.datamodel.base_models import InputFormat
+    from docling.datamodel.pipeline_options import PdfPipelineOptions
+    from docling.document_converter import DocumentConverter, PdfFormatOption
+
     pipeline_opts = PdfPipelineOptions(
         do_ocr=False,                    # digital PDFs only — OCR adds ~5x time
         do_table_structure=True,         # TableFormer — critical for oncology tables
@@ -169,6 +212,9 @@ def extract_document(
         image_mode="placeholder",   # writes <!-- image --> placeholders for caption.py
     )
     md_text = _fix_known_glyph_corruption(md_text)
+    md_text, _wm_removed = strip_org_boilerplate(md_text)
+    if _wm_removed:
+        print(f"  Stripped {_wm_removed} watermark/boilerplate line(s)")
     md_path = doc_out / f"{doc_id}.md"
     md_path.write_text(md_text, encoding="utf-8")
     print(f"  Markdown → {md_path.name}  ({len(md_text):,} chars)")
@@ -327,6 +373,24 @@ def extract_all(force: bool = False):
     )
 
 
+# ── Clean watermarks from already-extracted markdown (no Docling needed) ──────
+
+def clean_existing_markdown() -> None:
+    """
+    Apply strip_org_boilerplate() in place to every already-extracted <doc_id>.md.
+    Lets us clean the corpus of the NCCN watermark without re-running Docling — run
+    it, then re-run chunk.py + embed.py. See decisions.md D62.
+    """
+    total = 0
+    for md_path in sorted(EXTRACTED_DIR.glob("*/*.md")):
+        cleaned, removed = strip_org_boilerplate(md_path.read_text(encoding="utf-8"))
+        if removed:
+            md_path.write_text(cleaned, encoding="utf-8")
+            print(f"  {md_path.parent.name}: removed {removed} line(s)")
+            total += removed
+    print(f"Done. Removed {total} watermark/boilerplate line(s) across the corpus.")
+
+
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -335,10 +399,16 @@ if __name__ == "__main__":
     p.add_argument("--pdf",   help="Extract a single PDF (path)")
     p.add_argument("--force", action="store_true",
                    help="Re-extract even if extraction_log.json already exists")
+    p.add_argument("--clean-watermarks", action="store_true",
+                   help="Strip NCCN watermark/boilerplate from existing extracted .md files "
+                        "in place, then exit (no Docling needed). See decisions.md D62.")
     args = p.parse_args()
 
-    converter = build_converter()
-    if args.pdf:
-        extract_document(Path(args.pdf), converter, force=args.force)
+    if args.clean_watermarks:
+        clean_existing_markdown()
     else:
-        extract_all(force=args.force)
+        converter = build_converter()
+        if args.pdf:
+            extract_document(Path(args.pdf), converter, force=args.force)
+        else:
+            extract_all(force=args.force)

@@ -40,7 +40,10 @@ from typing import Optional
 import faiss
 import numpy as np
 import yaml
-from sentence_transformers import SentenceTransformer
+# NOTE: sentence_transformers is imported lazily inside load_indexes() (symmetric
+# branch only). The asymmetric/MedCPT path uses raw transformers instead, so the
+# GPU box can run retrieval without installing sentence-transformers (which pulls a
+# torch build and risks breaking the box's pinned torch — see decisions.md D59).
 
 # ── Config ─────────────────────────────────────────────────────────────────
 _ROOT = Path(__file__).resolve().parent.parent
@@ -75,7 +78,7 @@ class Indexes:
     bm25:         object
     bm25_id_map:  dict[int, str]    # BM25 row position -> chunk_id
     architecture: str = "symmetric"                    # "symmetric" | "asymmetric" — decisions.md D53/D56
-    model:           Optional[SentenceTransformer] = None   # symmetric case: one model embeds both sides
+    model:           Optional[object] = None                # symmetric case: a SentenceTransformer (lazy-imported)
     query_model:     Optional[object] = None                # asymmetric case: transformers.AutoModel (query side)
     query_tokenizer: Optional[object] = None                # asymmetric case: matching tokenizer
 
@@ -122,6 +125,7 @@ def load_indexes(embedding_model: Optional[str] = None, index_dir: Optional[Path
         bm25_payload = pickle.load(fh)
 
     if architecture == "symmetric":
+        from sentence_transformers import SentenceTransformer   # lazy — only the symmetric path needs it
         model = SentenceTransformer(model_id, device=EMB_CFG["device"])
         idx = Indexes(
             chunk_map=chunk_map, faiss_id_map=faiss_id_map, faiss_index=faiss_index,

@@ -79,3 +79,14 @@ vlm:
   model:    "llava"
   timeout:  300                       # seconds per image (complex figures may need more)
   base_url: "http://localhost:11434"  # Ollama daemon URL
+
+llm:
+  # Answer-generation model (Stage 8), run locally via llama-cpp-python on a GGUF file.
+  # Chosen by the 4-model comparison — Qwen3-32B — see decisions.md D59/D60.
+  model_path:   "/workspace/models/qwen3-32b/Qwen_Qwen3-32B-Q6_K.gguf"
+  n_ctx:        8192      # context window (input passages + answer)
+  n_gpu_layers: -1        # -1 = offload all layers to GPU (0 = CPU-only)
+  max_tokens:   768       # cap on answer length
+  temperature:  0.0       # deterministic — we want faithful, not creative, answers
+  no_think:     true      # Qwen3: append "/no_think" to disable its thinking mode (D60)
+  chat_format:  null      # force a llama-cpp chat template if the GGUF's is broken (e.g. "llama-3")
