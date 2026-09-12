@@ -203,24 +203,28 @@ def _encode_asymmetric(chunks: list[dict]) -> np.ndarray:
     tf    = _require("transformers", "transformers")
 
     article_model_name = EMB_CFG["model"]["article"]
-    log.info(f"Loading Article-Encoder: {article_model_name}")
+    device = "cuda" if torch.cuda.is_available() else "cpu"   # use the GPU when present, CPU otherwise
+    log.info(f"Loading Article-Encoder: {article_model_name}  (device={device})")
     tokenizer = tf.AutoTokenizer.from_pretrained(article_model_name)
-    model     = tf.AutoModel.from_pretrained(article_model_name)
+    model     = tf.AutoModel.from_pretrained(article_model_name).to(device)
     model.eval()
 
     pairs = [[c.get("title") or "", c["chunk_text"]] for c in chunks]
     n = len(pairs)
-    log.info(f"Embedding {n:,} chunks  (dim=768, batch={ASYMMETRIC_BATCH_SZ})")
+    log.info(f"Embedding {n:,} chunks  (dim=768, batch={ASYMMETRIC_BATCH_SZ}, device={device})")
 
     t0 = time.time()
     all_embeds = []
     with torch.no_grad():
         for i in range(0, n, ASYMMETRIC_BATCH_SZ):
             batch = pairs[i : i + ASYMMETRIC_BATCH_SZ]
-            encoded = tokenizer(batch, truncation=True, padding=True, return_tensors="pt", max_length=512)
+            encoded = tokenizer(batch, truncation=True, padding=True,
+                                return_tensors="pt", max_length=512).to(device)
             embeds = model(**encoded).last_hidden_state[:, 0, :]   # [CLS] token
             embeds = torch.nn.functional.normalize(embeds, p=2, dim=1)
-            all_embeds.append(embeds.numpy())
+            all_embeds.append(embeds.cpu().numpy())   # back to CPU for numpy/FAISS
+            if i % (ASYMMETRIC_BATCH_SZ * 20) == 0:
+                log.info(f"  encoded {min(i + ASYMMETRIC_BATCH_SZ, n):,}/{n:,}")
     embeddings = np.concatenate(all_embeds, axis=0)
     elapsed = time.time() - t0
     log.info(f"Encoding done in {elapsed:.1f}s  ({n/elapsed:.0f} chunks/s)")
