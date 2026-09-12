@@ -32,7 +32,9 @@ from typing import Any
 import faiss
 import numpy as np
 import yaml
-from sentence_transformers import SentenceTransformer
+# sentence_transformers is imported lazily inside build_encode_fn() (symmetric branch
+# only); the MedCPT/asymmetric path uses raw transformers, so the box can run verify.py
+# without sentence-transformers installed (no torch risk — see decisions.md D59).
 
 # ── Root-relative config (works regardless of CWD) ───────────────────────────
 _ROOT = Path(__file__).resolve().parent.parent
@@ -54,6 +56,7 @@ def build_encode_fn():
     """
     architecture = EMB_CFG.get("architecture", "symmetric")
     if architecture == "symmetric":
+        from sentence_transformers import SentenceTransformer   # lazy — symmetric path only
         print(f"Loading embedding model: {EMB_CFG['model']}  (device={EMB_CFG['device']})")
         model = SentenceTransformer(EMB_CFG["model"], device=EMB_CFG["device"])
 
