@@ -1,0 +1,582 @@
+[
+  {
+    "query_id": "q001",
+    "query": "What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0014",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Discussion",
+        "text": "This predefined subgroup analysis of the MONALEESA-2 trial demonstrates that postmenopausal women with de novo\n\nHR+, HER2- advanced breast cancer at diagnosis who received ribociclib in combination with letrozole had prolonged progression-free survival compared with those who received placebo plus letrozole, with an approximate 55% reduction in the risk of progression (hazard ratio 0.45, 95% CI 0.27-0.75). Median progression-free survival was not reached in the ribociclib plus letrozole arm, compared with 16.4 months in the placebo plus letrozole arm. Progressionfree survival benefit with the addition of ribociclib to letrozole was consistent with that observed in the MONALEESA-2 intent-to-treat population, where a hazard ratio of 0.56 (95% CI 0.43-0.72, p &lt; 0.001) was observed [16]. Ribociclib plus letrozole was also associated with improved overall response and clinical benefit rates versus placebo plus letrozole in patients with de novo disease.\n\nEnhanced treatment benefits in patients with de novo advanced disease have previously been described with the CDK4/6 inhibitor palbociclib in combination with letrozole in the PALOMA-2 trial [20]. The FALCON study recently\n\nFig. 1 MONALEESA-2 trial profile (CONSORT diagram)\n\nFig. 2 Kaplan-Meier analysis of locally assessed progressionfree survival in patients with de novo advanced breast cancer in the MONALEESA-2 trial. CI confidence interval\n\nreported improved efficacy for first-line fulvestrant over anastrozole, with a hazard ratio of 0.80 (95% CI 0.64-0.99) in a largely de novo patient population [21]. Median progression-free survival was 16.6 months in patients who received fulvestrant therapy compared with 13.8 months in the anastrozole arm; both values are in line with the median progression-free survival of 16.4 months reported herein for placebo plus letrozole-treated patients with de novo advanced disease.\n\nTable 2 Summary of best overall response per RECIST v1.1"
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0001",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Abstract",
+        "text": "Purpose Determine the efficacy and safety of first-line ribociclib plus letrozole in patients with de novo advanced breast cancer.\n\nMethods Postmenopausal women with HR+ , HER2- advanced breast cancer and no prior systemic therapy for advanced disease were enrolled in the Phase III MONALEESA-2 trial (NCT01958021). Patients were randomized to ribociclib (600 mg/day; 3 weeks-on/1 week-off) plus letrozole (2.5 mg/day; continuous) or placebo plus letrozole until disease progression, unacceptable toxicity, death, or treatment discontinuation. The primary endpoint was investigator-assessed progressionfree survival; predefined subgroup analysis evaluated progression-free survival in patients with de novo advanced breast cancer. Secondary endpoints included safety and overall response rate.\n\nResults Six hundred and sixty-eight patients were enrolled, of whom 227 patients (34%; ribociclib plus letrozole vs placebo plus letrozole arm: n = 114 vs. n = 113) presented with de novo advanced breast cancer. Median progression-free survival was not reached in the ribociclib plus letrozole arm versus 16.4 months in the placebo plus letrozole arm in patients with de novo advanced breast cancer (hazard ratio 0.45, 95% confidence interval 0.27-0.75). The most common Grade 3/4 adverse events were neutropenia and leukopenia; incidence rates were similar to those observed in the full MONALEESA-2 population. Ribociclib dose interruptions and reductions in patients with de novo disease occurred at similar frequencies to the overall study population.\n\nConclusions Ribociclib plus letrozole improved progression-free survival vs placebo plus letrozole and was well tolerated in postmenopausal women with HR+, HER2- de novo advanced breast cancer.\n\nKeywords Breast cancer · CDK inhibitor · Ribociclib · Endocrine therapy · De novo advanced breast cancer · Hormone receptor-positive"
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0010",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Efficacy",
+        "text": "The combination of ribociclib plus letrozole prolonged progression-free survival compared with placebo plus letrozole in patients with de novo advanced breast cancer, with a hazard ratio of 0.45 (95% CI 0.27-0.75). Median progressionfree survival in the ribociclib plus letrozole arm was not reached versus 16.4 months in the placebo plus letrozole arm (Fig. 2). After 12 months, the estimated progression-free survival rates in the ribociclib plus letrozole versus placebo plus letrozole arms were 82% versus 66%, respectively. The overall response rates in the intent-to-treat population were 47% in the ribociclib plus letrozole arm versus 34% in the placebo plus letrozole arm; clinical benefit rates were 83% versus 77% (Table 2). In patients with measurable disease at baseline, the overall response rates were 56% versus 45% and the clinical benefit rates were 82% versus 77% in the ribociclib plus letrozole versus placebo plus letrozole arms, respectively. Overall survival results were immature at the time of this interim analysis."
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0008",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Patient and disease characteristics",
+        "text": "From January 24, 2014 to March 24, 2015, 668 patients were randomized to the ribociclib plus letrozole ( n = 334) and placebo plus letrozole ( n = 334) arms. Among all patients randomized, 227 (34%) presented with de novo advanced breast cancer at diagnosis; these patients were compared between treatment arms in this exploratory analysis. There was an even distribution of patients with de novo disease across both treatment arms; 114 (34%) patients in the ribociclib plus letrozole arm and 113 (34%) patients in the placebo plus letrozole arm (Table 1). Baseline characteristics of patients with de novo advanced breast cancer were well balanced across both treatment arms, except for ECOG performance status. A higher proportion of patients in the ribociclib plus letrozole arm (66%) had an ECOG performance status of 0, compared with 54% of patients in the placebo plus letrozole arm."
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0003",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Introduction",
+        "text": "The cyclin D-CDK4/6-inhibitor of CDK4 (INK4)-retinoblastoma (Rb) pathway is frequently disrupted in HR+ breast cancer [13], and has been associated with a poor clinical outcome and resistance to endocrine therapy [14]. Targeting the cyclin D-CDK4/6-INK4-Rb pathway may, therefore, present an effective strategy to enhance the efficacy of endocrine therapies. Ribociclib is an orally bioavailable, selective inhibitor of CDK4/6 [15]. Results from the Phase III MONALEESA-2 (NCT01958021) planned interim analysis demonstrated that the addition of ribociclib to letrozole significantly improved progression-free survival compared with placebo plus letrozole in patients with HR+, human epidermal growth factor receptor 2-negative (HER2-) advanced breast cancer, with a hazard ratio of 0.56 ( p &lt; 0.001) [16]. Treatment with ribociclib plus letrozole was associated with a rapid response; 76% of patients with evaluable measurable disease had a reduction in tumor size following 8 weeks of treatment [17]. Here we report efficacy and safety results from a prospective subgroup analysis of MONALEESA-2 in patients with de novo advanced breast cancer."
+      }
+    ]
+  },
+  {
+    "query_id": "q019",
+    "query": "What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "keynote522_tnbc_qol_2025_chunk_0002",
+        "doc_id": "keynote522_tnbc_qol_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Neoadjuvant pembrolizumab plus chemotherapy/adjuvant pembrolizumab for early-stage triple-negative breast cancer: quality-of-life results from the randomized KEYNOTE-522 study",
+        "pub_year": 2024,
+        "section": "Abstract",
+        "text": "Background: In KEYNOTE-522 (NCT03036488), neoadjuvant pembrolizumab plus chemotherapy and then adjuvant pembrolizumab significantly improved pathological complete response and event-free survival vs neoadjuvant chemotherapy in early-stage triplenegative breast cancer (TNBC). We report patient-reported outcomes (PROs) from KEYNOTE-522.\n\nMethods: Patients  were  randomized  2:1  to  neoadjuvant  pembrolizumab  200mg  or  placebo  every  3 weeks,  plus  4  cycles  of paclitaxel plus carboplatin and then 4 cycles of doxorubicin (or epirubicin) plus cyclophosphamide. After surgery, patients received adjuvant pembrolizumab or placebo for up to 9 cycles. European Organisation for Research and Treatment of Cancer Quality of Life Questionnaire-Core 30 (EORTC QLQ-C30) and EORTC Breast Cancer-Specific Quality of Life Questionnaire (EORTC QLQ-BR23) were prespecified secondary objectives. Between-group differences in least squares (LS) mean change from baseline (day 1 of cycle 1 in both neoadjuvant and adjuvant phases) to the prespecified latest time point with at least 60% completion and at least 80% compliance were assessed using a longitudinal model (no alpha error assigned).\n\nResults: Week 21 (neoadjuvant phase) and week 24 (adjuvant phase) were the latest time points at which completion/compliance rates were ≥ 60%/80%. In the neoadjuvant phase, between-group differences (pembrolizumab plus chemotherapy [n = 762] vs placebo plus chemotherapy [n = 383]) in LS mean change from baseline to week 21 in QLQ-C30 global health status/quality of life (GHS/QoL), emotional functioning, and physical functioning were -1.04 (95% confidence interval = -3.46 to 1.38), -0.69 (95% CI = -3.13 to 1.75), and -2.85 (95% CI = -5.11 to -0.60),  respectively. In the adjuvant phase, between-group differences (pembrolizumab [n = 539] vs"
+      },
+      {
+        "chunk_id": "keynote522_tnbc_qol_2025_chunk_0004",
+        "doc_id": "keynote522_tnbc_qol_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Neoadjuvant pembrolizumab plus chemotherapy/adjuvant pembrolizumab for early-stage triple-negative breast cancer: quality-of-life results from the randomized KEYNOTE-522 study",
+        "pub_year": 2024,
+        "section": "The Author(s) 2024. Published by Oxford University Press.",
+        "text": "The  addition  of  the  anti -PD-1  antibody  pembrolizumab  or  the anti -PD-L1 antibodies atezolizumab or durvalumab to neoadjuvant chemotherapy demonstrated manageable safety and clinical benefit in several studies of patients with high-risk, early-stage TNBC (5-10). In the phase 3 KEYNOTE-522 study, 1174 patients were randomized (2:1) across 181 sites to receive neoadjuvant pembrolizumab plus chemotherapy followed by surgery and then adjuvant pembrolizumab or neoadjuvant  placebo  plus  chemotherapy  followed  by  surgery  and then adjuvant placebo (7,8). Treatment with pembrolizumab resulted in clinically meaningful and statistically significant improvements in the dual primary endpoints of pathological complete response (64.8% vs 51.2%; P &lt; .001) and event-free survival (hazard ratio = 0.63 [95% confidence interval = 0.48 -0.82]; P &lt; .001) in this patient population. Efficacy was observed regardless of tumor PD-L1 expression status as measured  by  PD-L1  IHC  22C3  pharmDx  (7,8).  The  incidence  and severity of adverse events were consistent with the known safety profiles of each treatment component (8). The most common treatmentrelated  adverse  events  of  grade  3  or  greater  throughout  the  study were neutropenia (34.5% with pembrolizumab plus chemotherapy vs 33.4% with chemotherapy alone), decreased neutrophil count (18.6% vs  23.1%),  anemia  (18.0%  vs  14.9%),  and  increased  alanine  aminotransferase  (5.5%  vs  2.3%)  (8).  The  results  from  the  KEYNOTE-522 study led to approval of the regimen in many countries (eg, United States,  27  European  Union  member  states,  United  Kingdom,  some Asian countries) and its recommendation as a standard-of-care treatment  for  patients  with  high-risk,  early-stage  TNBC  in  the  National Comprehensive Cancer Network (NCCN), American Society of Clinical Oncology (ASCO), and European Society for Medical Oncology (ESMO) guidelines (11-13)."
+      },
+      {
+        "chunk_id": "keynote522_tnbc_qol_2025_chunk_0022",
+        "doc_id": "keynote522_tnbc_qol_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Neoadjuvant pembrolizumab plus chemotherapy/adjuvant pembrolizumab for early-stage triple-negative breast cancer: quality-of-life results from the randomized KEYNOTE-522 study",
+        "pub_year": 2024,
+        "section": "Discussion",
+        "text": "The  KEYNOTE-522  study  has  some  limitations.  It  was  not powered for PRO endpoints, and the related analyses were not controlled for multiplicity. As expected, completion rates decreased over the course of the study as the number of evaluable patients decreased; however, completion/compliance rates for  QLQ-C30,  QLQ-BR23,  and  EQ-5D  remained  above  60%/80% throughout the study in the neoadjuvant and adjuvant phases. The  PRO  instruments  used  in  the  study  were  not  specifically designed to assess outcomes in patients treated with immunotherapies and therefore may not capture the impact of some toxicities on PROs. Immune checkpoint inhibitors are known to be associated with certain immune-related adverse events, some of which may be severe in nature, highlighting the importance of patient  monitoring  and  management  during  treatment  (29).  In the  KEYNOTE-522  study  (combined  neoadjuvant  and  adjuvant phases), immune-mediated adverse events of grade 3 or greater occurred  in  12.9%  of  patients  in  the  pembrolizumab  arm  and 1.0% of patients in the placebo arm; the most common grade 3 or greater events were severe skin reaction (4.7% vs 0.3%), hypophysitis (1.3% vs 0%), and adrenal insufficiency (1.0% vs 0%) (8). The proportion  of  patients  who  started  adjuvant  treatment  was higher  in  the  placebo  arm  (80.5%)  than  in  the  pembrolizumab arm  (69.8%)  (8).  The  results  of  the  adjuvant  phase  should  be interpreted  with  caution  because  this  was  a  nonrandomized analysis.\n\nIn  conclusion,  patients  with  high-risk,  early-stage  TNBC  did not experience substantial differences in any PRO assessments during treatment with neoadjuvant pembrolizumab plus chemotherapy  followed  by  adjuvant  pembrolizumab  compared  with neoadjuvant  placebo  plus  chemotherapy  followed  by  adjuvant placebo.  Taken  together  with  the  previously  reported  efficacy and  safety  findings  from  the  KEYNOTE-522  study,  these  PRO results support neoadjuvant pembrolizumab plus chemotherapy followed by adjuvant pembrolizumab as an effective standard of care treatment regimen in this setting."
+      },
+      {
+        "chunk_id": "keynote522_tnbc_qol_2025_chunk_0012",
+        "doc_id": "keynote522_tnbc_qol_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Neoadjuvant pembrolizumab plus chemotherapy/adjuvant pembrolizumab for early-stage triple-negative breast cancer: quality-of-life results from the randomized KEYNOTE-522 study",
+        "pub_year": 2024,
+        "section": "Patients",
+        "text": "Between  March  2017  and  September  2018,  1174  patients  were randomly  assigned  to  the  pembrolizumab  plus  chemotherapy arm (n = 784) or the placebo plus chemotherapy arm (n = 390). At the March 23, 2021, data cutoff, the median duration of follow-up was 39.1 (range = 30.0-48.0) months. As reported previously (7,8), patient demographics and baseline disease characteristics were similar between the 2 treatment groups.\n\nThe PRO full analysis set included 1145 patients for QLQ-C30, 1141 patients for QLQ-BR23, and 1146 patients for EQ-5D in the neoadjuvant phase and 847, 844, and 850 patients, respectively, in the adjuvant phase (Figure 1). In both treatment groups, completion and compliance rates for QLQ-C30, QLQ-BR23, and EQ-5D were greater than 90% at baseline in the neoadjuvant and adjuvant phases (Table 1). Week 21 in the neoadjuvant phase (calculated  from  day  1  of  cycle  1  of  the  neoadjuvant  phase  and corresponding to day 1 of cycle 5 of the neoadjuvant phase) and week 24 in the adjuvant phase (calculated from day 1 of cycle 1 of the adjuvant phase and corresponding to day 1 of cycle 6 of the  adjuvant  phase)  were  selected  for  analysis  because  these were the latest time points at which completion and compliance rates were at least 60% and at least 80%, respectively. Completion  and  compliance  rates  among  patients  with  PD-L1 CPS ≥ 1 are shown in Supplementary Table 1 (available online)."
+      },
+      {
+        "chunk_id": "keynote522_tnbc_qol_2025_chunk_0020",
+        "doc_id": "keynote522_tnbc_qol_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Neoadjuvant pembrolizumab plus chemotherapy/adjuvant pembrolizumab for early-stage triple-negative breast cancer: quality-of-life results from the randomized KEYNOTE-522 study",
+        "pub_year": 2024,
+        "section": "Discussion",
+        "text": "In the KEYNOTE-522 study, completion and compliance rates for all PRO instruments (QLQ-C30, QLQ-BR23, and EQ-5D) were high at baseline (above 90%) and remained above 80% through week 21 of the neoadjuvant phase and week 24 of the adjuvant phase. Treatment with neoadjuvant pembrolizumab plus chemotherapy followed  by  adjuvant  pembrolizumab  alone  did  not  adversely impact HRQoL compared with neoadjuvant placebo plus chemotherapy followed by adjuvant placebo alone. In both treatment groups,  the  prespecified  QLQ-C30  GHS/QoL  and  physical  functioning scales similarly decreased during the neoadjuvant phase and  similarly  increased  during  the  adjuvant  phase.  QLQ-C30 emotional functioning was largely unchanged during both treatment  phases.  No  substantial  between-group  differences  were observed  for  any  of  the  PRO  assessments.  Results  for  patients with PD-L1 CPS ≥ 1 tumors were similar to those for the overall study population.\n\nIn both treatment groups, increases from baseline in QLQ-C30 symptom scales (ie, fatigue, nausea and vomiting, pain, dyspnea, insomnia, appetite loss, constipation, and diarrhea) were observed during the neoadjuvant phase, whereas no changes or slight  decreases were noted during the adjuvant phase. This is consistent with the pattern of treatment-related adverse events that were reported during the study. Treatment-related adverse events for overlapping terms captured by the QLQ-C30 symptom scales occurred more frequently in the neoadjuvant phase than in the adjuvant phase and at rates that were generally similar in both treatment groups during both treatment phases (8,26).\n\nOur  findings  are  consistent  with  those  from  the  phase  3 IMpassion031 study in which patients with high-risk, early-stage TNBC were treated with neoadjuvant atezolizumab plus chemotherapy followed by adjuvant atezolizumab compared with neoadjuvant placebo plus chemotherapy (27). In that study, a total of 328 patients were included in the analysis of the prespecified secondary objectives of QLQ-C30 GHS/QoL, physical functioning, and role functioning. Baseline values for each of these PRO endpoints were comparable to those in KEYNOTE-522, and a similar"
+      }
+    ]
+  },
+  {
+    "query_id": "q067",
+    "query": "What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "nccn_genetic_familial_risk_v3_2026_chunk_0206",
+        "doc_id": "nccn_genetic_familial_risk_v3_2026",
+        "source_type": "guideline",
+        "recency_weight": 0.7,
+        "title": null,
+        "pub_year": null,
+        "section": "Breast Cancer Risk",
+        "text": "Estimates of penetrance for lifetime risk for primary breast cancer range from 60% to 72% for carriers of a BRCA1 P/LP variant and 55% to 69%\n\nfor carriers of a BRCA2 P/LP variant. 105,106 However, there exist variants established to have lower risks, such as BRCA1 R1699Q. 107,108 This includes certain missense and splicing variants for BRCA2 . 108,109 At this time, there is not enough data to establish risk estimates for these variants. Risk for contralateral breast cancer in carriers of a BRCA2 P/LP variant is age-dependent and greatest in those diagnosed with breast cancer at an early age (ie, &lt;40 years). 106,110 Risk is also greater in BRCA1 P/LP variant carriers compared to BRCA2 P/LP variant carriers (20-year cumulative risk of 30%-40% and 25%, respectively). 106,110 A study of UK Biobank data showed that, among carriers of a BRCA1/2 P/LP variant, breast cancer risk was greater in those with a first-degree relative diagnosed with breast cancer, compared to those who did not have this family history. 111"
+      },
+      {
+        "chunk_id": "nccn_genetic_familial_risk_v3_2026_chunk_0258",
+        "doc_id": "nccn_genetic_familial_risk_v3_2026",
+        "source_type": "guideline",
+        "recency_weight": 0.7,
+        "title": null,
+        "pub_year": null,
+        "section": "NCCN Guidelines Version 3.2026 Genetic/Familial High-Risk Assessment: Breast, Ovarian, Pancreatic, and Prostate Printed by Sparsh Wadhwa on 8/12/2026 11:40:27 AM. Copyright © 2026 National Comprehensive Cancer Network, Inc. All Rights Reserved.",
+        "text": "The association between specific types of ATM genetic variants and breast cancer susceptibility is less clear, 378-381 with some evidence showing that certain missense P/LP variants may act in a dominantnegative fashion to increase cancer risk, relative to truncating P/LP variants. 378,379 A meta-analysis including five studies showed that carriers of an ATM P/LP variant have a 38% lifetime risk of developing primary breast cancer, with carriers of the c.7271T&gt;G missense P/LP variant having a 69% risk of developing primary breast cancer by 70 years of age. 52 An analysis from a case-control study (42,671 breast cancer cases and 42,164 controls) showed a significant association between the c.7271T&gt;G variant and primary breast cancer risk (OR, 11.60; 95% CI, 1.50-89.90; P = .001). 53 An analysis of 27 families in which P/LP ATM variants were identified showed an association between the c.7271T&gt;G\n\nvariant and increased risk for primary breast cancer (60% risk by age 80). 54\n\nThe 2022 comparative modeling analysis by Lowry et al showed that beginning annual MRI screening at age 30 to 35 years may reduce breast cancer mortality by &gt;55% in carriers with a P/LP ATM variant. 372 The Panel also recommends annual mammogram for carriers with a P/LP ATM variant beginning at 40 years of age. Age at which to initiate MRI in carriers with a P/LP ATM variant depends on a number of risk factors, including family history, age, breast density, and patient preference. There are no data on the benefit of RRM for carriers of a P/LP ATM variant, 47 but this procedure may be considered based on family history."
+      },
+      {
+        "chunk_id": "nccn_genetic_familial_risk_v3_2026_chunk_0236",
+        "doc_id": "nccn_genetic_familial_risk_v3_2026",
+        "source_type": "guideline",
+        "recency_weight": 0.7,
+        "title": null,
+        "pub_year": null,
+        "section": "Bilateral Salpingo-Oophorectomy",
+        "text": "Carriers of a confirmed BRCA1/2 P/LP variant are at increased risk for both breast and ovarian cancers (including fallopian tube cancer and primary peritoneal cancer). 150,151 Although the risk for ovarian cancer is generally considered to be lower than the risk for breast cancer in carriers of a P/LP BRCA1/2 variant, 312-314 the absence of reliable methods of early detection and the poor prognosis associated with advanced ovarian cancer have lent support for the performance of bilateral RRSO after completion of childbearing.\n\nA 2014 observational prospective study of 5783 females carrying a P/LP BRCA1/2 variant showed that ovarian cancer is more prevalent in individuals carrying a BRCA1 (4.2%) P/LP variant than those carrying a BRCA2 (0.6%) P/LP variant. 315 In carriers of a P/LP BRCA1 variant, prevalence of ovarian, fallopian tube, and peritoneal cancers found during risk-reducing surgery was 1.5% for those &lt;40 years of age and 3.8% in those between the ages of 40 and 49 years. 315 The highest incidence rate for carriers of a P/LP BRCA1 variant was observed between the ages of 50 and 59 years (annual risk, 1.7%); for carriers of a P/LP BRCA2 variant, the highest incidence rate was observed between the ages of 60 and 69 years (annual risk, 0.6%). A more recent retrospective cohort study including 474 carriers of a P/LP BRCA1/2 variant who were diagnosed with high-grade serous ovarian cancer showed that age of diagnosis was significantly greater in carriers of a P/LP BRCA2 variant, compared to carriers of a P/LP BRCA1 variant (58.4 vs 53.3 years; P = .001). 316 Therefore, the recommended age for RRSO should be younger for carriers of a P/LP BRCA1 variant than for carriers of a P/LP BRCA2 variant."
+      },
+      {
+        "chunk_id": "nccn_genetic_familial_risk_v3_2026_chunk_0212",
+        "doc_id": "nccn_genetic_familial_risk_v3_2026",
+        "source_type": "guideline",
+        "recency_weight": 0.7,
+        "title": null,
+        "pub_year": null,
+        "section": "NCCN Guidelines Version 3.2026 Genetic/Familial High-Risk Assessment: Breast, Ovarian, Pancreatic, and Prostate Printed by Sparsh Wadhwa on 8/12/2026 11:40:27 AM. Copyright © 2026 National Comprehensive Cancer Network, Inc. All Rights Reserved.",
+        "text": "patients with early-onset (age at diagnosis &lt;40 years) triple-negative breast cancer (n = 106), the incidence of BRCA1 P/LP variants was 36%; the incidence was 27% among those diagnosed before 50 years of age (n = 208). Results from the prospective cohort POSH study showed that, among 558 patients with triple-negative breast cancer, 2-year OS was greater in carriers of a BRCA1/2 P/LP variant than in non-carriers (95% vs 91%, respectively; HR, 0.59; 95% CI, 0.35-0.99; P = .047), but 5- and 10year OS did not differ significantly between these groups. 115 A SEER analysis from California and Georgia including females diagnosed with breast cancer showed that, among 5461 patients diagnosed with triplenegative breast cancer, cancer-specific mortality was lower among carriers of a P/LP BRCA1 variant (HR, 0.49; 95% CI, 0.35-0.69) and carriers of a P/LP BRCA2 variant (HR, 0.60; 95% CI, 0.41-0.89), compared to non-carriers. 138\n\nCarriers of a P/LP BRCA1/2 variant who were assigned male at birth (AMAB) also have a greater risk for cancer susceptibility. 139-141 Among male patients with breast cancer unselected for family history, 4% to 14% tested positive for a germline BRCA2 P/LP variant. 142-145 For males carrying a P/LP BRCA2 variant, the cumulative lifetime risk for breast cancer has been estimated at 1.8% to 7.1%. 146-148 The cumulative lifetime risk for male carriers of a P/LP BRCA1 variant is 0.2% to 1.2%. 147,148 In contrast, for males who are not carriers of a P/LP BRCA1/2 variant, the lifetime risk for breast cancer has been estimated at approximately 0.1% (1 in 1000). 144,149"
+      },
+      {
+        "chunk_id": "nccn_genetic_familial_risk_v3_2026_chunk_0235",
+        "doc_id": "nccn_genetic_familial_risk_v3_2026",
+        "source_type": "guideline",
+        "recency_weight": 0.7,
+        "title": null,
+        "pub_year": null,
+        "section": "NCCN Guidelines Version 3.2026 Genetic/Familial High-Risk Assessment: Breast, Ovarian, Pancreatic, and Prostate Printed by Sparsh Wadhwa on 8/12/2026 11:40:27 AM. Copyright © 2026 National Comprehensive Cancer Network, Inc. All Rights Reserved.",
+        "text": "To summarize, findings from case-control studies are inconsistent regarding the effect of oral contraceptive use on the association of P/LP BRCA1 or BRCA2 variant and breast cancer risk. Oral contraceptive use for &gt;5 years may be associated with increased risk. Findings from metaanalyses are also conflicting, with several showing that oral contraceptive use is not significantly associated with breast cancer risk in carriers of a P/LP BRCA1/2 variant, 303-305 while others show mixed results based on subgroup analysis, study type, and population. 306-308 Another 2022 metaanalysis including 12 studies showed that the use of oral contraceptives was associated with an increased risk of breast cancer in carriers of both BRCA1 and BRCA2 P/LP variants, particularly in those who used oral contraceptives for ≥ 5 years. 309\n\nA 2024 analysis of four prospective cohort studies including 3882 BRCA1 P/LP variant carriers and 1509 BRCA2 P/LP variant carriers showed that longer cumulative duration of use of oral contraceptives was associated with breast cancer risk in BRCA1 carriers only ( P = .002). 310 A study examining a hypothetical cohort of 10,000 females found that the use of combined oral contraceptives was associated with increased breast cancer risk in those with a P/LP BRCA1 variant, assuming 10 years of continuous oral contraceptive use. The breast cancer risk difference attributable to oral contraceptive use increased throughout life for carriers of a P/LP BRCA1/2 variant (compared to ovarian and endometrial cancers, which showed decreasing incidences as age increased). 311\n\nDifferences in the study design used by these case-control studies make it difficult to compare outcomes between studies, and likely account for the conflicting results. The design of these studies might have differed with regard to factors such as the criteria for defining the 'control' population for the study (eg, nonBRCA1/2 carriers vs P/LP variant carriers without a cancer diagnosis), consideration of family history of breast or ovarian cancer, baseline demographics of the population studied (eg, nationality, ethnicity, geographic region, age groups), age of onset of breast cancer, and formulations or duration of oral contraceptives used."
+      }
+    ]
+  },
+  {
+    "query_id": "q010",
+    "query": "How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?",
+    "query_type": "comparative",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "asco_her2_testing_guideline_2023_chunk_0006",
+        "doc_id": "asco_her2_testing_guideline_2023",
+        "source_type": "review",
+        "recency_weight": 0.944,
+        "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+        "pub_year": 2023,
+        "section": "EVIDENCE REVIEW",
+        "text": "Although there is clearly a new role for IHC assays to most accurately identify tumors that test HER2 IHC 1 1 or 2 1 /ISH not-ampli fi ed, this clinical need is based on DESTINY-Breast04 clinical trial entry criteria rather than the demonstration of a new predictive or prognostic threshold for HER2 IHC test results below overexpression (IHC 3 1 ). 5 As patients whose cancers tested IHC 0 in a central laboratory were ineligible for the trial, and trial data did not identify a differential bene fi t between patients with IHC 1 1 and 2 1 /ISH not-ampli fi ed treated with trastuzumab deruxtecan, no new predictive biomarker threshold for response (yes or no) has been identi fi ed among tumors historically classi fi ed as HER2-negative for overexpression or ampli fi cation. Instead, a new threshold has been artifactually created between a result of IHC 0 and IHC at least 1 1 to determine access to the drug based on trial eligibility.\n\nTheterminologyHER2-Lowwasusedinthetrialasshorthand for IHC 1 1 or 2 1 /ISH not-ampli fi ed cases. However, other than renaming test results to fi t trial eligibility for this new treatment indication, there is no evidence that HER2-Low is a new or reproducibly de fi ned subtype of breast cancer with distinct prognostic or predictive implications. 7-13 HER2 IHC 0 versus Low status also appears to be unstable across patient samples, with close to 40% of cases switching between IHC 0 and IHC 1 1 or 2 1 /ISH not-ampli fi ed (HER2-Low) results when paired primary and metastatic are compared. 8"
+      },
+      {
+        "chunk_id": "asco_her2_testing_guideline_2023_chunk_0003",
+        "doc_id": "asco_her2_testing_guideline_2023",
+        "source_type": "review",
+        "recency_weight": 0.944,
+        "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+        "pub_year": 2023,
+        "section": "Recommendations",
+        "text": "- HER2 testing should still be optimized for the predictive purpose of identi fi cation of breast cancers with protein overexpression and/or gene ampli fi cation who could bene fi t from therapies aimed at disrupting HER2 signaling pathways.\n- While it is premature to change reporting terminology for lower levels of HER2 IHC expression (eg, HER2-Low), pathology labs should include a footnote in their HER2 testing reports (IHC and in situ hybridization [ISH]) with the following recommended comment:\n- s ' Patients with breast cancers that are HER2 IHC 3 1 or IHC 2 1 /ISH ampli fi ed may be eligible for several therapies that disrupt HER2 signaling pathways. Invasive breast cancers that test ' HER2-negative ' (IHC 0, 1 1 or 2 1 /ISH not-ampli fi ed) are more speci fi cally considered ' HER2-negative for protein overexpression/gene ampli fi cation ' since non-overexpressed levels of the HER2 protein may be present in these cases. Patients with breast cancers that are HER2 IHC 1 1 or IHC 2 1 / ISH not-ampli fi ed may be eligible for a treatment that targets non-ampli fi ed/non-overexpressed levels of HER2 expression for cytotoxic drug delivery (IHC 0 results do not result in eligibility currently). '\n- HER2IHC 1 1 or 0 results are still both interpreted as HER2-negative (HER2 is not overexpressed) using the previously recommended scoring criteria (Fig 1). Importantly, the semiquantitative IHC score must always be reported as well to ensure patients who meet eligibility criteria for trastuzumab deruxtecan can be identi fi ed.\n- s Example: HER2-negative for protein overexpression (1 1 staining present).\n- Since eligibility for trastuzumab deruxtecan (IHC 1 1 or IHC 2 1 /ISH not-ampli fi ed) may hinge around the IHC 0/IHC 1 1 threshold (although the clinical validity of this threshold remains untested), pathologists can make best practice efforts to distinguish IHC 1 1 results from 0 by the following practices:"
+      },
+      {
+        "chunk_id": "asco_her2_testing_guideline_2023_chunk_0004",
+        "doc_id": "asco_her2_testing_guideline_2023",
+        "source_type": "review",
+        "recency_weight": 0.944,
+        "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+        "pub_year": 2023,
+        "section": "Recommendations",
+        "text": "1. Examining HER2 IHC stained slides using standardized ASCO-CAP guidelines scoring criteria (see Fig 1 for interpretation).\n2. Examining HER2 IHC at high power (40 3 ) when discriminating 0 from 1 1 staining\n3. Considering second pathologist review when results are close to the 0 versus 1 1 interpretive threshold (&gt;10% of cells with incomplete membrane staining that is faint/barely perceptible).\n4. Usingcontrolswitharangeofproteinexpression(including1 1 ) to help ensure the assay has an appropriate limit of detection.\n5. Careful attention to preanalytic conditions of breast cancer tissue samples from both primary and metastatic sites.\n- Medical oncologists can also consider HER2 IHC results on prior or concurrent primary samples (or other metastatic sites) because there may be heterogeneity in HER2 expression levels between samples and because metastatic cancer tissue samples may suffer from preanalytic conditions that are not as well monitored as in primary breast tissue samples."
+      },
+      {
+        "chunk_id": "asco_her2_testing_guideline_2023_chunk_0029",
+        "doc_id": "asco_her2_testing_guideline_2023",
+        "source_type": "review",
+        "recency_weight": 0.944,
+        "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+        "pub_year": 2023,
+        "section": "APPENDIX",
+        "text": "Abbreviations: CAP, College of American Pathologists; CEP17, chromosome enumeration probe 17; ER, estrogen receptor; FDA, US Food and Drug Administration; FISH, fl uorescent in situ hybridization; HER2, human epidermal growth factor receptor 2; IHC, immunohistochemistry; ISH, in situ hybridization; LDT, laboratory-developed test; PgR, progesterone receptor; QA, quality assurance.\n\na Evidence is limited on the ef fi cacy of HER2-targeted therapy in the small subset of cases with a HER2 /CEP17 ratio ≥ 2.0 and an average HER2 copy number of &lt;4.0 per cell. In the fi rst generation of adjuvant trastuzumab trials, patients in this subgroup who were randomly assigned to the trastuzumab arm did not seem to derive an improvement in disease-free or overall survival, but there were too few such cases to draw de fi nitive conclusions. IHC expression for HER2 should be used to complement ISH and de fi ne HER2 status. If the IHC result is not 3 1 positive, it is recommended that the specimen be considered HER2 negative because of the low HER2 copy number by ISH and the lack of protein overexpression.\n\nb There are insuf fi cient data on the ef fi cacy of HER2-targeted therapy in cases with a HER2 ratio of &lt;2.0 in the absence of protein overexpression because such patients were not eligible for the fi rst generation of adjuvant trastuzumab clinical trials. When concurrent IHC results are negative (0 or 1 1 ), it is recommended that the specimen be considered HER2 negative.\n\nc It is uncertain whether patients with an average of ≥ 4.0 and &lt;6.0 HER2 signals per cell and a HER2 /CEP17 ratio of &lt;2.0 bene fi t from HER2-targeted therapy in the absence of protein overexpression (IHC 3 1 ). If the specimen test result is close to the ISH ratio threshold for positive, there is a higher likelihood that repeat testing will result in different results by chance alone. Therefore, when IHC results are not 3 1 positive, it is recommended that the sample be considered HER2 negative without additional testing on the same specimen.\n\n---"
+      },
+      {
+        "chunk_id": "asco_her2_testing_guideline_2023_chunk_0024",
+        "doc_id": "asco_her2_testing_guideline_2023",
+        "source_type": "review",
+        "recency_weight": 0.944,
+        "title": "Human Epidermal Growth Factor Receptor 2 Testing in Breast Cancer: ASCO–College of American Pathologists Guideline Update",
+        "pub_year": 2023,
+        "section": "APPENDIX",
+        "text": "If not already assessed by the institution/lab performing the ISH test, IHC testing for HER2 should be performed using sections from the same tissue sample used for ISH and the slides from both ISH and IHC be reviewed together to guide the selection of areas to score by ISH (local practice considerations will dictate the best procedure to accomplish this concomitant review): a. If the IHC result is 3 1 , diagnosis is HER2 POSITIVE b. If the IHC result is 2 1 , recount ISH by having an additional observer count at least 20 cells that includes the area of invasion with IHC 2 1 staining, blinded to previous ISH results: If reviewing the count by the additional observer alters the result into another ISH category, the result should be adjudicated per internal procedures to de fi ne the fi nal category If the HER2/CEP17 ratio remains <2.0 with ≥ 6.0 HER2 signals/cell, the diagnosis is HER2 POSITIVE c. If the IHC result is 0/1 1 , diagnosis is HER2 NEGATIVE with comment. b 5. If the case has an average HER2signals/tumor cell of ≥ 4.0 and <6.0 HER2signals/cell and HER2/CEP17ratio is <2.0, formerly diagnosed as ISH equivocal for HER2, a de fi nitive diagnosis will be rendered based on further workup. If not already assessed by the institution/lab performing the ISH test, IHC testing for HER2 should be performed using sections from the same tissue sample used for ISH and the slides from both ISH and IHC be reviewed together to guide the selection of areas to score by ISH (local practice considerations will dictate the best procedure to accomplish this concomitant review). a. If the IHC result is 3 1 , diagnosis is HER2 POSITIVE b."
+      }
+    ]
+  },
+  {
+    "query_id": "q028",
+    "query": "How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?",
+    "query_type": "comparative",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "cdk46i_meta_analysis_2023_chunk_0017",
+        "doc_id": "cdk46i_meta_analysis_2023",
+        "source_type": "meta_analysis",
+        "recency_weight": 0.944,
+        "title": "Comparative efficacy and safety of different combinations of three CDK4/6 inhibitors with endocrine therapies in HR+/HER-2 − metastatic or advanced breast cancer patients: a network meta-analysis",
+        "pub_year": 2023,
+        "section": "Meta-analysis of severe adverse events",
+        "text": "All eligible studies [41-49] reported the incidence of  severe  adverse  events.  The  pairwise  meta-analysis revealed  that  treatment  combinations  involving  three CDK4/6  inhibitors  plus  AI  or  fulvestrant  were  associated  with  a  higher  incidence  of  severe  adverse  events compared  to  AI  or  fulvestrant  alone  (Supplementary Fig.  3).  However,  the  network  meta-analysis  confirmed increased incidence only for specific combinations: ribociclib  (OR = 9.46,  95%  CI = 2.07  to  43.14)  or  palbociclib (OR = 10.83,  95%  CI = 2.36  to  50.93)  plus  AI  and  abemaciclib  (OR = 4.79,  95%  CI = 1.40  to  16.13)  or  palbociclib  (OR = 6.30,  95%  CI = 1.03  to  40.68)  plus  fulvestrant (Supplementary  Fig.  4).  However,  no  statistically  significant differences were observed between the available treatment combinations of the three CDK4/6 inhibitors and different  endocrine  therapies  in  the  network  metaanalysis (Supplementary Fig. 4).\n\nFig. 5 Forest plot of the hazard ratios for OS based on different pairwise comparisons\n\n<!-- image -->"
+      },
+      {
+        "chunk_id": "cdk46i_meta_analysis_2023_chunk_0021",
+        "doc_id": "cdk46i_meta_analysis_2023",
+        "source_type": "meta_analysis",
+        "recency_weight": 0.944,
+        "title": "Comparative efficacy and safety of different combinations of three CDK4/6 inhibitors with endocrine therapies in HR+/HER-2 − metastatic or advanced breast cancer patients: a network meta-analysis",
+        "pub_year": 2023,
+        "section": "Discussion",
+        "text": "This  viewpoint  can  be  further supported by the fact that combinations of three CDK4/6 inhibitors with two endocrine therapies were associated with different risks of severe AEs. Three network metaanalyses focused on a similar topic have also been published  recently  [22-24];  however,  no  one  differentiated the types of CDK4/6 inhibitors [22]. Desnoyers and colleagues  performed  a  network  meta-analysis  to  majorly investigate  the  safety  of  different  CDK4/6  inhibitors  in metastatic  BC  [23]  and  suggested  no  statistical  difference  in  comparison  of  ribociclib  versus  palbociclib  and comparison of  abemaciclib  versus  palbociclib  regarding PFS and OS after differentiating  endocrine  therapies  to be  AI  and  fulvestrant,  which  were  consistent  with  our findings. In addition, this meta-analysis also investigated the risk of three CDK4/6 inhibitors plus different endocrine  therapies  on  the  occurrence  of  specific  AEs  and suggested  that  ribociclib  and  abemaciclib  were  associated with lower severe neutropenia but higher gastrointestinal toxicity compared with palbociclib. However, no statistical  difference  was  detected  in  our  meta-analysis due to  severe  AEs  being  regarded  as  an  individual  outcome. Another  meta-analysis  investigated  the  efficacy and  safety  of  CDK4/6  and  PI3K/AKT/mTOR  inhibitors as  second-line  treatment  in  postmenopausal  patients with HR + /HER2- metastatic BC [24] and revealed no statistical  differences  between  three  combinations  of  three CDK4/6  inhibitors  with  fulvestrant  regarding  PFS  and OS, which was consistent with our findings. This metaanalysis also showed a benefit for ribociclib plus fulvestrant  in  terms  of  severe  AEs  compared  to  abemaciclib plus  fulvestrant  and  palboclclib  plus  fulvestrant,  which was  inconsistent  with  our  results. It's  noted  that  this study only considered the combined risk of severe neutropenia, leukopenia, and anemia; however, our network meta-analysis estimated the combined risk of all reported severe AEs. Certainly, it's essential to investigate the risk of various combinations of severe hematologic AEs under the inspiration of these positive findings [24]."
+      },
+      {
+        "chunk_id": "cdk46i_meta_analysis_2023_chunk_0020",
+        "doc_id": "cdk46i_meta_analysis_2023",
+        "source_type": "meta_analysis",
+        "recency_weight": 0.944,
+        "title": "Comparative efficacy and safety of different combinations of three CDK4/6 inhibitors with endocrine therapies in HR+/HER-2 − metastatic or advanced breast cancer patients: a network meta-analysis",
+        "pub_year": 2023,
+        "section": "Discussion",
+        "text": "and individual endocrine therapy, were comparable regarding  OS. In  addition,  our  network  meta-analysis also  suggested  that  palbociclib  plus  AI  or  fulvestrant, ribociclib  plus  AI,  and  abemaciclib  plus  fulvestrant  significantly  increased  the  incidence  of  severe  AEs  compared with endocrine therapy alone, and palbociclib plus AI and palbociclib plus fulvestrant were the worst combination in terms of therapeutic safety. Also, no statistical  differences  were  detected  between  combinations  of three  CDK4/6  inhibitors  and  two  endocrine  therapies. Six  pairwise  meta-analyses  [16-21]  have  investigated the  comparative  efficacy  and  safety  of  CDK4/6  inhibitors  combined  with  endocrine  therapy  and  endocrine therapy  alone. However,  only  two  meta-analyses  [18, 21]  designed  subgroup  analyses  to  investigate  the  comparative efficacy and safety of combining three CDK4/6 inhibitors with endocrine therapy and endocrine therapy alone. Meta-analysis  performed  by  Lin  et  al. [18]  suggested that whether the combination of CDK4/6 with AI or  fulvestrant  or  the  combination  of  ribociclib  or  abemaciclib with endocrine therapy significantly prolonged OS compared with endocrine therapy alone based on six eligible studies. Unfortunately, this meta-analysis did not differentiate  the  differences  in  the  combination  of  each CDK4/6  inhibitor  plus  each  endocrine  therapy,  leading to  inconsistent  results  with  our  network  meta-analysis. Furthermore,  our  meta-analysis  included  additional  3 studies  to  generate  more  reliable  results. In  addition,  a meta-analysis  performed  by  Zheng  and  colleagues  also used  a  similar  method  to  differentiate  the  efficacy  and safety  of  various  combinations  of  three  CDK4/6  inhibitors with endocrine therapy [21], revealing that combinations of three CDK4/6 inhibitors with endocrine therapy were significantly associated with the decreased PFS and the increased incidence of severe AEs, and ribociclib plus endocrine  therapy  was  related  to  longer  OS. It's  noted that  AI  and  fulvestrant  inhibit  estrogen  production  by regulating  different  pathways,  therefore  exerting  different  efficacy,  as  found  in  a  previous  meta-analysis  [50]. Therefore, it's more reasonable to separately differentiate various combinations of different CDK4/6 inhibitors with two endocrine therapies."
+      },
+      {
+        "chunk_id": "cdk46i_meta_analysis_2023_chunk_0018",
+        "doc_id": "cdk46i_meta_analysis_2023",
+        "source_type": "meta_analysis",
+        "recency_weight": 0.944,
+        "title": "Comparative efficacy and safety of different combinations of three CDK4/6 inhibitors with endocrine therapies in HR+/HER-2 − metastatic or advanced breast cancer patients: a network meta-analysis",
+        "pub_year": 2023,
+        "section": "Rank Probabilities",
+        "text": "The rankings of all available treatment combinations are presented in Fig. 6. Regarding PFS, palbociclib plus fulvestrant  had  the  highest  likelihood  of  being  the  most effective  regimen  (SUCRA = 37.65%),  followed  by  abemaciclib  plus  fulvestrant  (SUCRA = 28.76%) (Fig. 6a). For  OS,  ribociclib  plus  fulvestrant  was  identified  as  the most effective regimen (SUCRA = 34.11%), with abemaciclib  plus  fulvestrant  ranking  second  (SUCRA = 25.75%) (Fig. 6b). In terms of severe adverse events, the least desirable regimens were palbociclib plus AI (SUCRA = 53.98%)  (Fig.  6c)  and  palbociclib  plus  fulvestrant (SUCRA = 51.37%) (Fig. 6d)."
+      },
+      {
+        "chunk_id": "cdk46i_meta_analysis_2023_chunk_0000",
+        "doc_id": "cdk46i_meta_analysis_2023",
+        "source_type": "meta_analysis",
+        "recency_weight": 0.944,
+        "title": "Comparative efficacy and safety of different combinations of three CDK4/6 inhibitors with endocrine therapies in HR+/HER-2 − metastatic or advanced breast cancer patients: a network meta-analysis",
+        "pub_year": 2023,
+        "section": "Abstract",
+        "text": "Background This network meta-analysis aimed to assess the comparative efficacy and safety of combinations involving three cyclin-dependent kinase 4/6 (CDK4/6) inhibitors and endocrine therapies (ETs) in patients with metastatic or advanced breast cancer (BC) who are hormone receptor-positive (HR+) and human epidermal growth factor receptor 2-negative (HER2-).\n\nMethods We initially identified relevant studies from previous meta-analyses and then conducted a comprehensive search of PubMed, Embase, and the Cochrane Central Register of Controlled Trials (CENTRAL) databases to locate additional studies published between February 2020 and September 2021. Essential data were extracted, and a network meta-analysis was performed using R 4.1.1 software with a random-effects model. Furthermore, we assigned rankings to all available treatment combinations by calculating their cumulative probability.\n\nResults Data analysis included ten reports from nine studies. Pooled results demonstrated that each treatment combination significantly reduced the hazard risk of progression-free survival (PFS) compared to treatment with an aromatase inhibitor (AI) or fulvestrant alone. However, there were no differences observed in PFS or overall survival (OS) among the different treatment combinations. Additionally, patients receiving palbociclib plus AI and abemaciclib plus AI or fulvestrant experienced more severe adverse events (AEs), with hazard ratios (HRs) of 10.83 (95% confidence interval [CI] = 2.3 to 52.51) and 4.8 (95%CI = 1.41 to 16.21), respectively. The HR for ribociclib plus AI was 9.45 (95%CI = 2.02 to 43.61), and the HR for palbociclib plus fulvestrant was 6.33 (95%CI = 1.03 to 39.86). Based on\n\n†\n\nYiyuan Liu, Jinyao Wu and Zeqi Ji share first authorship\n\n*Correspondence: Yexi Chen yxchen3@stu.edu.cn Zhiyang Li s\\_zyli4@stu.edu.cn\n\nFull list of author information is available at the end of the article\n\n<!-- image -->"
+      }
+    ]
+  },
+  {
+    "query_id": "q015",
+    "query": "What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?",
+    "query_type": "definitional",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0013",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "DISCUSSION",
+        "text": "Breast cancers associated with gBRCA1/BRCA2pv are vulnerable to synthetic lethality caused by exposure to PARP inhibitors that inhibit catalytic activities of PARP1 and trap PARP1 on DNA, creating lesions that require functional BRCA1 and BRCA2 protein for repair. 3,4  Because this vulnerability is independent of hormone receptor status, OlympiA was designed to assess the efficacy and safety of olaparib in patients with gBRCA1/2pv and high-risk, HER2-negative EBC, irrespective of hormone receptor status. OlympiA was initially activated in patients with high-risk TNBC because of high unmet need for these patients in whom the residual recurrence risk following standard multimodality therapies remained sufficiently elevated to justify evaluating olaparib in the EBC setting, despite the lack of both phase III trial data and marketing authorization for olaparib in gBRCA1/2pvassociated MBC at that time. In contrast to gBRCA1pv-associated breast cancers, gBRCA2pv-associated breast cancers are predominantly hormone receptor positive. 7,8 Although adjuvant endocrine therapies reduce the risk of recurrence, patients presenting with larger, node-positive disease less responsive to NACT 14,15  or who have &gt;4 positive axillary nodes at initial surgery have similar residual risk as patients with TNBC meeting eligibility criteria for OlympiA. Additionally, the complexities and challenges of conducting OlympiA made it unlikely that a new study specifically for patients with gBRCA1/2pv and hormone receptor-positive, high-risk EBC would be conducted. Therefore, once safety data on combinations of standard endocrine therapies and olaparib were available, 17  OlympiA was amended to include patients with hormone receptor-positive, HER2-negative EBC with risk of recurrence equivalent to the TNBC cohorts. Although the first patient with hormone receptor-positive disease was enrolled 18 months after start of accrual, the median follow-up was similar between the TNBC and hormone receptor-positive cohorts (3.6 versus 3.4 years)."
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0002",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "INTRODUCTION",
+        "text": "Cancers harboring germline pathogenic or likely pathogenic variants in BRCA1 or BRCA2 (gBRCA1/2pv) are characterized by homologous recombination DNA repair deficiency following the inactivation of the wildtype allele during tumor evolution. 1  This engenders selective sensitivity to inhibition and trapping of the DNA repair enzyme, poly (adenosine diphosphate-ribose) polymerase 1 (PARP1) by exploiting the concept of synthetic lethality, as functional homologous recombination is required for cell survival when PARP1 function is inhibited and PARP1 is trapped on DNA arresting the DNA replication apparatus. 2-4 Olaparib and talazoparib both inhibit and trap PARP1 on DNA and have been approved for treating patients with gBRCA1/2pv and metastatic breast cancer (MBC) irrespective of hormone receptor status. 5,6"
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0014",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "DISCUSSION",
+        "text": "Subgroup analyses of IDFS, DDFS, and OS demonstrate no evidence of heterogeneity for benefit of olaparib by hormone receptor status. The HR for olaparib relative to placebo for IDFS was 0.62 in TNBC (282 IDFS events in 1509 patients) and 0.68 in hormone receptor-positive disease (59 IDFS events in 325 patients), both less than the target HR of 0.7 for the ITT population (Figure 2B). The corresponding HR for DDFS was 0.59 (225 DDFS events) in the TNBC subgroup and 0.69 (54 DDFS events) in the hormone receptor-positive subgroup (Figure 2C). With relatively few deaths (n = 33) reported among the 325 patients with hormone receptor-positive EBC (Figure 2A), meaningful analysis of differential treatment effect on OS is highly constrained. Therefore, based on the negative test for heterogeneity by hormone receptor status and evidence for similar efficacy in IDFS and DDFS, coupled with the safety profile and the quality-of-life data, 18  patients with high-risk, hormone receptor-positive EBC should be considered for olaparib therapy. This conclusion is further supported by the lack of mechanistic rationale for differential synthetic lethal effects of PARP inhibition in a hormone receptor-positive context, evidence of similar treatment effect for PARP inhibitor therapy in MBC irrespective of hormone receptor status, 5,6  and reports of the randomized GeparOla study of olaparib in combination\n\nwith paclitaxel, in which signals of comparative efficacy of olaparib/paclitaxel versus a carboplatin/paclitaxel regimen were stronger in the hormone receptor-positive subgroup. 19"
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0018",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "DISCUSSION",
+        "text": "In OlympiA, there was no evidence of statistical heterogeneity in the treatment effect for olaparib by hormone receptor status, and the similar HR for IDFS and DDFS for both hormone receptor-negative and hormone receptor-positive cohorts is consistent with a receptor-agnostic synthetic lethal targeting mechanism. The safety profile and quality-oflife data 18  from OlympiA also provide support that patients with gBRCA1/2pv and high recurrence risk, hormone receptor-positive EBC should be considered for combination adjuvant ET plus olaparib therapy following (N)ACT.\n\nThe pre-specified second IA of OlympiA with a median follow-up of 3.5 years demonstrates a statistically significant improvement in OS with olaparib compared to placebo and maintenance of clinically meaningful absolute improvements in the previously reported statistically significant primary endpoint of IDFS and the secondary endpoint of DDFS. Subgroup analyses for all three endpoints demonstrate benefit irrespective of hormone receptor status, NACT versus ACT, prior use of platinum for breast cancer, and type of g BRCA pv with CIs that include the point estimate of the HR in the overall population for each of the endpoints. The safety and tolerability profile of olaparib in this study remains consistent with that observed in previous studies of olaparib and only two cases (0.2%) of AML/MDS have been reported in the olaparib group compared with three (0.3%) in the placebo group. The results highlight the importance of testing for g BRCA1/2 pv in patients with newly diagnosed high-risk EBC. Blinded follow-up of patients continues to assess long-term effects on risks for recurrent breast cancer and other second malignancies"
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0020",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "Affiliations",
+        "text": "1 NRG Oncology/NSABP Foundation, Pittsburgh;\n\n2 Department of Medicine, UPMC Hillman Cancer Center, Pittsburgh;\n\n3 Dana-Farber Cancer Institute, Harvard Medical School, Boston;\n\n4 Harvard T.H. Chan School of Public Health, Boston;\n\n5 Frontier Science Foundation, Boston;\n\n6 Department of Biostatistics, University of Pittsburgh, Pittsburgh, USA;\n\n7 Oncology Biometrics Department, AstraZeneca, Macclesfield;\n\n8 Department of Data Management, Frontier Science (Scotland), Kincraig, Scotland, UK;\n\n9 Department of Oncology R&amp;D, AstraZeneca, Gaithersburg, USA;\n\n10 Research Operations Department, Breast International Group, Brussels, Belgium;\n\n11 Global Oncology Clinical Development, Merck and Co. Inc., Rahway, USA;\n\n12 Department of Medical Oncology, The Christie Hospital NHS Foundation Trust, Manchester, UK;\n\n13 European Organisation for Research and Treatment (EORTC), Brussels, Belgium;\n\nincluding AML/MDS, as well as to fully inform future translational studies to understand mechanisms of resistance to adjuvant olaparib."
+      }
+    ]
+  },
+  {
+    "query_id": "q051",
+    "query": "What is multiomics (also known as panomics) and which individual omics disciplines does it combine?",
+    "query_type": "definitional",
+    "answerable": true,
+    "passages": [
+      {
+        "chunk_id": "frontiers_molbiosci_multiomics_2022_chunk_0014",
+        "doc_id": "frontiers_molbiosci_multiomics_2022",
+        "source_type": "review",
+        "recency_weight": 0.889,
+        "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+        "pub_year": 2022,
+        "section": "MULTIOMICS APPROACHES AND BREAST CANCER MANAGEMENT",
+        "text": "Multiomics also described as panomics and/or integrative omics is an analytical approach that combines data from multiple ' omics ' approaches including genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics ,and metatranscriptomics to answer the complex biological questions. This omics approach is particularly very helpful in identifying biomarkers of health, disease, and treatment progress by collective characterization and quanti fi cation of pools of biological molecules within and among the cells. A range of omics software and databases are available for this analysis. Omics techniques produce a large amount of the data which is then processed. Advanced technologies have allowed ' omics ' data analysis in a combined, interconnected, and holistic format to solve the complex biological problems which could not have been found with experimental work in the laboratory Figure 1 . Systems biology is an approach in biomedical research to understand the larger picture be it at the level of the organism, tissue, or cell by putting its pieces together. It is in stark contrast to decades of reductionist biology, which involves taking the pieces apart."
+      },
+      {
+        "chunk_id": "frontiers_molbiosci_multiomics_2022_chunk_0041",
+        "doc_id": "frontiers_molbiosci_multiomics_2022",
+        "source_type": "review",
+        "recency_weight": 0.889,
+        "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+        "pub_year": 2022,
+        "section": "CONCLUSION",
+        "text": "Breast cancer is a very complex and heterogeneous illness with unique molecular and morphological features. Recent advancements in the omics technology have allowed a more precise approach toward the breast cancer classi fi cation by understanding the underlying molecular mechanisms. However, there is need for the integration of multiomics approaches which could take omics data from an individual patient and compare it with the databases to guide the strategy for personalized therapy. For management of the breast cancers, the treatment decisions not only depend on the assessment of prognosis factors but also on the evaluation of pathological and clinical factors. An integrated data approach of\n\nthese multiple factors of breast cancer through multiomics can provide signi fi cant insight and hope for making therapeutic decisions. Such personalized therapies will avoid conventional therapeutics where one medicine fi ts all. It will not only facilitate the patient ' s treatment time but also their long-term sufferings as well."
+      },
+      {
+        "chunk_id": "frontiers_molbiosci_multiomics_2022_chunk_0033",
+        "doc_id": "frontiers_molbiosci_multiomics_2022",
+        "source_type": "review",
+        "recency_weight": 0.889,
+        "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+        "pub_year": 2022,
+        "section": "Precision Medicine",
+        "text": "The recent developments in the ' OMICS ' sciences have uncovered many cellular mechanisms. This has led to the foundation of a new fi eld of study known as precision or personalized medicine. It has been an established fact now that not all the cancer patients respond to the same treatment regime equally. The difference in treatment responses is subjected to the variation in the genome that each individual carries. These variations lead to the variations in responses toward the drugs. Precision medicine is changing the healthcare pattern by linking individual genetic information to drug applications, thus changing the conventional practice of medicine."
+      },
+      {
+        "chunk_id": "frontiers_molbiosci_multiomics_2022_chunk_0013",
+        "doc_id": "frontiers_molbiosci_multiomics_2022",
+        "source_type": "review",
+        "recency_weight": 0.889,
+        "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+        "pub_year": 2022,
+        "section": "OVERCOMING RESISTANCE THROUGH EMERGING TECHNOLOGIES",
+        "text": "In recent years, advances have been made in BC treatment options including immunotherapy, cyclin-dependent kinase 4/ 6 (CDK4/6) inhibitors, tyrosine kinase inhibitors (TKIs), clustered regularly interspaced short palindromic repeats (CRISPR), microRNAs (miRNAs), use of already available drugs for different diseases for treating BC (drug repurposing), nanotechnology-based treatments, and electrochemotherapy (ECT). Additional bene fi ts have been added to the conventional treatment options by introducing new strategies in terms of decreasing the side effects and overcoming resistance. Multiomics is the most recent emerging technology for treating BC through personalized decisions and treatment options. It usually generates a vast amount of data on different kinds including genomics, transcriptomics, proteomics, metabolomics, and radiomics. One of the biggest challenges is to integrate in data to obtain biologically meaningful insight (Wang et al., 2014; Nik-Zainal et al., 2016). For this purpose, researchers need robust and sophisticated computational systems to integrate and analyze the data in a standardized manner (Chen et al., 2017). This can be achieved by making improvements in technology for better results in less sample processing and measurement time.\n\nThe BC treatment decision not only depends on the assessment of prognosis factors but also on the evaluation of pathological and clinical factors. Integrated data assessments of these multiple factors of breast carcinoma through multiomics can provide signi fi cant insights and hope for making therapeutic decisions. The implementation of omics approaches including genomics, transcriptomics, proteomics, metabolomics, and radiomics in clinical practice will assist the analysis of global level patient ' s changes which improves diagnosis and therapeutic choice on the basis of few markers (Scherf et al., 2000; Staunton et al., 2001; Bild et al., 2006). Early tumor detection will be facilitated by identi fi cation of omics technology-guided biomarkers, ultimately leading to early treatment and management of disease as marking the novel molecular targets con fi ned to speci fi c BC subtypes will decrease the reliance on non-targeted therapies, thus improving the quality of life for breast cancer patients."
+      },
+      {
+        "chunk_id": "frontiers_molbiosci_multiomics_2022_chunk_0002",
+        "doc_id": "frontiers_molbiosci_multiomics_2022",
+        "source_type": "review",
+        "recency_weight": 0.889,
+        "title": "‘Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics’",
+        "pub_year": 2022,
+        "section": "[' Breast Cancer Resistance Likelihood and Personalized Treatment Through Integrated Multiomics '](https://www.frontiersin.org/articles/10.3389/fmolb.2022.783494/full)",
+        "text": "In recent times, enormous progress has been made in improving the diagnosis and therapeutic strategies for breast carcinoma, yet it remains the most prevalent cancer and second highest contributor to cancer-related deaths in women. Breast cancer (BC) affects one in eight females globally. In 2018 alone, 1.4 million cases were identified worldwide in postmenopausal women and 645,000 cases in premenopausal females, and this burden is constantly increasing. This shows that still a lot of efforts are required to discover therapeutic remedies for this disease. One of the major clinical complications associated with the treatment of breast carcinoma is the development of therapeutic resistance. Multidrug resistance (MDR) and consequent relapse on therapy are prevalent issues related to breast carcinoma; it is due to our incomplete understanding of the molecular mechanisms of breast carcinoma disease. Therefore, elucidating the molecular mechanisms involved in drug resistance is critical. For management of breast carcinoma, the treatment decision not only depends on the assessment of prognosis factors but also on the evaluation of pathological and clinical factors. Integrated data assessments of these multiple factors of breast carcinoma through multiomics can provide significant insight and hope for making therapeutic decisions. This omics approach is particularly helpful since it identifies the biomarkers of disease progression and treatment progress by collective characterization and quantification of pools of biological molecules within and among the cancerous cells. The scrupulous understanding of cancer and its treatment at the molecular level led to the concept of a personalized approach, which is one of the most significant advancements in modern oncology. Likewise, there are certain genetic and non-genetic tests available for BC which can help in personalized therapy. Genetically inherited risks can be screened for personal predisposition to BC, and genetic changes or variations (mutations) can also be identified to decide on the best treatment. Ultimately, further understanding of BC at the molecular level (multiomics) will define more precise choices in personalized medicine. In this review, we have summarized therapeutic resistance associated with BC and the techniques used for its management.\n\nKeywords: breast cancer, drug resistance, genomics, transcriptomics, proteomics, metabolomics, radiomics"
+      }
+    ]
+  },
+  {
+    "query_id": "q073",
+    "query": "What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "passages": [
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0014",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Discussion",
+        "text": "This predefined subgroup analysis of the MONALEESA-2 trial demonstrates that postmenopausal women with de novo\n\nHR+, HER2- advanced breast cancer at diagnosis who received ribociclib in combination with letrozole had prolonged progression-free survival compared with those who received placebo plus letrozole, with an approximate 55% reduction in the risk of progression (hazard ratio 0.45, 95% CI 0.27-0.75). Median progression-free survival was not reached in the ribociclib plus letrozole arm, compared with 16.4 months in the placebo plus letrozole arm. Progressionfree survival benefit with the addition of ribociclib to letrozole was consistent with that observed in the MONALEESA-2 intent-to-treat population, where a hazard ratio of 0.56 (95% CI 0.43-0.72, p &lt; 0.001) was observed [16]. Ribociclib plus letrozole was also associated with improved overall response and clinical benefit rates versus placebo plus letrozole in patients with de novo disease.\n\nEnhanced treatment benefits in patients with de novo advanced disease have previously been described with the CDK4/6 inhibitor palbociclib in combination with letrozole in the PALOMA-2 trial [20]. The FALCON study recently\n\nFig. 1 MONALEESA-2 trial profile (CONSORT diagram)\n\nFig. 2 Kaplan-Meier analysis of locally assessed progressionfree survival in patients with de novo advanced breast cancer in the MONALEESA-2 trial. CI confidence interval\n\nreported improved efficacy for first-line fulvestrant over anastrozole, with a hazard ratio of 0.80 (95% CI 0.64-0.99) in a largely de novo patient population [21]. Median progression-free survival was 16.6 months in patients who received fulvestrant therapy compared with 13.8 months in the anastrozole arm; both values are in line with the median progression-free survival of 16.4 months reported herein for placebo plus letrozole-treated patients with de novo advanced disease.\n\nTable 2 Summary of best overall response per RECIST v1.1"
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0001",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Abstract",
+        "text": "Purpose Determine the efficacy and safety of first-line ribociclib plus letrozole in patients with de novo advanced breast cancer.\n\nMethods Postmenopausal women with HR+ , HER2- advanced breast cancer and no prior systemic therapy for advanced disease were enrolled in the Phase III MONALEESA-2 trial (NCT01958021). Patients were randomized to ribociclib (600 mg/day; 3 weeks-on/1 week-off) plus letrozole (2.5 mg/day; continuous) or placebo plus letrozole until disease progression, unacceptable toxicity, death, or treatment discontinuation. The primary endpoint was investigator-assessed progressionfree survival; predefined subgroup analysis evaluated progression-free survival in patients with de novo advanced breast cancer. Secondary endpoints included safety and overall response rate.\n\nResults Six hundred and sixty-eight patients were enrolled, of whom 227 patients (34%; ribociclib plus letrozole vs placebo plus letrozole arm: n = 114 vs. n = 113) presented with de novo advanced breast cancer. Median progression-free survival was not reached in the ribociclib plus letrozole arm versus 16.4 months in the placebo plus letrozole arm in patients with de novo advanced breast cancer (hazard ratio 0.45, 95% confidence interval 0.27-0.75). The most common Grade 3/4 adverse events were neutropenia and leukopenia; incidence rates were similar to those observed in the full MONALEESA-2 population. Ribociclib dose interruptions and reductions in patients with de novo disease occurred at similar frequencies to the overall study population.\n\nConclusions Ribociclib plus letrozole improved progression-free survival vs placebo plus letrozole and was well tolerated in postmenopausal women with HR+, HER2- de novo advanced breast cancer.\n\nKeywords Breast cancer · CDK inhibitor · Ribociclib · Endocrine therapy · De novo advanced breast cancer · Hormone receptor-positive"
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0010",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Efficacy",
+        "text": "The combination of ribociclib plus letrozole prolonged progression-free survival compared with placebo plus letrozole in patients with de novo advanced breast cancer, with a hazard ratio of 0.45 (95% CI 0.27-0.75). Median progressionfree survival in the ribociclib plus letrozole arm was not reached versus 16.4 months in the placebo plus letrozole arm (Fig. 2). After 12 months, the estimated progression-free survival rates in the ribociclib plus letrozole versus placebo plus letrozole arms were 82% versus 66%, respectively. The overall response rates in the intent-to-treat population were 47% in the ribociclib plus letrozole arm versus 34% in the placebo plus letrozole arm; clinical benefit rates were 83% versus 77% (Table 2). In patients with measurable disease at baseline, the overall response rates were 56% versus 45% and the clinical benefit rates were 82% versus 77% in the ribociclib plus letrozole versus placebo plus letrozole arms, respectively. Overall survival results were immature at the time of this interim analysis."
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0003",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Introduction",
+        "text": "The cyclin D-CDK4/6-inhibitor of CDK4 (INK4)-retinoblastoma (Rb) pathway is frequently disrupted in HR+ breast cancer [13], and has been associated with a poor clinical outcome and resistance to endocrine therapy [14]. Targeting the cyclin D-CDK4/6-INK4-Rb pathway may, therefore, present an effective strategy to enhance the efficacy of endocrine therapies. Ribociclib is an orally bioavailable, selective inhibitor of CDK4/6 [15]. Results from the Phase III MONALEESA-2 (NCT01958021) planned interim analysis demonstrated that the addition of ribociclib to letrozole significantly improved progression-free survival compared with placebo plus letrozole in patients with HR+, human epidermal growth factor receptor 2-negative (HER2-) advanced breast cancer, with a hazard ratio of 0.56 ( p &lt; 0.001) [16]. Treatment with ribociclib plus letrozole was associated with a rapid response; 76% of patients with evaluable measurable disease had a reduction in tumor size following 8 weeks of treatment [17]. Here we report efficacy and safety results from a prospective subgroup analysis of MONALEESA-2 in patients with de novo advanced breast cancer."
+      },
+      {
+        "chunk_id": "monaleesa2_subanalysis_2018_chunk_0008",
+        "doc_id": "monaleesa2_subanalysis_2018",
+        "source_type": "rct",
+        "recency_weight": 0.667,
+        "title": "Ribociclib plus letrozole versus letrozole alone in patients with de novo HR+, HER2− advanced breast cancer in the randomized MONALEESA-2 trial",
+        "pub_year": 2018,
+        "section": "Patient and disease characteristics",
+        "text": "From January 24, 2014 to March 24, 2015, 668 patients were randomized to the ribociclib plus letrozole ( n = 334) and placebo plus letrozole ( n = 334) arms. Among all patients randomized, 227 (34%) presented with de novo advanced breast cancer at diagnosis; these patients were compared between treatment arms in this exploratory analysis. There was an even distribution of patients with de novo disease across both treatment arms; 114 (34%) patients in the ribociclib plus letrozole arm and 113 (34%) patients in the placebo plus letrozole arm (Table 1). Baseline characteristics of patients with de novo advanced breast cancer were well balanced across both treatment arms, except for ECOG performance status. A higher proportion of patients in the ribociclib plus letrozole arm (66%) had an ECOG performance status of 0, compared with 54% of patients in the placebo plus letrozole arm."
+      }
+    ]
+  },
+  {
+    "query_id": "q076",
+    "query": "What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "passages": [
+      {
+        "chunk_id": "nccn_breast_v2_2026_chunk_0467",
+        "doc_id": "nccn_breast_v2_2026",
+        "source_type": "guideline",
+        "recency_weight": 1.0,
+        "title": "NCCN Guidelines for Patients: Breast Cancer",
+        "pub_year": 2026,
+        "section": "NCCN Guidelines Version 2.2026 Breast Cancer",
+        "text": "Based on the results of the above phase III trials, the two FDA-approved PARP inhibitors, olaparib and talazoparib, are included as category 1, preferred options for those with germline BRCA1/2 mutations. The NCCN Panel recommends assessing germline BRCA1/2 mutations in all patients with recurrent or metastatic breast cancer to identify candidates for PARP inhibitor therapy. While olaparib and talazoparib are FDA-indicated in\n\nHER2-negative disease, the NCCN Panel supports use in any breast cancer subtype associated with germline BRCA1/2 mutations.\n\nPlatinums: The phase III TNT trial compared docetaxel with carboplatin in the first-line setting in patients (n = 376) with triple-negative breast cancer. In the unselected population, carboplatin was not more active than docetaxel (ORR, 31.4% vs. 34.0%; P = .66). 582 Patients with a germline BRCA1/2 mutation had a significantly better response to carboplatin than docetaxel (ORR, 68.0% vs. 33.3%, absolute difference, 34.7%; P = .03). 582 PFS was also improved with carboplatin treatment in patients with a germline BRCA1/2 mutation (median PFS, 6.8 months vs. 4.4 months); no difference was found in OS. However, patients with somatic BRCA1/2 mutation in the tumor DNA did not appear to have the same advantage.\n\nFor those with triple-negative recurrent/stage IV breast cancer and germline BRCA1/2 mutations, the NCCN Panel has included platinum agents (cisplatin and carboplatin) as preferred treatment options. It is unknown how PARP inhibitors compare with platinums in this setting."
+      },
+      {
+        "chunk_id": "nccn_breast_v2_2026_chunk_0213",
+        "doc_id": "nccn_breast_v2_2026",
+        "source_type": "guideline",
+        "recency_weight": 1.0,
+        "title": "NCCN Guidelines for Patients: Breast Cancer",
+        "pub_year": 2026,
+        "section": "TARGETED THERAPIES AND ASSOCIATED BIOMARKER TESTING FOR RECURRENT UNRESECTABLE (LOCAL OR REGIONAL) OR STAGE IV (M1) DISEASE",
+        "text": "| Biomarkers Associated with FDA-Approved Therapies   | Biomarkers Associated with FDA-Approved Therapies   | Biomarkers Associated with FDA-Approved Therapies   | Biomarkers Associated with FDA-Approved Therapies   | Biomarkers Associated with FDA-Approved Therapies   | Biomarkers Associated with FDA-Approved Therapies   |\n|-----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------|\n| Breast Cancer Subtype                               | Biomarker                                           | Detection u                                         | FDA-Approved Agents                                 | NCCN Category of Evidence                           | NCCN Category of Preference                         |\n| Any                                                 | Germline BRCA1 or BRCA2 PV                          | Germline sequencing                                 | Olaparib Talazoparib                                | Category 1                                          | Preferred                                           |\n| Any                                                 | Germline PALB2 PVs                                  | Germline sequencing                                 | Olaparib bb                                         | Category 2A                                         | Other recommended                                   |"
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0010",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "Efficacy",
+        "text": "SafetyAt this safety analysis all patients had completed the protocol-specified course of olaparib or placebo which included 1815 patients (911 in the olaparib group and 904 in the placebo group). The median exposure duration was 364 days on olaparib and 365 days on placebo (Supplementary Table S7, available at https://doi.org/10.1016/ j.annonc.2022.09.159), with median percentage of intended dose delivered being 94.5% in the olaparib group and 98.9% in the placebo group (Supplementary Table S8, available at https://doi.org/10.1016/j.annonc.2022.09.159)). Greater than 11 months of the\n\nplanned 12 months of therapy was completed by 76.1% of patients receiving olaparib compared to 81.7% on placebo (Supplementary Table S9, available at https://doi.org/ 10.1016/j.annonc.2022.09.159). In the olaparib group, 228 patients (25.0%) required a dose reduction compared to 47 (5.2%) in the placebo group (Supplementary Table S10, available at https://doi.org/10.1016/j.annonc.2022.09.159). Dose interruptions lasting at least 3 days occurred in 405 (44.5%) patients in the olaparib group and 279 (30.9%) in the placebo group (Supplementary Table S11, available at https://doi.org/10.1016/j.annonc.2022.09.159)). Adverse events (AEs) requiring permanent discontinuation of the trial drug occurred in 98 patients (10.8%) in the olaparib group and 42 (4.6%) in the placebo group. The most frequent AEs leading to discontinuation of olaparib were nausea (2.2%), anemia (1.8%), fatigue (1.6%), and neutrophil count decreased (1%) (Supplementary Table S12, available at https://doi.org/10.1016/j.annonc.2022.09.159)."
+      },
+      {
+        "chunk_id": "nccn_breast_v2_2026_chunk_0392",
+        "doc_id": "nccn_breast_v2_2026",
+        "source_type": "guideline",
+        "recency_weight": 1.0,
+        "title": "NCCN Guidelines for Patients: Breast Cancer",
+        "pub_year": 2026,
+        "section": "NCCN Guidelines Version 2.2026 Breast Cancer",
+        "text": "Adjuvant Olaparib : In patients with germline BRCA 1/2 mutations and high-risk HER2-negative tumors, the results of the OlympiA trial showed that the 4-year OS in the group that received 1 year of adjuvant olaparib was 89.8% and 86.4% in the placebo group (95% CI -0.1% -6.8%). The 4- year invasive DFS for the olaparib group versus placebo group was 82.7% versus 75.4% (95% CI 3.0% - 11.5%) and 4-year distant DFS was 86.5% versus 79.1% (95% CI 3.6% -11.3%). 373\n\nAccording to the NCCN panel, addition of adjuvant olaparib for 1 year may be considered for those with germline BRCA 1/2 mutations in patients with HR-positive, HER2-negative tumors with ≥ 4 positive lymph nodes after adjuvant chemotherapy or residual disease after preoperative therapy and a clinical stage, pathologic stage, ER status, and tumor grade (CPS+EG) score ≥ 3  (category 2A).\n\nAdjuvant olaparib may be used concurrently with endocrine therapy. In patients eligible for both adjuvant olaparib and abemaciclib, the optimal sequencing is not known. (For sequencing of olaparib and/or abemaciclib with RT, see BINV-I on nccn.org)"
+      },
+      {
+        "chunk_id": "olympia_brca_os_2022_chunk_0013",
+        "doc_id": "olympia_brca_os_2022",
+        "source_type": "rct",
+        "recency_weight": 0.889,
+        "title": "Overall survival in the OlympiA phase III trial of adjuvant olaparib in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer",
+        "pub_year": 2022,
+        "section": "DISCUSSION",
+        "text": "Breast cancers associated with gBRCA1/BRCA2pv are vulnerable to synthetic lethality caused by exposure to PARP inhibitors that inhibit catalytic activities of PARP1 and trap PARP1 on DNA, creating lesions that require functional BRCA1 and BRCA2 protein for repair. 3,4  Because this vulnerability is independent of hormone receptor status, OlympiA was designed to assess the efficacy and safety of olaparib in patients with gBRCA1/2pv and high-risk, HER2-negative EBC, irrespective of hormone receptor status. OlympiA was initially activated in patients with high-risk TNBC because of high unmet need for these patients in whom the residual recurrence risk following standard multimodality therapies remained sufficiently elevated to justify evaluating olaparib in the EBC setting, despite the lack of both phase III trial data and marketing authorization for olaparib in gBRCA1/2pvassociated MBC at that time. In contrast to gBRCA1pv-associated breast cancers, gBRCA2pv-associated breast cancers are predominantly hormone receptor positive. 7,8 Although adjuvant endocrine therapies reduce the risk of recurrence, patients presenting with larger, node-positive disease less responsive to NACT 14,15  or who have &gt;4 positive axillary nodes at initial surgery have similar residual risk as patients with TNBC meeting eligibility criteria for OlympiA. Additionally, the complexities and challenges of conducting OlympiA made it unlikely that a new study specifically for patients with gBRCA1/2pv and hormone receptor-positive, high-risk EBC would be conducted. Therefore, once safety data on combinations of standard endocrine therapies and olaparib were available, 17  OlympiA was amended to include patients with hormone receptor-positive, HER2-negative EBC with risk of recurrence equivalent to the TNBC cohorts. Although the first patient with hormone receptor-positive disease was enrolled 18 months after start of accrual, the median follow-up was similar between the TNBC and hormone receptor-positive cohorts (3.6 versus 3.4 years)."
+      }
+    ]
+  },
+  {
+    "query_id": "q078",
+    "query": "What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "passages": [
+      {
+        "chunk_id": "destiny_breast06_2025_chunk_0017",
+        "doc_id": "destiny_breast06_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Patient-reported outcomes with trastuzumab deruxtecan in hormone receptor-positive, HER2-low or HER2-ultralow metastatic breast cancer: results from the randomized DESTINY-Breast06 trial",
+        "pub_year": 2025,
+        "section": "PROs",
+        "text": "Compliance. In the ITT population, baseline patient compliance for the EORTC QLQ-C30 was higher in the TPC group (74.4%) compared with the T-DXd group (66.5%). For the EORTC QLQ-BR45 also, the baseline compliance rate was higher in the TPC group (73.3%, versus 63.5% in the T-DXd group); however, patient compliance over time was always higher in the T-DXd group, with &gt; 70.0% compliance for T-DXd and &gt; 53.2% for TPC until week 31 across both questionnaires. The overall compliance rate, which was calculated using data collected at baseline and over time, was similar to T-DXd and TPC for the EORTC QLQ-C30 (65.8% and 69.8%, respectively) and EORTC QLQ-BR45 (62.4% and 67.9%, respectively). Data were consistent in the HER2-low population."
+      },
+      {
+        "chunk_id": "destiny_breast06_2025_chunk_0006",
+        "doc_id": "destiny_breast06_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Patient-reported outcomes with trastuzumab deruxtecan in hormone receptor-positive, HER2-low or HER2-ultralow metastatic breast cancer: results from the randomized DESTINY-Breast06 trial",
+        "pub_year": 2025,
+        "section": "Trial design",
+        "text": "DESTINY-Breast06 (NCT04494425) is an open-label, randomized phase III trial investigating the efficacy and safety of T-DXd versus TPC in patients with HR + , HER2-low, or HER2-ultralow mBC. Patients were eligible if they received at least two prior lines of ET for mBC, or one prior line if they demonstrated disease recurrence within 24 months of starting adjuvant ET or disease progression within 6 months of starting first-line ET plus cyclin-dependent kinase 4/6 inhibitor for mBC. Eligible patients must not have had prior chemotherapy for mBC. Patients were randomly assigned with the use of interactive response technology in a 1 : 1 ratio to receive T-DXd (5.4 mg/kg intravenously once every 3 weeks) or TPC (paclitaxel, nab-paclitaxel, or capecitabine) until disease progression. The ITT population comprised all randomized patients (those with either HER2-low or HER2ultralow tumor status). Full methods and the trial protocol have been published previously. 11"
+      },
+      {
+        "chunk_id": "destiny_breast06_2025_chunk_0034",
+        "doc_id": "destiny_breast06_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Patient-reported outcomes with trastuzumab deruxtecan in hormone receptor-positive, HER2-low or HER2-ultralow metastatic breast cancer: results from the randomized DESTINY-Breast06 trial",
+        "pub_year": 2025,
+        "section": "DISCUSSION",
+        "text": "Patients receiving T-DXd had more favorable outcomes across several scales/items of the EORTC QLQ-C30 and EORTC QLQ-BR45: a longer TTD in physical/role/emotional functioning, pain, and fatigue and a lower incidence of skin/ mucosal symptoms versus the TPC group. Preservation of functioning has been shown to be important for avoiding dose reductions and treatment discontinuation. 16 Regarding pain symptoms, T-DXd was associated with lower mean CFB scores over time and a 49% reduction in the risk of clinically meaningful deterioration. Effective pain management is a focus of treatment decisions, and a favorable outcome is particularly important given the association with disease burden and poor QOL. 17 The efficacy benefit of T-DXd indicates that an improvement in pain symptoms may be facilitated through an overall reduction in disease burden. 11 Although short overall, the median TTD for fatigue was longer with T-DXd versus TPC, and there were no treatment differences in CFB scores or PRO-CTCAE data. This contrasts with the AE profiles from investigators, with a higher incidence of fatigue reported in the T-DXd group (46.8%) versus TPC (34.3%). 11 Such discrepancies between PRO and investigator-reported outcomes highlight the importance of PRO data in helping to contextualize and interpret safety results. 1,18 A clinically meaningful worsening of skin/mucosal symptoms was observed with TPC but not with T-DXd. Given the high proportion of patients receiving capecitabine in the TPC group (59.8%), this is likely attributable to a common side-effect, palmarplantar erythrodysesthesia syndrome 19 ; indeed, one-third of patients in the TPC group were affected by this AE (32.4%, versus 0.5% with T-DXd). In a post hoc TTD analysis of T-DXd versus capecitabine, outcomes in the EORTC QLC-C30 scales for capecitabine were broadly consistent with that of the TPC group as a whole, with a comparably shorter TTD in role functioning, pain, and fatigue versus T-DXd; notably, the TTD in social functioning was similar between T-DXd and capecitabine."
+      },
+      {
+        "chunk_id": "destiny_breast06_2025_chunk_0033",
+        "doc_id": "destiny_breast06_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Patient-reported outcomes with trastuzumab deruxtecan in hormone receptor-positive, HER2-low or HER2-ultralow metastatic breast cancer: results from the randomized DESTINY-Breast06 trial",
+        "pub_year": 2025,
+        "section": "DISCUSSION",
+        "text": "In this PRO analysis of DESTINY-Breast06, no differences were observed between T-DXd and TPC in CFB scores of the EORTC QLQ-C30 GHS/QOL and functioning scales and the EQ-5D-5L over the first 7 months. The risk of clinically meaningful deterioration in GHS/QOL was similar between treatments, and patients considered T-DXd and TPC to be similarly tolerable per the PGI-TT. When considered alongside the positive efficacy data, and the almost twice-longer median treatment duration with T-DXd (11.0 months, versus 5.6 months with TPC), these results indicate that T-DXd provides an efficacy benefit over a prolonged period without detriment to overall HRQOL."
+      },
+      {
+        "chunk_id": "destiny_breast06_2025_chunk_0016",
+        "doc_id": "destiny_breast06_2025",
+        "source_type": "rct",
+        "recency_weight": 1.0,
+        "title": "Patient-reported outcomes with trastuzumab deruxtecan in hormone receptor-positive, HER2-low or HER2-ultralow metastatic breast cancer: results from the randomized DESTINY-Breast06 trial",
+        "pub_year": 2025,
+        "section": "Patient characteristics and treatment",
+        "text": "Patients in DESTINY-Breast06 were recruited from 273 sites in 28 countries. From July 2020 to April 2023, 866 patients comprising the ITTpopulation were enrolled and randomized to T-DXd ( n = 436) or TPC ( n = 430; 59.8% capecitabine, 24.4% nab-paclitaxel, and 15.8% paclitaxel). Of these patients, 713 comprised the HER2-low population, and 153 comprised the HER2-ultralow population. Patient demographics and baseline clinical characteristics were similar between treatment groups and across populations (Table 1). 11 Patients received a median of 2 previous lines (range 1-5) of endocrine-based therapy for metastatic disease. At the primary data cut-off (18 March 2024), 89 (20.5%) patients in the T-DXd group and 30 (7.2%) in the TPC\n\ngroup remained on treatment. The median duration of treatment was 11.0 months (range 0.4-39.6 months) in the T-DXd group and 5.6 months (0.1-35.9 months) in the TPC group."
+      }
+    ]
+  }
+]

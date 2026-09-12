@@ -1,0 +1,72 @@
+[
+  {
+    "query_id": "q001",
+    "query": "What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial was 0.45 (95% CI 0.27-0.75) [SOURCE 2]."
+  },
+  {
+    "query_id": "q019",
+    "query": "What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The pathological complete response rate was 64.8% with pembrolizumab plus chemotherapy versus 51.2% with placebo plus chemotherapy [SOURCE 2]."
+  },
+  {
+    "query_id": "q067",
+    "query": "What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q010",
+    "query": "How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "Based on the provided sources, the eligibility for trastuzumab deruxtecan (a HER2-targeted antibody-drug conjugate) hinges on the IHC 0/IHC 1+ threshold.\n\n*   Patients with IHC 1+ or IHC 2+/ISH not-amplified results (referred to as HER2-Low in the DESTINY-Breast04 trial) may be eligible for this treatment [SOURCE 1].\n*   Patients whose cancers tested IHC 0 in a central laboratory were ineligible for the trial [SOURCE 1].\n*   Currently, only IHC 1+ or IHC 2+/ISH not-amplified results confer eligibility for trastuzumab deruxtecan, while IHC 0 results do not [SOURCE 1].\n*   HER2 IHC 0 versus Low (IHC 1+ or 2+/ISH not-amplified) status also appears to be unstable across patient samples [SOURCE 1].\n*   Pathologists can make best practice efforts to distinguish IHC 1+ results from 0 by examining slides at high power, considering second pathologist review, using appropriate controls, and paying attention to preanalytic conditions [SOURCE 3].\n*   The semiquantitative IHC score must always be reported to ensure patients who meet eligibility criteria for trastuzumab deruxtecan can be identified [SOURCE 2].\n*   HER2 IHC 0/1+ results are still both interpreted as HER2-negative (HER2 is not overexpressed) using the previously recommended scoring criteria [SOURCE 2].\n*   An example of reporting is \"HER2-negative for protein overexpression (1+ staining present)\" [SOURCE 2].\n\nIn summary, an IHC 0 result does not confer eligibility for trastuzumab deruxtecan, whereas an IHC 1+ result (along with IHC 2+/ISH not-amplified) does [SOURCE 1, 2]."
+  },
+  {
+    "query_id": "q028",
+    "query": "How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q015",
+    "query": "What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "Cancers harboring germline pathogenic or likely pathogenic variants in BRCA1 or BRCA2 (gBRCA1/2pv) are characterized by homologous recombination DNA repair deficiency following the inactivation of the wildtype allele during tumor evolution. This engenders selective sensitivity to inhibition and trapping of the DNA repair enzyme, poly (adenosine diphosphate-ribose) polymerase 1 (PARP1) by exploiting the concept of synthetic lethality, as functional homologous recombination is required for cell survival when PARP1 function is inhibited and PARP1 is trapped on DNA arresting the DNA replication apparatus [SOURCE 2]."
+  },
+  {
+    "query_id": "q051",
+    "query": "What is multiomics (also known as panomics) and which individual omics disciplines does it combine?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "Multiomics, also known as panomics or integrative omics, is an analytical approach that combines data from multiple 'omics' approaches [SOURCE 1]. These approaches include genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics [SOURCE 1]."
+  },
+  {
+    "query_id": "q073",
+    "query": "What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q076",
+    "query": "What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q078",
+    "query": "What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  }
+]

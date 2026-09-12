@@ -1,0 +1,72 @@
+[
+  {
+    "query_id": "q001",
+    "query": "What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "According to [SOURCE 1], the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial was 0.45 (95% CI 0.27-0.75)."
+  },
+  {
+    "query_id": "q019",
+    "query": "What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "According to [SOURCE 2], the pathological complete response (pCR) rate was 64.8% in the pembrolizumab plus chemotherapy arm versus 51.2% in the placebo plus chemotherapy arm, with a statistically significant difference (P < .001)."
+  },
+  {
+    "query_id": "q067",
+    "query": "What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q010",
+    "query": "How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "According to [SOURCE 2], patients with breast cancers that test IHC 0 are considered \"HER2-negative for protein overexpression/gene amplification\" and are not eligible for HER2-targeted antibody-drug conjugate therapy. On the other hand, patients with breast cancers that test IHC 1+ may be eligible for a treatment that targets non-amplified/non-overexpressed levels of HER2 expression for cytotoxic drug delivery."
+  },
+  {
+    "query_id": "q028",
+    "query": "How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "According to [SOURCE 1], the pairwise meta-analysis revealed that treatment combinations involving three CDK4/6 inhibitors plus AI or fulvestrant were associated with a higher incidence of severe adverse events compared to AI or fulvestrant alone. However, the network meta-analysis confirmed increased incidence only for specific combinations: ribociclib (OR = 9.46, 95% CI = 2.07 to 43.14) or palbociclib (OR = 10.83, 95% CI = 2.36 to 50.93) plus AI and abemaciclib (OR = 4.79, 95% CI = 1.40 to 16.13) or palbociclib (OR = 6.30, 95% CI = 1.03 to 40.68) plus fulvestrant.\n\nAccording to [SOURCE 3], palbociclib plus AI and palbociclib plus fulvestrant were the worst combination in terms of therapeutic safety, and significantly increased the incidence of severe adverse events compared with endocrine therapy alone.\n\nAccording to [SOURCE 4], in terms of severe adverse events, the least desirable regimens were palbociclib plus AI (SUCRA = 53.98%) and palbociclib plus fulvestrant (SUCRA = 51.37%).\n\nIn summary, the risk of severe adverse events is higher for palbociclib plus AI and palbociclib plus fulvestrant compared to other treatment combinations, according to [SOURCE 1], [SOURCE 3], and [SOURCE 4]."
+  },
+  {
+    "query_id": "q015",
+    "query": "What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "According to the sources, the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib is as follows:\n\n* Cancers harboring germline pathogenic or likely pathogenic variants in BRCA1 or BRCA2 (gBRCA1/2pv) are characterized by homologous recombination DNA repair deficiency following the inactivation of the wild-type allele during tumor evolution. [SOURCE 2]\n* This engenders selective sensitivity to inhibition and trapping of the DNA repair enzyme, poly (adenosine diphosphate-ribose) polymerase 1 (PARP1) by exploiting the concept of synthetic lethality, as functional homologous recombination is required for cell survival when PARP1 function is inhibited and PARP1 is trapped on DNA arresting the DNA replication apparatus. [SOURCE 2]\n* Olaparib and talazoparib both inhibit and trap PARP1 on DNA and have been approved for treating patients with gBRCA1/2pv and metastatic breast cancer (MBC) irrespective of hormone receptor status. [SOURCE 2]\n\nIn summary, the mechanism of synthetic lethality is that BRCA1/2-mutated cancers are sensitive to PARP inhibitors like olaparib because they have homologous recombination DNA repair deficiency, which makes them dependent on functional homologous recombination for cell survival. Inhibition and trapping of PARP1 by PARP inhibitors like olaparib exploits this concept of synthetic lethality, leading to cell death."
+  },
+  {
+    "query_id": "q051",
+    "query": "What is multiomics (also known as panomics) and which individual omics disciplines does it combine?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "According to [SOURCE 1], multiomics is an analytical approach that combines data from multiple 'omics approaches, including:\n\n* Genomics\n* Transcriptomics\n* Proteomics\n* Metabolomics\n* Epigenomics\n* Metagenomics\n* Metatranscriptomics\n\nThis omics approach is particularly helpful in identifying biomarkers of health, disease, and treatment progress by collective characterization and quantification of pools of biological molecules within and among the cells."
+  },
+  {
+    "query_id": "q073",
+    "query": "What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q076",
+    "query": "What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q078",
+    "query": "What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  }
+]

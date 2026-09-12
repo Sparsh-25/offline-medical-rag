@@ -1,0 +1,114 @@
+[
+  {
+    "query_id": "n01",
+    "query": "Does adding ribociclib to letrozole actually help women whose breast cancer was already advanced when first diagnosed?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Yes, adding ribociclib to letrozole improves progression-free survival in women whose breast cancer was already advanced at first diagnosis. In the MONALEESA-2 trial, median progression-free survival was not reached in the ribociclib plus letrozole arm, compared with 16.4 months in the placebo plus letrozole arm for patients with de novo advanced breast cancer (hazard ratio 0.45, 95% confidence interval 0.27-0.75) [SOURCE 1]. This indicates a significant reduction in the risk of progression by approximately 55% [SOURCE 3]."
+  },
+  {
+    "query_id": "n02",
+    "query": "What's the difference between a HER2 score of 0 and 1+, and why does it matter for treatment?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "A HER2 immunohistochemistry (IHC) score of 0 indicates absent membrane staining for HER2, while a score of 1+ indicates faint, partial membrane staining in ≤10% of tumor cells. Both scores are currently interpreted as HER2-negative for protein overexpression using standard scoring criteria [SOURCE 4]. However, the distinction between these two scores is clinically relevant because patients with IHC 1+ or 2+/ISH not-amplified (collectively termed HER2-Low) may be eligible for certain treatments, such as trastuzumab deruxtecan, which target non-amplified levels of HER2 expression, whereas IHC 0 results do not confer eligibility [SOURCE 4].\n\nThe distinction between IHC 0 and IHC 1+ is also unstable, with nearly 40% of cases switching between these categories when comparing primary and metastatic tumors. This instability raises concerns about the reliability of using this threshold to determine treatment access [SOURCE 1]. Additionally, there is no evidence that HER2-Low is a distinct subtype with reproducible prognostic or predictive implications [SOURCE 1].\n\nPathologists are encouraged to carefully examine IHC 0 results for any faint staining at high power, as the distinction between IHC 0 and IHC 1+ may impact treatment decisions, particularly for patients with metastatic disease who may be candidates for HER2-targeted therapies [SOURCE 2]."
+  },
+  {
+    "query_id": "n03",
+    "query": "Which CDK4/6 inhibitor works best, and which one has the worst side effects?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "n04",
+    "query": "Is Enhertu (T-DXd) better than regular chemotherapy for HER2-low breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Yes, Enhertu (trastuzumab deruxtecan, T-DXd) is more effective than regular single-agent chemotherapy for HER2-low breast cancer. The DESTINY-Breast04 trial demonstrated that T-DXd has a survival advantage over physician's choice of chemotherapy for patients with HER2-low metastatic breast cancer [SOURCE 4]. Additionally, T-DXd could extend survival time by more than 3 months compared to single-agent chemotherapy [SOURCE 1]. Based on these findings, the US Food and Drug Administration approved T-DXd for patients with unresectable or metastatic HER2-low breast cancer who have received prior chemotherapy in the metastatic setting [SOURCE 2]."
+  },
+  {
+    "query_id": "n05",
+    "query": "What's the recommended first treatment for ER-positive, HER2-negative metastatic breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The recommended first treatment for ER-positive, HER2-negative metastatic breast cancer includes an aromatase inhibitor (AI) combined with a CDK4/6 inhibitor for patients with disease that is de novo or recurring more than 12 months after the end of adjuvant endocrine therapy [I, A]. Options include AI-ribociclib (ESMO-MCBS v2.0 score: 4), AI-abemaciclib (ESMO-MCBS v2.0 score: 1), and AI-palbociclib (ESMO-MCBS v2.0 score: 2) [SOURCE 3]. Additionally, ovarian function suppression (OFS) or ovarian ablation is recommended in addition to all endocrine-based therapies in pre- and perimenopausal women [I, A] [SOURCE 3]."
+  },
+  {
+    "query_id": "n06",
+    "query": "What is multi-omics, and how is it being used in breast cancer research?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Multi-omics, also described as panomics or integrative omics, is an analytical approach that combines data from multiple 'omics approaches, including genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics, to address complex biological questions [SOURCE 2]. This approach is particularly helpful in identifying biomarkers of health, disease, and treatment progress by collectively characterizing and quantifying pools of biological molecules within and among cells [SOURCE 2]. \n\nIn breast cancer research, multi-omics is being used to provide significant insight into therapeutic decision-making by integrating data from multiple factors of breast cancer, including pathological, clinical, and molecular factors [SOURCE 1]. This approach helps in elucidating the molecular mechanisms involved in drug resistance and disease progression, which is critical for the management of breast cancer [SOURCE 1]. By understanding cancer and its treatment at the molecular level, multi-omics supports the development of a personalized approach to therapy, which is a significant advancement in modern oncology [SOURCE 1]."
+  },
+  {
+    "query_id": "n07",
+    "query": "Is T-DXd worth the cost compared to standard chemotherapy?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Based on the provided sources, T-DXd is not considered cost-effective compared to standard chemotherapy from the perspective of the Chinese healthcare system. The incremental cost-effectiveness ratio (ICER) for T-DXd was $336,026.77 per QALY, which is more than 9 times the willingness-to-pay (WTP) threshold of $35,796.83 per QALY in China [SOURCE 5]. Additionally, probabilistic sensitivity analysis (PSA) showed that the probability of T-DXd being cost-effective was 0% at the WTP threshold of $35,796.83/QALY in both all patients and the hormone receptor-positive cohort [SOURCE 2]. The study also indicated that T-DXd would not be cost-effective unless the threshold for cost-effectiveness (CEA) sharply increased to about $170,000-$225,000 per QALY, which is considered unlikely given China's current economic conditions [SOURCE 2]."
+  },
+  {
+    "query_id": "n08",
+    "query": "Does adding immunotherapy before surgery help triple-negative breast cancer, and does it hurt patients' quality of life?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "n09",
+    "query": "When should a breast cancer patient be offered genetic testing?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "A breast cancer patient should be offered genetic testing if they meet specific testing criteria, such as being diagnosed with breast cancer at age ≤ 65 years, or if they have other clinical or family history indicators consistent with inherited cancer susceptibility [SOURCE 2]. All patients with breast cancer should be evaluated to determine the appropriateness of germline genetic testing, but testing should be based on individual patient characteristics [SOURCE 2]. Additionally, patients known to harbor genetic mutations that increase the risk of breast cancer may opt for bilateral prophylactic mastectomies with reconstruction [SOURCE 3]."
+  },
+  {
+    "query_id": "n10",
+    "query": "What are the cancer risks for someone who carries a BRCA1 mutation?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Individuals who carry a pathogenic/likely pathogenic (P/LP) BRCA1 mutation have an elevated risk for several cancers. The absolute risk for primary breast cancer is estimated to be 60%-72% [SOURCE 4]. The 20-year cumulative risk for contralateral breast cancer is 30%-40%, and the 15-year cumulative risk in premenopausal women is greater than 20% [SOURCE 4]. Additionally, there is an increased risk for serous and/or serous-like endometrial cancer, with a hazard ratio (HR) of 10.48 (95% CI, 2.95-37.20) for serous-like endometrial cancer and an HR of 15.71 (95% CI, 4.62-53.40) for p53-abnormal endometrial cancer in BRCA1 carriers [SOURCE 5]. The absolute risk for male breast cancer by age 70 years is 0.2%-1.2% [SOURCE 4]. Additionally, there is an estimated ≤5% absolute risk for pancreatic cancer [SOURCE 4]."
+  },
+  {
+    "query_id": "n11",
+    "query": "Does olaparib help stop breast cancer from coming back in people with BRCA mutations?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Yes, olaparib has been shown to help reduce the risk of breast cancer recurrence in people with BRCA mutations. In the OlympiA trial, the primary endpoint of invasive disease-free survival (IDFS) was significantly improved with olaparib compared to placebo. The trial also showed significant improvements in distant disease-free survival (DDFS), although overall survival (OS) did not reach statistical significance at the time of the second interim analysis [SOURCE 2]. \n\nThe primary endpoint, IDFS, was defined as the time from randomization until the first occurrence of ipsilateral invasive breast tumor, locoregional invasive disease, distant recurrence, contralateral invasive breast cancer, second primary invasive cancer, or death from any cause [SOURCE 4]. \n\nThese findings support the use of adjuvant olaparib for high-risk, early breast cancer in patients with germline BRCA1/2 mutations [SOURCE 2]."
+  },
+  {
+    "query_id": "n12",
+    "query": "Is it better to give chemotherapy before or after surgery for hormone-positive breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Randomized clinical trials have found no significant differences in long-term outcomes when systemic chemotherapy is given before or after surgery [SOURCE 1]. For hormone-positive breast cancer specifically, the correlation between pathologic response to preoperative systemic therapy and long-term outcomes is least strong compared to triple-negative or HER2-positive breast cancer [SOURCE 1]. Therefore, the decision to administer chemotherapy before or after surgery for hormone-positive breast cancer should be individualized, considering factors such as tumor biology, patient preferences, and potential benefits such as facilitating breast conservation or providing prognostic information [SOURCE 1]."
+  },
+  {
+    "query_id": "n13",
+    "query": "For HER2-low metastatic breast cancer, how well does T-DXd work — and is it worth the cost?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "Trastuzumab deruxtecan (T-Dxd) has demonstrated a survival advantage over the physician's choice of chemotherapy for patients with HER2-low metastatic breast cancer, as shown in the DESTINY-Breast04 trial [SOURCE 1]. Specifically, T-Dxd could extend survival time by more than 3 months compared to single-agent chemotherapy [SOURCE 2]. However, in terms of cost-effectiveness, T-Dxd was found to be not cost-effective for advanced HER2-low breast cancer compared with chemotherapy from the perspective of the Chinese healthcare system. The incremental cost-effectiveness ratio (ICER) was $336,026.77 per quality-adjusted life-year (QALY) gained in all patients, and $274,905.72 per QALY in the hormone receptor-positive cohort, both of which are much higher than the commonly accepted willingness-to-pay threshold of $35,796.83 per QALY [SOURCE 5]."
+  },
+  {
+    "query_id": "n14",
+    "query": "If someone has a BRCA mutation and breast cancer, what are their treatment and risk-management options?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "For individuals with a BRCA pathogenic/likely pathogenic (P/LP) variant and breast cancer, treatment and risk-management options include:\n\n1. **Risk-Reducing Mastectomy (RRM):** This is an option for individuals with a BRCA P/LP variant who have not had a bilateral mastectomy. Counseling should include a discussion regarding the degree of protection, reconstruction options, and risks. Additionally, the history and residual breast cancer risk with age and life expectancy should be considered during counseling. Psychosocial and quality-of-life aspects of undergoing RRM should also be addressed [SOURCE 1].\n\n2. **Screening Recommendations:** \n   - For individuals with a BRCA P/LP variant, screening includes:\n     - Annual breast MRI with and without contrast starting at age 25-29 years.\n     - Annual mammogram and breast MRI with and without contrast starting at age 30-75 years.\n     - For those over 75 years, management should be considered on an individual basis.\n     - For individuals treated for breast cancer and who have not had a bilateral mastectomy, annual mammogram and breast MRI should continue as described above.\n     - Clinical breast exams every 6-12 months starting at age 25 years [SOURCE 1].\n\n3. **Management of Contralateral Breast Cancer Risk:** The 20-year cumulative risk for contralateral breast cancer is 25% for BRCA2 carriers and 30%-40% for BRCA1 carriers. These risks should be considered in the context of ongoing screening and potential RRM [SOURCE 4, SOURCE 5].\n\n4. **Additional Cancers:** Individuals with BRCA mutations also have an increased risk for other cancers, such as pancreatic and prostate cancer. For pancreatic cancer, screening is recommended for BRCA2 carriers with a family history of pancreatic cancer. For prostate cancer, management should follow the guidelines for BRCA pathogenic variant-positive management [SOURCE 4, SOURCE 5].\n\nThese recommendations are based on the strength of evidence of association with cancer and the increased risk for associated cancers in individuals with BRCA mutations [SOURCE 3, SOURCE 4, SOURCE 5]."
+  },
+  {
+    "query_id": "n15",
+    "query": "How do the different CDK4/6 inhibitors compare, and what do the guidelines actually recommend for HR-positive metastatic disease?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "n16",
+    "query": "What role does immunotherapy play in triple-negative breast cancer treatment?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "Immunotherapy, specifically the use of programmed cell death protein 1 (PD-1) or programmed cell death ligand 1 (PD-L1) inhibitors, has been studied as a strategy to improve outcomes for patients with early-stage triple-negative breast cancer (TNBC). The addition of immunotherapies to chemotherapy has been explored, with some treatments being approved for clinical use [SOURCE 3]. For example, the KEYNOTE-522 study evaluated neoadjuvant pembrolizumab plus chemotherapy followed by adjuvant pembrolizumab in early-stage TNBC, though no substantial differences in patient-reported outcomes (PROs) were observed between the treatment groups [SOURCE 3]. \n\nHowever, the provided sources do not contain enough information to answer this question in full, as they do not detail long-term efficacy or broader clinical implementation of immunotherapy in TNBC beyond specific trials."
+  }
+]

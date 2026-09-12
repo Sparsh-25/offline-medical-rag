@@ -1,0 +1,72 @@
+[
+  {
+    "query_id": "q001",
+    "query": "What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer was 0.45 (95% CI 0.27-0.75) [SOURCE 1, SOURCE 2, SOURCE 3]."
+  },
+  {
+    "query_id": "q019",
+    "query": "What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "In the KEYNOTE-522 study, the pathological complete response rate was 64.8% with pembrolizumab plus chemotherapy versus 51.2% with chemotherapy alone (P < .001) [SOURCE 2]."
+  },
+  {
+    "query_id": "q067",
+    "query": "What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The provided sources state that BRCA1 R1699Q is an example of a variant established to have lower risks compared to BRCA1 P/LP variants [SOURCE 1]. However, the sources do not provide specific risk estimates for BRCA1 R1699Q by age 70, nor do they offer a direct comparison to typical BRCA1 pathogenic variants beyond stating the former has lower risk [SOURCE 1]. The sources do state that carriers of BRCA1 P/LP variants have a 60% to 72% lifetime risk of primary breast cancer [SOURCE 1]. \n\nThe provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q010",
+    "query": "How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "Patients with an IHC 1+ result may be eligible for a treatment that targets non-amplified/non-overexpressed levels of HER2 expression for cytotoxic drug delivery, while patients with an IHC 0 result currently do not have eligibility for such treatment [SOURCE 2]. The guideline update notes that a threshold has been “artifactually created between a result of IHC 0 and IHC at least 1+ to determine access to the drug based on trial eligibility” [SOURCE 1]. However, the clinical validity of this threshold has not been tested [SOURCE 1]."
+  },
+  {
+    "query_id": "q028",
+    "query": "How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "According to the meta-analysis, palbociclib plus AI was associated with a higher incidence of severe adverse events compared to abemaciclib plus fulvestrant [SOURCE 1, SOURCE 5]. Specifically, palbociclib plus AI had an OR of 10.83 (95% CI = 2.36 to 50.93), while abemaciclib plus fulvestrant had an OR of 4.79 (95% CI = 1.40 to 16.13) [SOURCE 1].  The hazard ratio for palbociclib plus AI was 10.83 (95% CI = 2.3 to 52.51) and for abemaciclib plus fulvestrant was 4.8 (95%CI = 1.41 to 16.21) [SOURCE 5].  Palbociclib plus AI was also identified as one of the least desirable regimens in terms of severe adverse events [SOURCE 4]."
+  },
+  {
+    "query_id": "q015",
+    "query": "What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "Cancers with germline pathogenic variants in BRCA1 or BRCA2 (gBRCA1/2pv) have a deficiency in homologous recombination DNA repair, which makes them sensitive to PARP inhibitors [SOURCE 2]. PARP inhibitors inhibit and trap PARP1 on DNA, and functional homologous recombination is required for cell survival when PARP1 function is inhibited [SOURCE 2]. This exploitation of the requirement for functional homologous recombination is the concept of synthetic lethality [SOURCE 2].  The vulnerability is independent of hormone receptor status [SOURCE 1]."
+  },
+  {
+    "query_id": "q051",
+    "query": "What is multiomics (also known as panomics) and which individual omics disciplines does it combine?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "Multiomics, also described as panomics or integrative omics, is an analytical approach that combines data from multiple 'omics' approaches [SOURCE 1]. It is used to identify biomarkers of health, disease, and treatment progress by characterizing and quantifying biological molecules within and among cells [SOURCE 1, SOURCE 2, SOURCE 5]. \n\nIt combines data from genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics [SOURCE 1]. Radiomics is also included in omics approaches used in clinical practice [SOURCE 4]."
+  },
+  {
+    "query_id": "q073",
+    "query": "What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question. While the sources report on progression-free survival and overall response rates, overall survival results were reported as “immature at the time of this interim analysis” [SOURCE 3]."
+  },
+  {
+    "query_id": "q076",
+    "query": "What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q078",
+    "query": "What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  }
+]

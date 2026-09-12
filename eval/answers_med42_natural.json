@@ -1,0 +1,114 @@
+[
+  {
+    "query_id": "n01",
+    "query": "Does adding ribociclib to letrozole actually help women whose breast cancer was already advanced when first diagnosed?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Yes, adding ribociclib to letrozole improves progression-free survival compared to letrozole alone in postmenopausal women with de novo HR+, HER2- advanced breast cancer. In the MONALEESA-2 trial, median progression-free survival was not reached in the ribociclib plus letrozole arm versus 16.4 months in the placebo plus letrozole arm (hazard ratio 0.45, 95% confidence interval 0.27-0.75) [SOURCE 1, §Abstract; SOURCE 3, §Discussion]. This benefit was consistent across subgroups, including patients with de novo advanced disease [SOURCE 2, §Patient and disease characteristics]. Ribociclib plus letrozole was also associated with improved overall response and clinical benefit rates versus placebo plus letrozole in patients with de novo disease [SOURCE 3, §Discussion]."
+  },
+  {
+    "query_id": "n02",
+    "query": "What's the difference between a HER2 score of 0 and 1+, and why does it matter for treatment?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "According to SOURCE 1, a HER2 score of 0 indicates no membrane staining or faint, partial membrane staining in ≤10%, while a score of 1+ shows weak, incomplete membrane staining in ≥10% of tumor cells. This distinction matters for treatment because patients with metastatic disease who have HER2 IHC 0 results are currently ineligible for trastuzumab deruxtecan, a drug targeting non-amplified levels of HER2 expression. However, the clinical validity of this threshold remains untested, and additional clinical trial data are needed to determine if IHC 0 samples include targetable levels of HER2 protein needed for clinical response."
+  },
+  {
+    "query_id": "n03",
+    "query": "Which CDK4/6 inhibitor works best, and which one has the worst side effects?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "n04",
+    "query": "Is Enhertu (T-DXd) better than regular chemotherapy for HER2-low breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "According to DESTINY-Breast04, trastuzumab deruxtecan (T-Dxd) demonstrated a survival advantage compared to the physician's choice of chemotherapy for patients with HER2-low metastatic breast cancer. However, this expensive novel treatment also brought an economic burden. A cost-effectiveness analysis based on DESTINY-Breast04 from the perspective of the Chinese healthcare system showed that T-Dxd increased costs by $104,168.30 while gaining 0.31 quality-adjusted life-years (QALYs), resulting in an incremental cost-effectiveness ratio (ICER) of $336,026.77 per QALY in all patients. The ICER was much higher than the commonly accepted willingness-to-pay threshold ($357,96.83 per QALY). In the hormone receptor-positive cohort, the ICER was lower, with $274,905.72 per QALY. The costs of T-Dxd and the utility of progression-free survival (PFS) were crucial factors in determining the ICER."
+  },
+  {
+    "query_id": "n05",
+    "query": "What's the recommended first treatment for ER-positive, HER2-negative metastatic breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The recommended first-line treatment for ER-positive, HER2-negative metastatic breast cancer is an aromatase inhibitor (AI) combined with a CDK4/6 inhibitor, such as AI-ribociclib [ESMO-Magnitude of Clinical Benefit Scale (MCBS) v2.0 score: 4], AI-abemaciclib (ESMO-MCBS v2.0 score: 1), or AI-palbociclib (ESMO-MCBS v2.0 score: 2) [SOURCE 3]. This recommendation is based on the ESMO Clinical Practice Guideline for Metastatic Breast Cancer (None) - §First-line treatment."
+  },
+  {
+    "query_id": "n06",
+    "query": "What is multi-omics, and how is it being used in breast cancer research?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Multiomics, also described as panomics and/or integrative omics, is an analytical approach that combines data from multiple 'omics' approaches including genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics to answer complex biological questions. This omics approach is particularly helpful in identifying biomarkers of health, disease, and treatment progress by collective characterization and quantification of pools of biological molecules within and among the cells. Advanced technologies have allowed 'omics' data analysis in a combined, interconnected, and holistic format to solve complex biological problems. Systems biology is an approach in biomedical research to understand the larger picture, be it at the level of the organism, tissue, or cell by putting its pieces together. It is in stark contrast to decades of reductionist biology, which involves taking the pieces apart."
+  },
+  {
+    "query_id": "n07",
+    "query": "Is T-DXd worth the cost compared to standard chemotherapy?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Based on the cost-effectiveness analysis of trastuzumab deruxtecan (T-DXd) in patients with HER2-low advanced breast cancer based on DESTINY-Breast04 (2023), the results suggest that T-DXd is not cost-effective compared to standard chemotherapy in China. Even with a high willingness-to-pay (WTP) threshold, the incremental cost-effectiveness ratio (ICER) for T-DXd was more than 9 times the WTP threshold for cost-effectiveness ($357,96.83 per QALY in China). The probability of T-DXd being cost-effective was 0% at the WTP threshold of $35,796.83/QALY in both all patients and the hormone receptor-positive cohort. Additionally, the prices of anti-cancer drugs in China have greatly reduced in recent years due to national centralized drug procurement and national medical insurance negotiations, which may further increase the ICER. Therefore, T-DXd may need to significantly reduce its price to be considered cost-effective."
+  },
+  {
+    "query_id": "n08",
+    "query": "Does adding immunotherapy before surgery help triple-negative breast cancer, and does it hurt patients' quality of life?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Adding immunotherapy before surgery for triple-negative breast cancer may improve outcomes, but it can also negatively affect patients' quality of life. In the KEYNOTE-522 study, patients received neoadjuvant pembrolizumab plus chemotherapy followed by adjuvant pembrolizumab. The study found that this regimen improved disease-free survival and overall survival compared to chemotherapy alone. However, patients in the immunotherapy group reported more fatigue, nausea, and diarrhea during treatment. These side effects can negatively impact patients' quality of life, but it is important to note that the benefits of immunotherapy may outweigh the risks for some patients."
+  },
+  {
+    "query_id": "n09",
+    "query": "When should a breast cancer patient be offered genetic testing?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "According to SOURCE 2, testing may be considered for patients diagnosed with breast cancer at age ≤ 65 years who do not meet other testing criteria, including breast cancer genes plus other inherited cancer genes consistent with family phenotype. Testing should ultimately be based on patient characteristics, such as those specified in the Testing Criteria for High-Penetrance Breast Cancer Susceptibility Genes in the algorithm. It is estimated that the age ≤ 65 years threshold will lead to a recommendation of testing 80% of women with breast cancer."
+  },
+  {
+    "query_id": "n10",
+    "query": "What are the cancer risks for someone who carries a BRCA1 mutation?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "According to SOURCE 4, carriers of a BRCA1 pathogenic variant have an absolute risk of 60%-72% for primary breast cancer and a 20-year cumulative risk of 30%-40% for contralateral breast cancer. They also have an absolute risk of 0.2%-1.2% for male breast cancer by age 70. Additionally, carriers of a BRCA1 pathogenic variant have an absolute risk of 39%-58% for ovarian cancer. The strength of evidence for association with cancer for BRCA1 is very strong for breast and ovarian cancer and strong for male breast cancer."
+  },
+  {
+    "query_id": "n11",
+    "query": "Does olaparib help stop breast cancer from coming back in people with BRCA mutations?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "Yes, olaparib has been shown to help prevent breast cancer recurrence in people with BRCA mutations. This is based on the OlympiA phase III trial, which found that adjuvant olaparib significantly improved disease-free survival (HR 0.70) and distant disease-free survival (HR 0.69) compared to placebo in patients with germline pathogenic variants in BRCA1/2 and high-risk, early breast cancer. However, the trial did not meet its primary endpoint of overall survival (OS), as the superiority boundary for OS was not crossed. The OlympiA trial's results support the use of olaparib as an adjuvant treatment for high-risk, BRCA-mutated breast cancer to prevent recurrence, but its impact on OS remains uncertain."
+  },
+  {
+    "query_id": "n12",
+    "query": "Is it better to give chemotherapy before or after surgery for hormone-positive breast cancer?",
+    "query_type": "natural_single",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "n13",
+    "query": "For HER2-low metastatic breast cancer, how well does T-DXd work — and is it worth the cost?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "Trastuzumab deruxtecan (T-DXd) has demonstrated a survival advantage over the physician's choice of chemotherapy for patients with HER2-low metastatic breast cancer, as shown in the DESTINY-Breast04 trial. However, this expensive novel treatment also brings an economic burden. A cost-effectiveness analysis based on DESTINY-Breast04 from the perspective of the Chinese healthcare system found that T-DXd increased costs by $104,168.30 while gaining 0.31 quality-adjusted life-years (QALYs), resulting in an incremental cost-effectiveness ratio (ICER) of $336,026.77 per QALY in all patients. The costs of T-DXd and the utility of progression-free survival (PFS) were crucial factors in determining the ICER. In the hormone receptor-positive cohort, the ICER was lower, at $274,905.72 per QALY. The ICER was much higher than the commonly accepted willingness-to-pay threshold of $357,96.83 per QALY."
+  },
+  {
+    "query_id": "n14",
+    "query": "If someone has a BRCA mutation and breast cancer, what are their treatment and risk-management options?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "For individuals with a BRCA pathogenic/likely pathogenic variant who are treated for breast cancer and have not had a bilateral mastectomy, screening annual mammogram and breast MRI should continue as described above. Discuss option of RRM (risk-reducing mastectomy) and address psychosocial and quality-of-life aspects of undergoing RRM. Screening with clinical breast exam should continue after RRM. Routine screening with mammogram and breast MRI are indicated. [SOURCE 1]\n\nIf a patient with recurrent/stage IV breast cancer presents with a tumor with an NTRK fusion, treatment with an NTRK inhibitor is an option if no satisfactory alternative treatments exist or for disease progression following treatment. [SOURCE 2]\n\nIf a patient with recurrent/stage IV breast cancer presents with a tumor with MSI-H/mismatch repair (MMR) mutation, whose disease has progressed following prior treatments and no satisfactory alternative treatment options, treatment with pembrolizumab is an option. [SOURCE 2]\n\nRecommendations for the medical management of BRCA-related cancers are based on an appreciation of the early onset and increased risk for associated cancers. An individual from a family with a known BRCA1/2 pathogenic/likely pathogenic variant who tests negative for the familial variant should be followed according to the recommendations for the general population for breast cancer (eg, the NCCN Guidelines for Breast Cancer Screening and Diagnosis [available at www.NCCN.org]). [SOURCE 3]\n\nCancer risk management based on genetic test results:\n- BRCA2: Primary breast cancer absolute risk 55%-69%, contralateral breast cancer 20-year cumulative risk 25%, male breast cancer absolute risk 1.8%-7.1% by age 70, pancreatic cancer absolute risk 5%-10%, prostate cancer absolute risk 19%-61%, melanoma management see BRCA Pathogenic Variant-Positive Management. [SOURCE 4]\n- BRCA1: Primary breast cancer absolute risk 60%-72%, contralateral breast cancer 20-year cumulative risk 30%-40%, male breast cancer absolute risk 0.2%-1.2% by age 70, pancreatic cancer absolute risk ≤5%, prostate cancer absolute risk 7%-26%. [SOURCE 5]"
+  },
+  {
+    "query_id": "n15",
+    "query": "How do the different CDK4/6 inhibitors compare, and what do the guidelines actually recommend for HR-positive metastatic disease?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "The different CDK4/6 inhibitors (abemaciclib, palbociclib, and ribociclib) have been investigated in combination with endocrine therapies (AI and fulvestrant) for the treatment of HR-positive metastatic breast cancer. Network meta-analyses have confirmed the efficacy and safety of these combinations, with palbociclib plus fulvestrant and abemaciclib plus fulvestrant appearing to be the most effective regimens. However, guidelines recommend that the choice of CDK4/6 inhibitor should be individualized based on patient characteristics, such as menopausal status, and that the optimal regimen may vary depending on the line of therapy. Further randomized controlled trials are necessary to provide more robust evidence and compare the efficacy and safety of different treatment combinations."
+  },
+  {
+    "query_id": "n16",
+    "query": "What role does immunotherapy play in triple-negative breast cancer treatment?",
+    "query_type": "natural_multi",
+    "answerable": true,
+    "answer": "Immunotherapy has emerged as a promising treatment option for triple-negative breast cancer (TNBC), particularly in early-stage disease. The KEYNOTE-522 study (SOURCE 3) investigated the addition of pembrolizumab to chemotherapy in the neoadjuvant and adjuvant settings for early-stage TNBC. The study demonstrated a significant pathologic complete response (pCR) rate of 64.8% with pembrolizumab plus chemotherapy, compared to 51.2% with chemotherapy alone (Gianni et al., 2022). Furthermore, the quality-of-life results showed no substantial differences between the pembrolizumab plus chemotherapy arm and the chemotherapy alone arm (Rebecca Dent et al., 2024).\n\nImmunotherapy has been shown to improve outcomes in TNBC, as it targets the immune system's ability to recognize and attack cancer cells. In a real-world study, nearly 50% of patients with early-stage TNBC experienced recurrence despite treatment with chemotherapy, highlighting the need for alternative strategies (Sung et al., 2021). Strategies such as the addition of immunotherapies, like PD-1 or PD-L1 inhibitors, to chemotherapy have been studied and some have been approved for clinical use (Anders and Carey, 2009).\n\nTriple-negative breast cancer is an aggressive tumor type with a high rate of disease recurrence, and its response to chemotherapy is generally poorer compared to other types (Eliyatkın et al., 2015). Despite adjuvant chemotherapy, the survival rate of patients with triple-negative breast cancer is very poor (Anders and Carey, 2009). Therefore, the integration of immunotherapy into treatment regimens for TNBC may improve outcomes for these patients.\n\nIn conclusion, immunotherapy plays a significant role in triple-negative breast cancer treatment, particularly in early-stage disease. The addition of pembrolizumab to chemotherapy in the neoadjuvant and adjuvant settings has been shown to improve pCR rates and quality of life in patients with early-stage TNBC (Gianni et al., 2022; Rebecca Dent et al., 2024). Further research is needed to explore the optimal use of immunotherapy in TNBC treatment and to identify biomarkers that can predict response to therapy."
+  }
+]

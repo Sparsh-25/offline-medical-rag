@@ -1,0 +1,72 @@
+[
+  {
+    "query_id": "q001",
+    "query": "What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial was 0.45 (95% CI 0.27-0.75) [SOURCE 1, SOURCE 2, SOURCE 3]."
+  },
+  {
+    "query_id": "q019",
+    "query": "What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The pathological complete response rates in KEYNOTE-522 were 64.8% with pembrolizumab plus chemotherapy versus 51.2% with placebo plus chemotherapy [SOURCE 2]."
+  },
+  {
+    "query_id": "q067",
+    "query": "What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?",
+    "query_type": "factoid_numeric",
+    "answerable": true,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q010",
+    "query": "How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "Patients with breast cancers that are HER2 IHC 1+ or IHC 2+/ISH not-amplified may be eligible for a treatment that targets non-amplified/non-overexpressed levels of HER2 expression for cytotoxic drug delivery, while IHC 0 results do not currently result in eligibility [SOURCE 2]. The clinical validity of this threshold remains untested [SOURCE 2]."
+  },
+  {
+    "query_id": "q028",
+    "query": "How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?",
+    "query_type": "comparative",
+    "answerable": true,
+    "answer": "The risk of severe adverse events is higher for palbociclib plus AI (OR = 10.83, 95% CI = 2.36 to 50.93) compared to abemaciclib plus fulvestrant (OR = 4.79, 95% CI = 1.40 to 16.13) [SOURCE 1]."
+  },
+  {
+    "query_id": "q015",
+    "query": "What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "The mechanism of synthetic lethality involves inhibiting catalytic activities of PARP1 and trapping PARP1 on DNA, creating lesions that require functional BRCA1 and BRCA2 protein for repair [SOURCE 1]. This vulnerability is due to the homologous recombination DNA repair deficiency in cancers harboring germline pathogenic variants in BRCA1 or BRCA2 (gBRCA1/2pv), which makes them selectively sensitive to PARP1 inhibition and trapping [SOURCE 2]."
+  },
+  {
+    "query_id": "q051",
+    "query": "What is multiomics (also known as panomics) and which individual omics disciplines does it combine?",
+    "query_type": "definitional",
+    "answerable": true,
+    "answer": "Multiomics, also known as panomics, is an analytical approach that combines data from multiple 'omics' approaches to answer complex biological questions. It combines the following individual omics disciplines: genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics [SOURCE 1]."
+  },
+  {
+    "query_id": "q073",
+    "query": "What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q076",
+    "query": "What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  },
+  {
+    "query_id": "q078",
+    "query": "What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?",
+    "query_type": "unanswerable",
+    "answerable": false,
+    "answer": "The provided sources do not contain enough information to answer this question."
+  }
+]
