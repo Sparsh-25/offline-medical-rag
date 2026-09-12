@@ -10,7 +10,12 @@ cfg = yaml.safe_load(open("config.yaml"))
 
 # Loaded once at import time (same tradeoff embed.py already accepts for its
 # SentenceTransformer) — real subword tokenization, not a word-count proxy.
-_tokenizer = AutoTokenizer.from_pretrained(cfg["embedding"]["model"])
+# For the asymmetric/MedCPT config, embedding.model is a {query, article} dict;
+# chunks are embedded by the Article-Encoder (which truncates at 512 tokens), so
+# count tokens with its tokenizer. Symmetric configs store a plain model-name string.
+_model_cfg = cfg["embedding"]["model"]
+_tokenizer_name = _model_cfg["article"] if isinstance(_model_cfg, dict) else _model_cfg
+_tokenizer = AutoTokenizer.from_pretrained(_tokenizer_name)
 
 # ── Recency weight computation ────────────────────────────────────
 
