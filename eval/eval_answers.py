@@ -183,7 +183,14 @@ def main():
     parser.add_argument("--metrics-only", action="store_true", help="Recompute metrics from saved answers, no generation")
     parser.add_argument("--show", action="store_true", help="Print each answer + sources + gold for manual scoring")
     parser.add_argument("--limit", type=int, default=None, help="Generate only the first N (quick smoke test)")
+    parser.add_argument("--out", default="answers_gold.jsonl",
+                        help="Output filename in eval/ (use a different one, e.g. answers_gold_reranked.jsonl, "
+                             "to keep the baseline and reranked answers separate for comparison)")
     args = parser.parse_args()
+
+    # Point every mode (generate / metrics / show) at the chosen output file.
+    global OUT_PATH
+    OUT_PATH = Path(__file__).parent / args.out
 
     if args.show:
         show_for_reading()

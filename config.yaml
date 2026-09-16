@@ -73,6 +73,15 @@ retrieval:
                                  # abstention logic yet; Tier 2 (generic oncology queries) showed this
                                  # value still lets some genuinely-wrong matches through.
 
+reranker:
+  # Cross-encoder second stage: reorders the retrieval candidate pool so the best
+  # chunks land in the top_k the LLM sees. Chosen by the A/B in decisions.md D66
+  # (bge-reranker-v2-m3 lifted R@5 from 0.665 to 0.813). Set enabled: false to fall
+  # back to plain hybrid retrieval.
+  enabled: true
+  model:   "bge-v2-m3"   # short name from src/rerank.py RERANKERS
+  pool:    50            # how many top candidates to rerank (matches retrieval.candidate_pool)
+
 vlm:
   # Ollama model used by caption.py for figure extraction.
   # Change to "llava:13b", "llava-phi3", "bakllava", etc. — no code change needed.

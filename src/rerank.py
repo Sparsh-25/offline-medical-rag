@@ -80,3 +80,22 @@ def rerank(query: str, candidates: list[dict], score, text_key: str = "chunk_tex
     scores = score(query, [c[text_key] for c in candidates])
     ranked = sorted(zip(candidates, scores), key=lambda pair: pair[1], reverse=True)
     return [candidate for candidate, _ in ranked]
+
+
+def cap_top_k(candidates: list[dict], max_per_doc: int, top_k: int, doc_key: str = "doc_id") -> list[dict]:
+    """Keep candidates in order, allowing at most max_per_doc per document, up to top_k.
+
+    Same diversity cap as retrieve.py's, but working on the chunk dicts a reranker
+    returns. Shared by answer.py (production) and eval/compare_rerankers.py (the A/B)
+    so both apply the exact same cap.
+    """
+    kept, per_doc = [], {}
+    for c in candidates:
+        doc = c[doc_key]
+        if per_doc.get(doc, 0) >= max_per_doc:
+            continue
+        per_doc[doc] = per_doc.get(doc, 0) + 1
+        kept.append(c)
+        if len(kept) == top_k:
+            break
+    return kept

@@ -30,7 +30,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from src.retrieve import retrieve, CANDIDATE_POOL, MAX_PER_DOC
-from src.rerank import load_reranker, rerank, RERANKERS
+from src.rerank import load_reranker, rerank, cap_top_k, RERANKERS
 
 GOLD_PATH = Path(__file__).parent / "gold.jsonl"
 RESULTS_PATH = Path(__file__).parent / "rerank_results.json"
@@ -43,19 +43,6 @@ def load_answerable() -> list[dict]:
     """Gold entries we can score retrieval on (negatives have no relevant chunk)."""
     gold = [json.loads(l) for l in GOLD_PATH.read_text(encoding="utf-8").splitlines() if l.strip()]
     return [e for e in gold if e["answerable"]]
-
-
-def top_k_capped(candidates: list[dict], k: int, max_per_doc: int) -> list[dict]:
-    """Keep candidates in order, allowing at most max_per_doc per document, up to k."""
-    kept, per_doc = [], defaultdict(int)
-    for c in candidates:
-        if per_doc[c["doc_id"]] >= max_per_doc:
-            continue
-        per_doc[c["doc_id"]] += 1
-        kept.append(c)
-        if len(kept) == k:
-            break
-    return kept
 
 
 def score_query(retrieved_ids: list[str], relevant_ids: list[str]) -> dict:
@@ -87,7 +74,7 @@ def evaluate(pools: list[tuple[dict, list[dict]]], order_fn) -> list[dict]:
     rows = []
     for entry, pool in pools:
         ordered = order_fn(entry["query"], pool)
-        top = top_k_capped(ordered, k=FINAL_K, max_per_doc=MAX_PER_DOC)
+        top = cap_top_k(ordered, max_per_doc=MAX_PER_DOC, top_k=FINAL_K)
         row = score_query([c["chunk_id"] for c in top], entry["relevant_chunk_ids"])
         row["query_type"] = entry["query_type"]
         rows.append(row)

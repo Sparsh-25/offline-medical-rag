@@ -32,15 +32,45 @@ from pathlib import Path
 
 import yaml
 
-from src.retrieve import retrieve
+from src.retrieve import retrieve, MAX_PER_DOC, TOP_K
 from src.prompt import build_messages
+from src.rerank import load_reranker, rerank, cap_top_k
 
 _ROOT = Path(__file__).resolve().parent.parent
 cfg = yaml.safe_load((_ROOT / "config.yaml").read_text())
 LLM_CFG = cfg["llm"]
+RERANK_CFG = cfg.get("reranker", {})
 
 # The model is big and slow to load, so we load it once and reuse it.
 _llm = None
+# Same for the reranker (loaded only if enabled).
+_reranker = None
+
+
+def load_reranker_once():
+    """Load the configured reranker once, then reuse on later calls."""
+    global _reranker
+    if _reranker is None:
+        _reranker = load_reranker(RERANK_CFG["model"])
+    return _reranker
+
+
+def retrieve_top_k(query: str, top_k: int) -> list[dict]:
+    """
+    Get the top_k chunks for a query. If the reranker is enabled (config), pull a
+    larger uncapped candidate pool, reorder it with the cross-encoder, then apply the
+    per-doc cap and keep top_k — the exact flow the D66 A/B measured (R@5 0.813).
+    Otherwise fall back to plain hybrid retrieval.
+    """
+    if not RERANK_CFG.get("enabled"):
+        return retrieve(query, top_k=top_k)
+
+    pool = retrieve(query, top_k=RERANK_CFG.get("pool", 50), max_per_doc=10**6)  # 10**6 = no cap
+    reordered = rerank(query, pool, load_reranker_once())
+    top = cap_top_k(reordered, max_per_doc=MAX_PER_DOC, top_k=top_k)
+    for i, chunk in enumerate(top, start=1):   # renumber rank to the reranked order
+        chunk["rank"] = i
+    return top
 
 
 def load_llm():
@@ -84,7 +114,7 @@ def answer(query: str, top_k: int | None = None) -> dict:
     Returns a dict: {query, answer, sources}, where `sources` lists the chunks the
     model was given (rank, chunk_id, doc_id, section) for citation/traceability.
     """
-    results = retrieve(query, top_k=top_k) if top_k else retrieve(query)
+    results = retrieve_top_k(query, top_k or TOP_K)
     if not results:
         return {"query": query, "answer": NO_EVIDENCE, "sources": []}
 
