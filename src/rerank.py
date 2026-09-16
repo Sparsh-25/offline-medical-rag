@@ -20,13 +20,21 @@ these four models.
 
 from __future__ import annotations
 
-# Short name -> HuggingFace model id. Two medical? No — only MedCPT is a real
-# off-the-shelf medical cross-encoder; the other three are general (see D66).
+# Short name -> (HuggingFace model id, max input tokens for the query+chunk pair).
+# Two medical? No — only MedCPT is a real off-the-shelf medical cross-encoder; the
+# other three are general (see D66).
+#
+# max_length is each model's REAL capacity, not a fixed 512. Our chunks reach ~500
+# tokens (p90=499), so a 512-limited model must clip the tail of a long chunk once the
+# query is added — we truncate 'only_second' below so the query is always kept intact
+# and only the chunk tail is ever cut. bge-v2-m3 supports long inputs, so we give it
+# room to read the whole chunk+query with no truncation. Each model is compared at the
+# capacity it would actually run with — that is the fair comparison (D66).
 RERANKERS = {
-    "medcpt":    "ncbi/MedCPT-Cross-Encoder",           # medical, pairs with our MedCPT retriever
-    "bge-v2-m3": "BAAI/bge-reranker-v2-m3",             # general, strong
-    "mxbai-v1":  "mixedbread-ai/mxbai-rerank-base-v1",  # general
-    "bge-base":  "BAAI/bge-reranker-base",              # general, light (fast on Mac CPU)
+    "medcpt":    ("ncbi/MedCPT-Cross-Encoder", 512),           # BERT — hard 512 limit
+    "bge-v2-m3": ("BAAI/bge-reranker-v2-m3", 1024),            # supports 8192; 1024 fits chunk+query whole
+    "mxbai-v1":  ("mixedbread-ai/mxbai-rerank-base-v1", 512),  # 512-limited architecture
+    "bge-base":  ("BAAI/bge-reranker-base", 512),              # XLM-R base — 512 limit
 }
 
 
@@ -44,8 +52,8 @@ def load_reranker(name: str):
     import torch
     from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-    model_id = RERANKERS[name]
-    print(f"Loading reranker: {model_id}")
+    model_id, max_length = RERANKERS[name]
+    print(f"Loading reranker: {model_id} (max_length={max_length})")
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForSequenceClassification.from_pretrained(model_id)
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -54,8 +62,10 @@ def load_reranker(name: str):
     def score(query: str, texts: list[str]) -> list[float]:
         pairs = [[query, text] for text in texts]
         with torch.no_grad():
-            encoded = tokenizer(pairs, padding=True, truncation=True,
-                                max_length=512, return_tensors="pt").to(device)
+            # truncation='only_second' keeps the whole query and clips only the chunk
+            # tail if the pair is over max_length (see the RERANKERS note above).
+            encoded = tokenizer(pairs, padding=True, truncation="only_second",
+                                max_length=max_length, return_tensors="pt").to(device)
             logits = model(**encoded).logits   # shape [n, 1] — one score per pair
         return logits.squeeze(-1).cpu().tolist()
 
