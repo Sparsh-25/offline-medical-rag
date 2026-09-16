@@ -55,7 +55,10 @@ def load_reranker(name: str):
     model_id, max_length = RERANKERS[name]
     print(f"Loading reranker: {model_id} (max_length={max_length})")
     tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForSequenceClassification.from_pretrained(model_id)
+    # use_safetensors=True forces the .safetensors weights and skips torch.load, which
+    # the box's pinned torch (<2.6) refuses over CVE-2025-32434. All four rerankers ship
+    # safetensors, so this loads everywhere without upgrading torch (see decisions.md D59).
+    model = AutoModelForSequenceClassification.from_pretrained(model_id, use_safetensors=True)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model.to(device).eval()
 
