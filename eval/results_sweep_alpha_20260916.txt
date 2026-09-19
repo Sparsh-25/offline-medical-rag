@@ -1,0 +1,14 @@
+=== Sweep: hybrid_alpha (others held at config defaults) ===
+
+[hybrid]
+  hybrid_alpha=0.0  n= 99  MRR=0.443  R@1=0.291  R@3=0.559  R@5=0.584  R@10=0.665
+               unanswerable top-1 avg=1.000
+  hybrid_alpha=0.25  n= 99  MRR=0.469  R@1=0.301  R@3=0.554  R@5=0.645  R@10=0.715
+               unanswerable top-1 avg=0.903
+  hybrid_alpha=0.5  n= 99  MRR=0.480  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.741
+               unanswerable top-1 avg=0.830
+  hybrid_alpha=0.75  n= 99  MRR=0.412  R@1=0.263  R@3=0.485  R@5=0.579  R@10=0.675
+               unanswerable top-1 avg=0.863
+  hybrid_alpha=1.0  n= 99  MRR=0.314  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.588
+               unanswerable top-1 avg=1.000
+

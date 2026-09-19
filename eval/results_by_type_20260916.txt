@@ -1,0 +1,32 @@
+eval/gold.jsonl: 99 answerable, 10 unanswerable  (top_k=10, candidate_pool=50, max_per_doc=5, rrf_k=60, hybrid_alpha=0.5, embedding_model={'query': 'ncbi/MedCPT-Query-Encoder', 'article': 'ncbi/MedCPT-Article-Encoder'})
+
+[dense]
+  overall       n= 99  MRR=0.314  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.588
+    clinical_practice  n= 29  MRR=0.359  R@1=0.207  R@3=0.379  R@5=0.586  R@10=0.724
+    comparative  n= 13  MRR=0.300  R@1=0.154  R@3=0.385  R@5=0.538  R@10=0.615
+    definitional  n= 12  MRR=0.434  R@1=0.333  R@3=0.417  R@5=0.667  R@10=0.750
+    exact_term  n= 15  MRR=0.202  R@1=0.067  R@3=0.333  R@5=0.400  R@10=0.467
+    factoid_numeric  n= 21  MRR=0.283  R@1=0.190  R@3=0.286  R@5=0.476  R@10=0.476
+    multi_hop   n=  9  MRR=0.289  R@1=0.056  R@3=0.222  R@5=0.222  R@10=0.352
+  unanswerable top-1 scores: min=0.618 max=0.720 avg=0.681  (n=10)
+
+[hybrid]
+  overall       n= 99  MRR=0.480  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.741
+    clinical_practice  n= 29  MRR=0.592  R@1=0.414  R@3=0.759  R@5=0.828  R@10=0.931
+    comparative  n= 13  MRR=0.487  R@1=0.308  R@3=0.538  R@5=0.731  R@10=0.808
+    definitional  n= 12  MRR=0.449  R@1=0.250  R@3=0.583  R@5=0.750  R@10=0.833
+    exact_term  n= 15  MRR=0.386  R@1=0.267  R@3=0.533  R@5=0.533  R@10=0.600
+    factoid_numeric  n= 21  MRR=0.394  R@1=0.238  R@3=0.524  R@5=0.619  R@10=0.667
+    multi_hop   n=  9  MRR=0.511  R@1=0.204  R@3=0.259  R@5=0.259  R@10=0.315
+  unanswerable top-1 scores: min=0.599 max=1.000 avg=0.830  (n=10)
+
+[rrf]
+  overall       n= 99  MRR=0.458  R@1=0.313  R@3=0.556  R@5=0.670  R@10=0.704
+    clinical_practice  n= 29  MRR=0.536  R@1=0.379  R@3=0.655  R@5=0.828  R@10=0.862
+    comparative  n= 13  MRR=0.417  R@1=0.231  R@3=0.692  R@5=0.769  R@10=0.769
+    definitional  n= 12  MRR=0.551  R@1=0.417  R@3=0.667  R@5=0.833  R@10=0.833
+    exact_term  n= 15  MRR=0.341  R@1=0.200  R@3=0.467  R@5=0.600  R@10=0.600
+    factoid_numeric  n= 21  MRR=0.452  R@1=0.381  R@3=0.476  R@5=0.524  R@10=0.619
+    multi_hop   n=  9  MRR=0.356  R@1=0.111  R@3=0.222  R@5=0.259  R@10=0.296
+  unanswerable top-1 scores: min=0.030 max=0.033 avg=0.031  (n=10)
+

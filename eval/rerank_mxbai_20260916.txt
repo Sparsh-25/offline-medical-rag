@@ -1,0 +1,16 @@
+Retrieving candidate pools for 99 answerable queries ...
+Loading reranker: mixedbread-ai/mxbai-rerank-base-v1 (max_length=512)
+
+=== overall (top-5) ===
+  baseline         n= 99  MRR=0.470  R@1=0.301  R@3=0.579  R@5=0.665
+  mxbai-v1         n= 99  MRR=0.536  R@1=0.399  R@3=0.621  R@5=0.742
+
+=== by query type (R@5) — baseline vs reranker ===
+  clinical_practice    0.828 -> 0.897
+  comparative          0.731 -> 0.769
+  definitional         0.750 -> 0.833
+  exact_term           0.533 -> 0.667
+  factoid_numeric      0.619 -> 0.762
+  multi_hop            0.259 -> 0.167
+
+Saved -> /workspace/offline-medical-rag/eval/rerank_results.json   (run --summary to compare all rerankers)

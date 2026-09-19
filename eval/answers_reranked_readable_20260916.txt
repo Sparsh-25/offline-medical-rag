@@ -1,0 +1,1277 @@
+
+================================================================================
+q001  (factoid_numeric, answerable=True)
+Q: What was the hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial?
+GOLD notes: chunk_0010 Efficacy section states HR 0.45 (95% CI 0.27-0.75); chunk_0014 Discussion restates the same number
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0010']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The hazard ratio for progression-free survival with ribociclib plus letrozole versus placebo plus letrozole in patients with de novo advanced breast cancer in the MONALEESA-2 trial was 0.45 (95% CI 0.27-0.75) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0014', 'monaleesa2_subanalysis_2018_chunk_0011']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q002  (exact_term, answerable=True)
+Q: What proportion of patients in the ribociclib plus letrozole arm had an ECOG performance status of 0 at baseline, compared to placebo plus letrozole?
+GOLD notes: chunk_0008 prose states 66% vs 54%; chunk_0012 (Table 1) has the same breakdown in table form
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0008']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A higher proportion of patients in the ribociclib plus letrozole arm (66%) had an ECOG performance status of 0 at baseline, compared with 54% of patients in the placebo plus letrozole arm [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0008', 'monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0009', 'monaleesa2_subanalysis_2018_chunk_0011']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q003  (definitional, answerable=True)
+Q: What is the mechanism of action of ribociclib in HR-positive, HER2-negative breast cancer?
+GOLD notes: chunk_0003 Introduction: ribociclib is a selective CDK4/6 inhibitor targeting the cyclin D-CDK4/6-INK4-Rb pathway
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0003']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The mechanism of action of ribociclib in HR-positive, HER2-negative breast cancer involves targeting the cyclin D-CDK4/6-INK4-Rb pathway, which is frequently disrupted in HR-positive breast cancer and associated with poor clinical outcomes and resistance to endocrine therapy. Ribociclib is an orally bioavailable, selective inhibitor of CDK4/6 [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0343', 'monaleesa2_subanalysis_2018_chunk_0003', 'nccn_breast_v2_2026_chunk_0382', 'nccn_breast_v2_2026_chunk_0381', 'nccn_breast_v2_2026_chunk_0113']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q004  (comparative, answerable=True)
+Q: How does the progression-free survival benefit of ribociclib plus letrozole in the de novo subgroup compare to the full MONALEESA-2 intent-to-treat population?
+GOLD notes: chunk_0014 Discussion directly compares de novo HR 0.45 to ITT population HR 0.56 (95% CI 0.43-0.72)
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0014']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The progression-free survival benefit of ribociclib plus letrozole in the de novo subgroup was more pronounced compared to the full MONALEESA-2 intent-to-treat population. In the de novo subgroup, the hazard ratio was 0.45 (95% CI 0.27-0.75), whereas in the intent-to-treat population, the hazard ratio was 0.56 (95% CI 0.43-0.72, p < 0.001) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0014', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0019']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q005  (clinical_practice, answerable=True)
+Q: How often did patients require dose interruption or reduction of ribociclib because of neutropenia?
+GOLD notes: chunk_0013: dose interruption 66% vs 15%, dose reduction 48% vs 5%; neutropenia was the most frequent cause (49% of patients). Trimmed from original two-part version - actionable management detail (G-CSF criteria, CBC monitoring schedule, specific mg reduction steps) is not present anywhere in this document, only in a prescribing label / supportive-care guideline neither of which is in the corpus
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0013']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the MONALEESA-2 trial, at least one dose interruption due to an adverse event occurred in 75 (66%) patients in the ribociclib plus letrozole arm, and neutropenia was the most frequent adverse event requiring ribociclib dose interruption or dose reduction, affecting 56 (49%) patients [SOURCE 1]. Additionally, at least one dose reduction due to an adverse event occurred in 55 (48%) patients in the ribociclib plus letrozole arm [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0013', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0019', 'monaleesa2_subanalysis_2018_chunk_0006', 'monaleesa2_subanalysis_2018_chunk_0011']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q006  (clinical_practice, answerable=True)
+Q: What were the specific exclusion criteria for patients screening for the MONALEESA-2 trial?
+GOLD notes: chunk_0004: excludes inflammatory breast cancer, CNS metastases, cardiac disease/QTcF > 450 ms, GI impairment affecting drug absorption. Broadened from a cardiac/CNS-only version so the full exclusion list in the chunk is the expected answer, not a subset
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0004']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Patients were excluded from the MONALEESA-2 trial if they had inflammatory breast cancer, central nervous system metastases, cardiac disease, or a Fridericia's corrected QT interval (QTcF) > 450 ms, or gastrointestinal function impairment that would alter study drug absorption [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0004', 'monaleesa2_subanalysis_2018_chunk_0005', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0019', 'monaleesa2_subanalysis_2018_chunk_0014']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q007  (factoid_numeric, answerable=True)
+Q: What percentage of tumor cells must show complete circumferential membrane staining for a HER2 IHC result to be scored as 3+ (positive)?
+GOLD notes: chunk_0024 'IHC interpretation criteria' row: >10% of tumor cells with homogeneous, dark circumferential (chicken wire) staining to call 3+ positive
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0024']   retrieval_hit: True
+--------------------------------------------------------------------------------
+For a HER2 IHC result to be scored as 3+ (positive), more than 10% of tumor cells must show homogeneous, dark circumferential (chicken wire) pattern staining [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['asco_her2_testing_guideline_2023_chunk_0024', 'asco_her2_testing_guideline_2023_chunk_0009', 'asco_her2_testing_guideline_2023_chunk_0021', 'nccn_breast_v2_2026_chunk_0067', 'asco_her2_testing_guideline_2023_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q008  (exact_term, answerable=True)
+Q: What HER2 IHC results made patients eligible for trastuzumab deruxtecan in the DESTINY-Breast04 trial?
+GOLD notes: chunk_0005: IHC 1+ or IHC 2+/ISH not-amplified were treated with fam-trastuzumab-deruxtecan-nxki; IHC 0 patients were excluded from the trial
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0005']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Patients were eligible for trastuzumab deruxtecan in the DESTINY-Breast04 trial if their tumors had HER2 immunohistochemistry (IHC) 1+ or IHC 2+ with in situ hybridization (ISH) not-amplified results [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0004', 'asco_her2_testing_guideline_2023_chunk_0005', 'asco_her2_testing_guideline_2023_chunk_0006', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'asco_her2_testing_guideline_2023_chunk_0007']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q009  (definitional, answerable=True)
+Q: Why does the distinction between a HER2 IHC 0 result and an IHC 1+ result matter clinically?
+GOLD notes: chunk_0006: the IHC 0 vs 1+ threshold now determines trastuzumab deruxtecan trial eligibility, even though no new prognostic/predictive threshold was demonstrated
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0006']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The distinction between a HER2 IHC 0 result and an IHC 1+ result matters clinically because patients with breast cancers that are HER2 IHC 1+ or IHC 2+/ISH not-amplified may be eligible for a treatment that targets non-amplified/non-overexpressed levels of HER2 expression for cytotoxic drug delivery, such as trastuzumab deruxtecan [SOURCE 4]. Although IHC 0 results do not currently result in eligibility for such treatments, the distinction is important due to the trial entry criteria that supported the regulatory approval of these newer therapies [SOURCE 1]. Additionally, there is instability between IHC 0 and IHC 1+ results when comparing paired primary and metastatic samples, with nearly 40% of cases switching between these categories [SOURCE 3]. Therefore, best practices are recommended to distinguish IHC 0 from IHC 1+ results, including examining slides at high power and considering second pathologist review when results are close to the threshold [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['asco_her2_testing_guideline_2023_chunk_0001', 'nccn_breast_v2_2026_chunk_0065', 'asco_her2_testing_guideline_2023_chunk_0006', 'asco_her2_testing_guideline_2023_chunk_0003', 'asco_her2_testing_guideline_2023_chunk_0007']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q010  (comparative, answerable=True)
+Q: How does a patient's eligibility for HER2-targeted antibody-drug conjugate therapy differ between an IHC 0 result and an IHC 1+ result?
+GOLD notes: chunk_0003: IHC 1+ or 2+ may make a patient eligible for trastuzumab deruxtecan; IHC 0 does not
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0003']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A patient with a HER2 IHC 1+ result may be eligible for a treatment that targets non-amplified/non-overexpressed levels of HER2 expression, such as trastuzumab deruxtecan, whereas patients with HER2 IHC 0 results are not eligible for such treatment [SOURCE 1]. 
+
+This distinction is clinically relevant due to the trial entry criteria supporting the regulatory approval of trastuzumab deruxtecan, even though there is no demonstrated predictive or prognostic threshold for HER2 IHC results below overexpression (IHC 3+). The terminology "HER2-Low" has been used to describe IHC 1+ or 2+/ISH not-amplified cases, but it is not yet established as a distinct subtype with reproducible prognostic or predictive implications [SOURCE 3]. 
+
+Pathologists are encouraged to use best practices to distinguish IHC 0 from IHC 1+ results, as eligibility for trastuzumab deruxtecan may hinge on this threshold [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['asco_her2_testing_guideline_2023_chunk_0003', 'asco_her2_testing_guideline_2023_chunk_0001', 'asco_her2_testing_guideline_2023_chunk_0006', 'destiny_breast06_2025_chunk_0019', 'asco_her2_testing_guideline_2023_chunk_0008']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q011  (clinical_practice, answerable=True)
+Q: What should a pathologist do when a HER2 IHC result is close to the 0 versus 1+ interpretive threshold?
+GOLD notes: chunk_0003: examine at high power (40x), consider second pathologist review when >10% of cells show faint/barely perceptible staining, use controls spanning a range of protein expression
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0003']   retrieval_hit: True
+--------------------------------------------------------------------------------
+When a HER2 IHC result is close to the 0 versus 1+ interpretive threshold, the pathologist should:
+
+1. Examine HER2 IHC stained slides using standardized ASCO-CAP guidelines scoring criteria.
+2. Examine HER2 IHC at high power (40×) when discriminating 0 from 1+ staining.
+3. Consider second pathologist review when results are close to the 0 versus 1+ interpretive threshold (>10% of cells with incomplete membrane staining that is faint/barely perceptible) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['asco_her2_testing_guideline_2023_chunk_0003', 'nccn_breast_v2_2026_chunk_0065', 'asco_her2_testing_guideline_2023_chunk_0023', 'asco_her2_testing_guideline_2023_chunk_0001', 'asco_her2_testing_guideline_2023_chunk_0026']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q012  (clinical_practice, answerable=True)
+Q: How quickly after surgical excision must a breast cancer tissue sample be fixed for HER2 testing, and in what fixative?
+GOLD notes: chunk_0024 'Optimal tissue handling requirements' row: fixation should start as soon as possible, 10% neutral buffered formalin for 6-72 hours
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0024']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The tissue sample for HER2 testing must be fixed as soon as possible after surgical excision, with the time from tissue acquisition to fixation being as short as possible. The sample should be fixed in 10% neutral buffered formalin for 6-72 hours [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['asco_her2_testing_guideline_2023_chunk_0024', 'asco_her2_testing_guideline_2023_chunk_0021', 'nccn_breast_v2_2026_chunk_0065', 'nccn_breast_v2_2026_chunk_0267', 'nccn_breast_v2_2026_chunk_0117']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q013  (factoid_numeric, answerable=True)
+Q: What was the hazard ratio for overall survival with adjuvant olaparib versus placebo in the OlympiA trial's second interim analysis?
+GOLD notes: chunk_0007 Efficacy: HR 0.68, 98.5% CI 0.47-0.97, P = 0.009; also restated in chunk_0000 (abstract) and chunk_0012 (discussion)
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0007']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The hazard ratio for overall survival with adjuvant olaparib versus placebo in the OlympiA trial's second interim analysis was 0.68 [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0012', 'olympia_brca_os_2022_chunk_0003', 'nccn_breast_v2_2026_chunk_0344', 'olympia_brca_os_2022_chunk_0015']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q014  (exact_term, answerable=True)
+Q: What percentage of patients in the olaparib arm of OlympiA required a dose reduction, compared to placebo?
+GOLD notes: chunk_0010: 228 patients (25.0%) in olaparib arm required dose reduction vs 47 (5.2%) placebo; dose interruptions >=3 days in 44.5% vs 30.9%
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0010']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the olaparib group of the OlympiA trial, 228 patients (25.0%) required a dose reduction, compared to 47 (5.2%) in the placebo group [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0010', 'olympia_brca_os_2022_chunk_0015', 'olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0012', 'olympia_brca_os_2022_chunk_0007']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q015  (definitional, answerable=True)
+Q: What is the mechanism of synthetic lethality that makes BRCA1/2-mutated cancers sensitive to PARP inhibitors like olaparib?
+GOLD notes: chunk_0002 Introduction: homologous recombination DNA repair deficiency + PARP1 trapping/inhibition creates synthetic lethality in gBRCA1/2pv tumors
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0002']   retrieval_hit: True
+--------------------------------------------------------------------------------
+BRCA1/2-mutated cancers are sensitive to PARP inhibitors like olaparib due to synthetic lethality, which occurs because these cancers are already deficient in homologous recombination DNA repair following the inactivation of the wildtype allele. This deficiency makes the cancer cells selectively sensitive to the inhibition and trapping of PARP1 on DNA by PARP inhibitors, as functional homologous recombination is required for cell survival when PARP1 function is inhibited and PARP1 is trapped on DNA, arresting the DNA replication apparatus [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0013', 'olympia_brca_os_2022_chunk_0002', 'olympia_brca_os_2022_chunk_0018', 'olympia_brca_os_2022_chunk_0014', 'nccn_breast_v2_2026_chunk_0409']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q016  (comparative, answerable=True)
+Q: How does the invasive disease-free survival benefit of olaparib compare between patients with triple-negative breast cancer and those with hormone receptor-positive disease in OlympiA?
+GOLD notes: chunk_0014: IDFS HR 0.62 in TNBC (282 events/1509 patients) vs HR 0.68 in HR-positive disease (59 events/325 patients), no evidence of heterogeneity by hormone receptor status
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0014']   retrieval_hit: False
+--------------------------------------------------------------------------------
+In the OlympiA trial, there was no evidence of statistical heterogeneity in the treatment effect for olaparib by hormone receptor status, and the similar hazard ratios (HR) for invasive disease-free survival (IDFS) for both hormone receptor-negative (triple-negative breast cancer) and hormone receptor-positive cohorts are consistent with a receptor-agnostic synthetic lethal targeting mechanism [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0003', 'olympia_brca_os_2022_chunk_0018', 'olympia_brca_os_2022_chunk_0004', 'olympia_brca_os_2022_chunk_0013']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q017  (clinical_practice, answerable=True)
+Q: How should a clinician manage anemia in a patient taking adjuvant olaparib, based on the OlympiA protocol?
+GOLD notes: chunk_0015: hold study medication until Hb recovers to >9.5 g/dl; if recovery takes >2 weeks, reduce olaparib to 250 mg b.i.d.; discontinue if repeated RBC transfusions needed to maintain Hb >9.5 g/dl
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0015']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In managing anemia in a patient taking adjuvant olaparib, the OlympiA protocol suggests holding study medication until hemoglobin (Hb) recovers to >9.5 g/dl. If recovery takes >2 weeks, the olaparib dose should be reduced to 250 mg b.i.d. Study therapy should be discontinued if repeated red blood cell (RBC) transfusions are required to maintain Hb >9.5 g/dl [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0015', 'olympia_brca_os_2022_chunk_0012', 'olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0013', 'olympia_brca_os_2022_chunk_0006']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q018  (clinical_practice, answerable=True)
+Q: Why is germline BRCA1/2 testing important for patients newly diagnosed with high-risk early breast cancer?
+GOLD notes: chunk_0018 closing discussion: results highlight the importance of testing for gBRCA1/2pv in patients with newly diagnosed high-risk EBC, since it identifies candidates for adjuvant olaparib
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0018']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Germline BRCA1/2 testing is important for patients newly diagnosed with high-risk early breast cancer because it identifies candidates for adjuvant therapy with PARP inhibitors, such as olaparib, which have demonstrated clinical benefit in improving outcomes like invasive disease-free survival (IDFS) and distant disease-free survival (DDFS), as well as overall survival (OS) [SOURCE 1]. Additionally, the results from the OlympiA trial highlight the importance of testing for germline BRCA1/2 pathogenic variants (gBRCA1/2pv) in these patients to guide treatment decisions [SOURCE 1]. Furthermore, germline BRCA1/2 testing supports systemic therapy decision-making and may have therapeutic implications, particularly for identifying patients who may benefit from PARP inhibitor therapy [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0018', 'nccn_genetic_familial_risk_v3_2026_chunk_0238', 'nccn_breast_v2_2026_chunk_0370', 'nccn_genetic_familial_risk_v3_2026_chunk_0234', 'nccn_genetic_familial_risk_v3_2026_chunk_0240']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q019  (factoid_numeric, answerable=True)
+Q: What were the pathological complete response rates with pembrolizumab plus chemotherapy versus placebo plus chemotherapy in KEYNOTE-522?
+GOLD notes: chunk_0004: pCR 64.8% (pembrolizumab) vs 51.2% (placebo), P < .001; EFS HR 0.63 (95% CI 0.48-0.82), P < .001
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0004']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the KEYNOTE-522 study, the pathological complete response (pCR) rates were 64.8% with pembrolizumab plus chemotherapy and 51.2% with placebo plus chemotherapy [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0002', 'keynote522_tnbc_qol_2025_chunk_0004', 'nccn_breast_v2_2026_chunk_0316', 'keynote522_tnbc_qol_2025_chunk_0019', 'keynote522_tnbc_qol_2025_chunk_0021']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q020  (exact_term, answerable=True)
+Q: What tumor staging criteria (T and N categories) were required for eligibility in the KEYNOTE-522 trial?
+GOLD notes: chunk_0006 Patients: locally advanced disease T1c N1-N2 or T2-T4 N0-N2, ECOG 0 or 1, centrally confirmed TNBC, PD-L1 CPS via IHC 22C3 pharmDx
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0006']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The KEYNOTE-522 trial included patients with previously untreated stage II-III triple-negative breast cancer (TNBC) [SOURCE 5]. The provided sources do not contain enough information to specify the exact T and N categories required for eligibility.
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0004', 'keynote522_tnbc_qol_2025_chunk_0019', 'keynote522_tnbc_qol_2025_chunk_0021', 'keynote522_tnbc_qol_2025_chunk_0023', 'nccn_breast_v2_2026_chunk_0315']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q021  (definitional, answerable=True)
+Q: What is the EORTC QLQ-C30 questionnaire and what domains does it measure?
+GOLD notes: chunk_0009: 30-item self-reported cancer-specific instrument, 15 domains (5 functional scales, 9 symptom scales/items, global health status/QoL), scored 0-100
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0009']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The EORTC QLQ-C30 is a self-reported, 30-item, cancer-specific instrument that assesses 15 domains. These domains include 5 functional scales (physical, role, emotional, cognitive, and social functioning), 9 symptom scales or single items (fatigue, nausea and vomiting, pain, dyspnea, insomnia, appetite loss, constipation, diarrhea, and financial difficulties), and global health status/quality of life (GHS/QoL) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0009', 'keynote522_tnbc_qol_2025_chunk_0008', 'keynote522_tnbc_qol_2025_chunk_0017', 'destiny_breast06_2025_chunk_0008', 'keynote522_tnbc_qol_2025_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q022  (comparative, answerable=True)
+Q: How did quality-of-life scores for global health status and physical functioning change during the neoadjuvant phase compared to the adjuvant phase in KEYNOTE-522?
+GOLD notes: chunk_0012: GHS/QoL and physical functioning DECREASED from baseline to week 21 (neoadjuvant); chunk_0013: same scales INCREASED from baseline to week 24 (adjuvant) - needs both chunks for a complete comparison
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0012', 'keynote522_tnbc_qol_2025_chunk_0013']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the neoadjuvant phase of the KEYNOTE-522 study, LS mean scores for QLQ-C30 global health status/quality of life (GHS/QoL) and physical functioning decreased from baseline to week 21 in both treatment groups [SOURCE 5]. During the adjuvant phase, the prespecified QLQ-C30 GHS/QoL and physical functioning scales similarly decreased during the neoadjuvant phase and then similarly increased during the adjuvant phase in both treatment groups [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0002', 'keynote522_tnbc_qol_2025_chunk_0019', 'keynote522_tnbc_qol_2025_chunk_0021', 'keynote522_tnbc_qol_2025_chunk_0020', 'keynote522_tnbc_qol_2025_chunk_0012']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q023  (clinical_practice, answerable=True)
+Q: What immune-related adverse events should a clinician monitor for in a patient receiving pembrolizumab for early-stage TNBC, and how common are they?
+GOLD notes: chunk_0021: grade >=3 immune-mediated AEs in 12.9% (pembrolizumab) vs 1.0% (placebo); most common were severe skin reaction (4.7% vs 0.3%), hypophysitis (1.3% vs 0%), adrenal insufficiency (1.0% vs 0%)
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0021']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In patients receiving pembrolizumab for early-stage triple-negative breast cancer (TNBC), clinicians should monitor for immune-related adverse events such as severe skin reactions, hypophysitis, and adrenal insufficiency. These events are of grade 3 or greater severity. Specifically, in the KEYNOTE-522 study, immune-mediated adverse events of grade 3 or greater occurred in 12.9% of patients in the pembrolizumab arm. The most common of these were severe skin reactions (4.7% vs 0.3% in the placebo arm), hypophysitis (1.3% vs 0%), and adrenal insufficiency (1.0% vs 0%) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0021', 'keynote522_tnbc_qol_2025_chunk_0004', 'keynote522_tnbc_qol_2025_chunk_0019', 'olympia_brca_os_2022_chunk_0015', 'keynote522_tnbc_qol_2025_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q024  (clinical_practice, answerable=True)
+Q: How should a clinician counsel a patient about expected symptom burden during the neoadjuvant versus adjuvant phases of pembrolizumab-based treatment for TNBC?
+GOLD notes: chunk_0019 Discussion: symptom scales (fatigue, nausea/vomiting, pain, dyspnea, insomnia, appetite loss, constipation, diarrhea) increased from baseline during neoadjuvant phase, but showed no change or slight improvement during adjuvant phase
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0019']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A clinician should counsel a patient that during the neoadjuvant phase of pembrolizumab-based treatment for triple-negative breast cancer (TNBC), increases from baseline in QLQ-C30 symptom scales (such as fatigue, nausea and vomiting, pain, dyspnea, insomnia, appetite loss, constipation, and diarrhea) are expected. These increases are consistent with the pattern of treatment-related adverse events reported during the study. In contrast, during the adjuvant phase, no changes or only slight decreases in these symptom scales are typically noted [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0019', 'keynote522_tnbc_qol_2025_chunk_0021', 'keynote522_tnbc_qol_2025_chunk_0002', 'keynote522_tnbc_qol_2025_chunk_0003', 'keynote522_tnbc_qol_2025_chunk_0004']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q025  (factoid_numeric, answerable=True)
+Q: According to this network meta-analysis, which CDK4/6 inhibitor plus endocrine therapy combination had the highest probability of being the most effective for progression-free survival?
+GOLD notes: chunk_0019 Rank Probabilities: palbociclib plus fulvestrant highest for PFS (SUCRA=37.65%), followed by abemaciclib plus fulvestrant (28.76%); for OS, ribociclib plus fulvestrant ranked first (34.11%)
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0019']   retrieval_hit: False
+--------------------------------------------------------------------------------
+According to the network meta-analysis, palbociclib plus fulvestrant and abemaciclib plus fulvestrant were likely the most effective regimes for progression-free survival [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0020', 'monaleesa2_subanalysis_2018_chunk_0003', 'cdk46i_meta_analysis_2023_chunk_0017', 'monaleesa2_subanalysis_2018_chunk_0016']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q026  (exact_term, answerable=True)
+Q: What was the hazard ratio for progression-free survival reported in the MONALEESA-3 trial (ribociclib plus fulvestrant)?
+GOLD notes: chunk_0012 Table 1 row 'MONALEESA-3': HR for PFS 0.593 (0.480, 0.732)
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0012']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0014', 'cdk46i_meta_analysis_2023_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0001']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q027  (definitional, answerable=True)
+Q: What is a network meta-analysis and what advantage does it offer over traditional pairwise meta-analysis?
+GOLD notes: chunk_0004 Background: network meta-analysis allows summarizing/comparing multiple treatment combinations at once and ranking them by cumulative probability, which pairwise meta-analyses of individual trials cannot do
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0004']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A network meta-analysis is a statistical method that allows for the summary and comparison of the efficacy and safety of different treatment combinations, facilitating their ranking based on cumulative probability [SOURCE 5]. It offers the advantage of incorporating all available data to investigate the comparative efficacy and safety of all available treatment combinations more precisely, which is not feasible with traditional pairwise meta-analysis [SOURCE 2]. Traditional pairwise meta-analysis only compares two treatments at a time, whereas network meta-analysis can compare multiple treatments simultaneously, providing a more comprehensive overview [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0009', 'cdk46i_meta_analysis_2023_chunk_0023', 'cdk46i_meta_analysis_2023_chunk_0018', 'cdk46i_meta_analysis_2023_chunk_0016', 'cdk46i_meta_analysis_2023_chunk_0004']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q028  (comparative, answerable=True)
+Q: How does the risk of severe adverse events compare between palbociclib plus AI and abemaciclib plus fulvestrant, according to this meta-analysis?
+GOLD notes: chunk_0018: palbociclib+AI OR=10.83 (95% CI 2.36-50.93) vs abemaciclib+fulvestrant OR=4.79 (95% CI 1.40-16.13) for severe AEs vs endocrine therapy alone - both numbers in one chunk
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0018']   retrieval_hit: True
+--------------------------------------------------------------------------------
+According to the meta-analysis, the risk of severe adverse events for palbociclib plus AI is higher compared to abemaciclib plus fulvestrant. The hazard ratio (HR) for palbociclib plus AI is 10.83 (95% confidence interval [CI] = 2.3 to 52.51), while the HR for abemaciclib plus fulvestrant is 4.8 (95% CI = 1.41 to 16.21) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0018', 'cdk46i_meta_analysis_2023_chunk_0002', 'cdk46i_meta_analysis_2023_chunk_0022', 'cdk46i_meta_analysis_2023_chunk_0019']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q029  (clinical_practice, answerable=True)
+Q: Based on this network meta-analysis, which CDK4/6 inhibitor combination would a clinician consider preferring for the best balance of efficacy and safety?
+GOLD notes: chunk_0024 Conclusions: abemaciclib plus fulvestrant or ribociclib plus AI appear to be promising options, demonstrating superior efficacy and safety versus other combinations
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0024']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Based on the network meta-analysis, the combinations of abemaciclib plus fulvestrant or ribociclib plus AI appear to be promising options for the treatment of HR+/HER2- metastatic or advanced breast cancer, as they demonstrate superior efficacy and safety compared to other available treatment options [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0024', 'cdk46i_meta_analysis_2023_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0020', 'cdk46i_meta_analysis_2023_chunk_0004', 'cdk46i_meta_analysis_2023_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q030  (clinical_practice, answerable=True)
+Q: What inclusion criteria did studies need to meet to be included in this CDK4/6 inhibitor network meta-analysis?
+GOLD notes: chunk_0006 Inclusion criteria: definitive HR+/HER2- metastatic/advanced BC diagnosis, combinations of the 3 named CDK4/6 inhibitors with AI/fulvestrant, at least one of PFS/OS/severe AEs reported, full-text RCTs only
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0006']   retrieval_hit: True
+--------------------------------------------------------------------------------
+To be included in this CDK4/6 inhibitor network meta-analysis, studies needed to meet the following criteria: (a) patients must have had a definitive diagnosis of HR+/HER2- metastatic or advanced breast cancer (BC), (b) therapeutic regimes must have included various combinations of three CDK4/6 inhibitors (abemaciclib, palbociclib, ribociclib) and two endocrine therapies (AI and fulvestrant), (c) at least one of the following outcomes must have been reported: progression-free survival (PFS), overall survival (OS), and severe treatment-related adverse events (AEs), and (d) the studies must have been full-text randomized controlled trials (RCTs) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0006', 'cdk46i_meta_analysis_2023_chunk_0023', 'cdk46i_meta_analysis_2023_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0021', 'cdk46i_meta_analysis_2023_chunk_0017']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q031  (factoid_numeric, answerable=True)
+Q: After propensity score matching, how did 5-year and 10-year overall survival compare between patients receiving neoadjuvant versus adjuvant chemotherapy for stage II-III HR+/HER2- breast cancer?
+GOLD notes: chunk_0008: post-PSM OS 5-year 83.7% (NACT) vs 89.6% (ACT), 10-year 69.9% vs 76.7%, P < 0.001; BCSS 85.9% vs 91.6% (5yr), 75.3% vs 81.8% (10yr)
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0008']   retrieval_hit: True
+--------------------------------------------------------------------------------
+After propensity score matching (PSM), the 5-year overall survival (OS) for patients receiving neoadjuvant chemotherapy (NACT) was 83.7%, compared to 89.6% for those receiving adjuvant chemotherapy (ACT). The 10-year OS was 69.9% for the NACT group versus 76.7% for the ACT group [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0021', 'sci_reports_nact_hr_pos_2025_chunk_0026', 'sci_reports_nact_hr_pos_2025_chunk_0008', 'sci_reports_nact_hr_pos_2025_chunk_0020']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q032  (exact_term, answerable=True)
+Q: What was the multivariate-adjusted hazard ratio for overall survival associated with NACT compared to ACT in this SEER cohort study?
+GOLD notes: chunk_0009 (was 0010 before D37's figure-removal shifted it by -1): after multivariate adjustment, NACT HR 1.442, 95% CI 1.304-1.594, p < 0.001
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0009']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The multivariate-adjusted hazard ratio (HR) for overall survival (OS) associated with neoadjuvant chemotherapy (NACT) compared to adjuvant chemotherapy (ACT) in this SEER cohort study was 1.44 (95% CI 1.30-1.59, p < 0.001) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0016', 'sci_reports_nact_hr_pos_2025_chunk_0007', 'sci_reports_nact_hr_pos_2025_chunk_0021', 'sci_reports_nact_hr_pos_2025_chunk_0020']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q033  (definitional, answerable=True)
+Q: What is pathological complete response (pCR) and why is its use as a surrogate marker questioned in HR+/HER2- breast cancer specifically?
+GOLD notes: chunk_0023 (was 0026 before D37's figure-removal shifted it by -1): pCR used as a surrogate marker for OS in general, but HR+/HER2- cancers have a lower pCR rate and weaker pCR-to-DFS/OS correlation than HER2-positive or triple-negative subtypes
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0023']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Pathological complete response (pCR) is defined as the absence of residual invasive cancer in both the breast and axillary lymph nodes following neoadjuvant therapy. It is often used as a marker of sensitivity to neoadjuvant chemotherapy (NACT) and has been shown to predict long-term outcomes in several neoadjuvant studies [SOURCE 1].
+
+However, its use as a surrogate marker is questioned in HR+/HER2- breast cancer specifically for two main reasons. First, HR+/HER2- breast cancers have a lower pCR rate compared to other subtypes [SOURCE 1]. Second, the correlation between pCR and both disease-free survival (DFS) and overall survival (OS) is weaker in HR+/HER2- breast cancer compared to HER2-positive and triple-negative breast cancers [SOURCE 1]. In a study, achieving pCR did not result in improved survival outcomes for HR+/HER2- patients, further questioning its utility as a surrogate marker in this subtype [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0023', 'sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0002', 'nccn_breast_v2_2026_chunk_0311', 'nccn_breast_v2_2026_chunk_0117']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q034  (comparative, answerable=True)
+Q: How did survival outcomes differ between NACT patients who achieved pathological complete response, NACT patients who did not, and patients who received adjuvant chemotherapy instead?
+GOLD notes: chunk_0009 (was 0010 before D37's figure-removal shifted it by -1): pCR patients showed no significant OS (P=0.129) or BCSS (P=0.435) benefit vs ACT; non-pCR patients had significantly worse OS (HR 1.580) and BCSS (HR 1.677) than ACT - both comparisons in one chunk
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0009']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Patients who achieved pathological complete response (pCR) after neoadjuvant chemotherapy (NACT) did not show significant survival benefits in terms of overall survival (OS) or breast cancer-specific survival (BCSS) compared to patients receiving adjuvant chemotherapy (ACT) (P = 0.129 for OS and P = 0.435 for BCSS) [SOURCE 3]. However, NACT patients who did not achieve pCR had significantly worse OS and BCSS compared to ACT recipients (OS HR 1.580, 95% CI 1.425-1.751, P < 0.001; BCSS HR 1.677, 95% CI 1.493-1.883, P < 0.001) [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0022', 'sci_reports_nact_hr_pos_2025_chunk_0009', 'sci_reports_nact_hr_pos_2025_chunk_0024', 'sci_reports_nact_hr_pos_2025_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q035  (clinical_practice, answerable=True)
+Q: Based on this study, how should a clinician approach the decision to use neoadjuvant versus adjuvant chemotherapy for a patient with T1-3/N0-2, HR+/HER2- breast cancer?
+GOLD notes: chunk_0023 (was 0025 before D37's figure-removal shifted it by -1): NACT should be cautiously selected for T1-3/N0-2 disease; decision-making should incorporate other high-risk biological indicators such as Ki-67 index and multigene assay results, not anatomic stage alone
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0023']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Based on this study, clinicians should cautiously consider the use of neoadjuvant chemotherapy (NACT) for patients with T1-3/N0-2, HR+/HER2- breast cancer. The study demonstrates that NACT is associated with significantly lower overall survival (OS) and breast cancer-specific survival (BCSS) compared to adjuvant chemotherapy (ACT) in this subgroup [SOURCE 2]. Even after propensity score matching to balance observed confounding factors, NACT remained an independent risk factor for mortality [SOURCE 2]. Achieving a pathological complete response (pCR) did not improve survival outcomes, and non-pCR patients had worse outcomes than those receiving ACT [SOURCE 2]. Therefore, the decision to use NACT should be carefully weighed against potential survival trade-offs, and other high-risk biological indicators such as the KI-67 index and multigene assay results should be incorporated into clinical decision-making [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0023', 'sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0026', 'sci_reports_nact_hr_pos_2025_chunk_0024', 'sci_reports_nact_hr_pos_2025_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q036  (clinical_practice, answerable=True)
+Q: Should a surgeon recommend neoadjuvant chemotherapy primarily to increase breast-conserving surgery rates in a patient with stage III HR+/HER2- breast cancer?
+GOLD notes: chunk_0025 (was 0029 before D37's figure-removal shifted it by -1) Conclusion: patients undergoing BCS should be cautious selecting NACT (especially stage III) to avoid sacrificing survival benefit in pursuit of breast conservation as the primary goal
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0025']   retrieval_hit: True
+--------------------------------------------------------------------------------
+For patients with stage III HR+/HER2- breast cancer, the decision to recommend neoadjuvant chemotherapy (NACT) primarily to increase breast-conserving surgery (BCS) rates should be approached with caution. While NACT can theoretically increase the chance of BCS by downstaging tumors, the provided sources indicate that NACT is associated with poorer overall survival (OS) and breast cancer-specific survival (BCSS) compared to adjuvant chemotherapy (ACT) in stage III patients [SOURCE 1]. Additionally, the study highlights that NACT in stage III patients undergoing BCS is associated with significantly lower OS and BCSS compared to ACT [SOURCE 2].
+
+The sources emphasize that the survival disadvantage of NACT persists even after propensity score matching and that achieving pathological complete response (pCR) does not improve prognosis [SOURCE 4]. Therefore, the decision to use NACT should involve a comprehensive individualized assessment, carefully weighing its potential impact on survival [SOURCE 5].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0024', 'sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0002', 'sci_reports_nact_hr_pos_2025_chunk_0026', 'sci_reports_nact_hr_pos_2025_chunk_0025']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q037  (factoid_numeric, answerable=True)
+Q: What was the hazard ratio for progression-free survival with trastuzumab deruxtecan versus chemotherapy of physician's choice in the HER2-low population of DESTINY-Breast06?
+GOLD notes: chunk_0005: PFS hazard ratio 0.62, P < 0.001, median 13.2 vs 8.1 months in HER2-low population
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0005']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The hazard ratio for progression-free survival with trastuzumab deruxtecan versus chemotherapy of physician's choice in the HER2-low population of DESTINY-Breast06 was 0.62 [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0001', 'destiny_breast06_2025_chunk_0004', 'destiny_breast06_2025_chunk_0005', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'destiny_breast06_2025_chunk_0006']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q038  (exact_term, answerable=True)
+Q: What was the adjusted mean difference in pain scores between T-DXd and TPC in the EORTC QLQ-C30 analysis?
+GOLD notes: chunk_0017: adjusted mean difference -7.2 (95% CI -9.9 to -4.5), nominal P < 0.0001, favoring T-DXd
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0017']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The adjusted mean difference in pain scores between T-DXd and TPC in the EORTC QLQ-C30 analysis was −7.2 (95% CI −9.9 to −4.5) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0017', 'destiny_breast06_2025_chunk_0002', 'destiny_breast06_2025_chunk_0032', 'destiny_breast06_2025_chunk_0020', 'destiny_breast06_2025_chunk_0031']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q039  (definitional, answerable=True)
+Q: What domains does the EORTC QLQ-BR45 breast cancer-specific quality of life questionnaire measure?
+GOLD notes: chunk_0008: functioning scales (body image, future perspective, sexual functioning, sexual enjoyment, breast satisfaction) and symptom scales (arm/breast symptoms, systemic therapy side-effects, hair loss, ET symptoms, skin mucosis, endocrine sexual symptoms)
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0008']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The EORTC QLQ-BR45 breast cancer-specific quality of life questionnaire measures functioning domains including body image, future perspective, sexual functioning, sexual enjoyment, and breast satisfaction. It also includes symptom scales/items such as arm symptoms, breast symptoms, systemic therapy side-effects, upset by hair loss, ET symptoms, skin mucosis symptoms, and endocrine sexual symptoms [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0009', 'destiny_breast06_2025_chunk_0008', 'destiny_breast06_2025_chunk_0001', 'destiny_breast06_2025_chunk_0034', 'destiny_breast06_2025_chunk_0032']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q040  (comparative, answerable=True)
+Q: How did T-DXd compare to TPC in terms of risk of deterioration for pain and fatigue versus gastrointestinal symptoms like nausea and vomiting?
+GOLD notes: chunk_0022: 49% reduced risk of deterioration in pain (HR 0.51) and 23% reduced risk in fatigue (HR 0.77) with T-DXd, but 64% increased risk in nausea/vomiting (HR 1.64) - both directions in one chunk
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0022']   retrieval_hit: True
+--------------------------------------------------------------------------------
+T-DXd was associated with a reduced risk of clinically meaningful deterioration in pain and fatigue compared to TPC. Specifically, the risk of deterioration in pain was reduced by 49% with T-DXd versus TPC [hazard ratio 0.51 (95% CI 0.39-0.65); nominal P < 0.0001], and the risk of deterioration in fatigue was reduced by 23% [hazard ratio 0.77 (95% CI 0.63-0.95); nominal P = 0.0127] [SOURCE 2]. 
+
+However, T-DXd increased the risk of deterioration in gastrointestinal symptoms such as nausea and vomiting, with a 64% increased risk of clinically meaningful deterioration in nausea/vomiting [hazard ratio 1.64 (95% CI not fully provided)] [SOURCE 2]. Additionally, T-DXd was associated with higher average scores for nausea/vomiting symptoms over time compared to TPC [adjusted mean difference 7.2 (95% CI 5.3-9.2)] [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0002', 'destiny_breast06_2025_chunk_0022', 'destiny_breast06_2025_chunk_0017', 'destiny_breast06_2025_chunk_0035', 'destiny_breast06_2025_chunk_0028']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q041  (clinical_practice, answerable=True)
+Q: What antiemetic prophylaxis should be considered before administering T-DXd infusions, and how commonly was it actually used in this trial?
+GOLD notes: chunk_0033: premedication with 2-3 antiemetics (e.g. dexamethasone + 5-HT3 antagonist and/or NK-1 antagonist) recommended before T-DXd infusions; only 74.1% of patients actually received prophylaxis, 57.6% before cycle 1 - noted as room for improvement
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0033']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Premedication with a combination of two or three antiemetics, such as dexamethasone with a 5-hydroxytryptamine type 3 (5-HT3) receptor antagonist and/or a neurokinin-1 receptor antagonist, was recommended before T-DXd infusions. However, this was prescribed at the investigator's discretion and not mandated [SOURCE 1]. In the trial, 74.1% of patients in the T-DXd group received antiemetic prophylaxis with at least one agent at any time during treatment, with 57.6% receiving at least one antiemetic agent before cycle 1 [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0033', 'destiny_breast06_2025_chunk_0034', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q042  (clinical_practice, answerable=True)
+Q: What prior treatment history would make a patient eligible for T-DXd based on the DESTINY-Breast06 trial's enrollment criteria?
+GOLD notes: chunk_0006: at least 2 prior lines of ET for mBC, or 1 prior line if recurrence within 24 months of starting adjuvant ET or progression within 6 months of first-line ET plus CDK4/6i
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0006']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Patients were eligible for T-DXd in the DESTINY-Breast06 trial if they had received at least two prior lines of endocrine therapy (ET) for metastatic breast cancer (mBC), or one prior line if they demonstrated disease recurrence within 24 months of starting adjuvant ET or disease progression within 6 months of starting first-line ET plus a cyclin-dependent kinase 4/6 inhibitor for mBC. Additionally, patients must not have had prior chemotherapy for mBC [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0006', 'destiny_breast06_2025_chunk_0001', 'destiny_breast06_2025_chunk_0005', 'destiny_breast06_2025_chunk_0004', 'destiny_breast06_2025_chunk_0034']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q043  (factoid_numeric, answerable=True)
+Q: What radiotherapy fractionation is recommended for uncomplicated bone metastases in this ESMO guideline?
+GOLD notes: chunk_0029: a single 8 Gy RT fraction is recommended for uncomplicated bone metastases [I, A]
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0029']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A single 8 Gy RT fraction is recommended for uncomplicated bone metastases [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0029', 'esmo_metastatic_bc_guideline_2026_chunk_0034', 'esmo_metastatic_bc_guideline_2026_chunk_0017', 'esmo_metastatic_bc_guideline_2026_chunk_0016', 'esmo_metastatic_bc_guideline_2026_chunk_0001']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q044  (exact_term, answerable=True)
+Q: What is the recommended first-line treatment for ER-positive, HER2-negative, PIK3CA-mutated metastatic breast cancer recurring within 12 months of adjuvant endocrine therapy?
+GOLD notes: chunk_0005: fulvestrant-palbociclib-inavolisib is recommended [I, A; ESMO-MCBS v2.0 score: 3] for this population
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0005']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The recommended first-line treatment for ER-positive, HER2-negative, PIK3CA-mutated metastatic breast cancer recurring within 12 months of adjuvant endocrine therapy is fulvestrant -palbociclib -inavolisib [I, A; ESMO-MCBS v2.0 score: 3] [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0005', 'nccn_breast_v2_2026_chunk_0160', 'esmo_metastatic_bc_guideline_2026_chunk_0014', 'nccn_breast_v2_2026_chunk_0159', 'nccn_breast_v2_2026_chunk_0393']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q045  (definitional, answerable=True)
+Q: What is the ESCAT score and what does it represent in this ESMO guideline's molecular testing recommendations?
+GOLD notes: chunk_0002: ESCAT = ESMO Scale for Clinical Actionability of molecular Targets; scores apply to alterations from genomic-driven analyses only, defined by the guideline authors assisted by the ESMO Precision Oncology and Taxonomy Committee
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0002']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The ESMO Scale for Clinical Actionability of molecular Targets (ESCAT) score is used in the ESMO guideline to classify the clinical relevance of molecular alterations in metastatic breast cancer (MBC). It applies to alterations identified through genomic-driven analyses and is defined by the authors, with assistance from the ESMO Precision Oncology and Taxonomy Committee [SOURCE 2; SOURCE 3].
+
+The ESCAT score represents the level of clinical actionability of a molecular target, indicating how strongly a specific molecular alteration is associated with treatment decisions or outcomes. For example, an ESCAT score of I-A indicates that the molecular alteration has high clinical actionability and is strongly recommended for evaluation if specific treatments are available [SOURCE 1; SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0001', 'esmo_metastatic_bc_guideline_2026_chunk_0009', 'esmo_metastatic_bc_guideline_2026_chunk_0002', 'esmo_metastatic_bc_guideline_2026_chunk_0011', 'esmo_metastatic_bc_guideline_2026_chunk_0007']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q046  (comparative, answerable=True)
+Q: How does the second-line treatment recommendation differ between T-DXd and T-DM1 for HER2-positive metastatic breast cancer?
+GOLD notes: chunk_0016: T-DXd is the preferred second-line option after progression on taxane-trastuzumab [I, A; MCBS 4]; T-DM1 is recommended only if T-DXd is not available [I, A; MCBS 3]
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0016']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the second-line treatment of HER2-positive metastatic breast cancer (MBC), T-DXd is recommended as the preferred option when available, irrespective of the presence of brain metastases (BMs), with an ESMO-MCBS v2.0 score of 4 [SOURCE 2]. In contrast, T-DM1 is recommended only if T-DXd is not available, with an ESMO-MCBS v2.0 score of 3 [SOURCE 2]. Both T-DXd and T-DM1 are not EMA or FDA approved for specific settings involving BMs [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0032', 'esmo_metastatic_bc_guideline_2026_chunk_0017', 'esmo_metastatic_bc_guideline_2026_chunk_0016', 'esmo_metastatic_bc_guideline_2026_chunk_0014', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q047  (clinical_practice, answerable=True)
+Q: What precautions should a clinician take before starting a patient on a bone-modifying agent like denosumab for bone metastases?
+GOLD notes: chunk_0029: thorough dental evaluation and completion of required dental treatment recommended before BMA initiation [III, A]; calcium and vitamin D supplements recommended [III, A]
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0029']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Before starting a patient on a bone-modifying agent like denosumab for bone metastases, a clinician should ensure that the patient undergoes a dental examination with preventive dentistry intervention [SOURCE 1]. This is due to the risk of developing osteonecrosis of the jaw (ONJ) associated with denosumab. Additional precautions include ensuring that the patient takes supplemental calcium and vitamin D [SOURCE 2]. Invasive dental procedures during treatment should be avoided if at all possible, as they are a known risk factor for ONJ [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0376', 'esmo_metastatic_bc_guideline_2026_chunk_0029', 'nccn_breast_v2_2026_chunk_0031', 'nccn_breast_v2_2026_chunk_0334', 'nccn_breast_v2_2026_chunk_0346']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q048  (clinical_practice, answerable=True)
+Q: What test should be performed before starting a patient on capecitabine, according to this guideline?
+GOLD notes: chunk_0011: if capecitabine is used, dihydropyrimidine dehydrogenase (DPD) testing is recommended before treatment is initiated [V, A]
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0011']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Before starting a patient on capecitabine, dihydropyrimidine dehydrogenase testing is recommended [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0010', 'esmo_metastatic_bc_guideline_2026_chunk_0011', 'nccn_breast_v2_2026_chunk_0122', 'nccn_genetic_familial_risk_v3_2026_chunk_0112', 'nccn_breast_v2_2026_chunk_0131']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q049  (factoid_numeric, answerable=True)
+Q: How many genes does the MammaPrint assay analyze, and what analysis method does it use?
+GOLD notes: chunk_0034 (was 0040 before D37's figure-removal shifted it by -1) Table 2: MammaPrint analyzes 70 genes via microarray
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0034']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The MammaPrint assay analyzes 70 genes and uses microarray technology for its analysis [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0032', 'frontiers_molbiosci_multiomics_2022_chunk_0017', 'frontiers_molbiosci_multiomics_2022_chunk_0034', 'nccn_breast_v2_2026_chunk_0151', 'nccn_genetic_familial_risk_v3_2026_chunk_0157']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q050  (exact_term, answerable=True)
+Q: What percentage of breast cancer patients are estimated to carry BRCA1 mutations, according to this review?
+GOLD notes: chunk_0013: BRCA1 mutation estimated in 10% of patients overall; TNBC chances 20% in young females
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0013']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0013', 'nccn_genetic_familial_risk_v3_2026_chunk_0169', 'nccn_genetic_familial_risk_v3_2026_chunk_0175', 'nccn_genetic_familial_risk_v3_2026_chunk_0240', 'nccn_genetic_familial_risk_v3_2026_chunk_0239']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q051  (definitional, answerable=True)
+Q: What is multiomics (also known as panomics) and which individual omics disciplines does it combine?
+GOLD notes: chunk_0012: multiomics/panomics/integrative omics combines genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0012']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Multiomics, also described as panomics or integrative omics, is an analytical approach that combines data from multiple 'omics' disciplines. These include genomics, transcriptomics, proteomics, metabolomics, epigenomics, metagenomics, and metatranscriptomics [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0012', 'frontiers_molbiosci_multiomics_2022_chunk_0011', 'frontiers_molbiosci_multiomics_2022_chunk_0001', 'frontiers_molbiosci_multiomics_2022_chunk_0036', 'frontiers_molbiosci_multiomics_2022_chunk_0000']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q052  (comparative, answerable=True)
+Q: How did response rates to PI3K inhibitors differ between non-selective, first-generation agents and second-generation alpha-selective agents in breast cancer?
+GOLD notes: chunk_0033: non-selective PI3K inhibitor monotherapy gave modest 4% response rate; second-generation alpha-selective agents showed ~6% partial response in PIK3CA-mutant tumors, 0% in wild-type tumors - both compared in one chunk
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0033']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In early clinical trials, the non-selective PI3K inhibitors demonstrated modest response rates of approximately 4% when administered as monotherapy in breast cancer [SOURCE 1]. In contrast, second-generation (α-selective) PI3K inhibitors showed improved inhibition in vivo in animal models and exhibited greater specificity. Initial results with these newer agents demonstrated partial responses of about 6% in patients with PIK3CA-mutant breast cancer, although no responses were observed in patients with PIK3CA wild-type tumors [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0033', 'nccn_breast_v2_2026_chunk_0390', 'destiny_breast06_2025_chunk_0012', 'frontiers_molbiosci_multiomics_2022_chunk_0007', 'cdk46i_meta_analysis_2023_chunk_0011']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q053  (clinical_practice, answerable=True)
+Q: What is the clinical implication of a patient's tumor having both a PIK3CA mutation and ERBB2 amplification when considering HER2-targeted therapy?
+GOLD notes: chunk_0035 (was 0041 before D37's figure-removal shifted it by -1): PIK3CA mutation + ERBB2 amplification co-occurrence linked to resistance to lapatinib and trastuzumab, providing rationale for combining HER2 and PI3K inhibitors; resistance not observed when dual HER2 blockade used instead
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0035']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The presence of both a PIK3CA mutation and ERBB2 amplification in a patient's tumor has been linked with resistance to HER2-targeting drugs such as lapatinib and trastuzumab. This provides the rationale for combining HER2 and PI3K inhibitors in clinical trials [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0035', 'esmo_metastatic_bc_guideline_2026_chunk_0009', 'esmo_metastatic_bc_guideline_2026_chunk_0001', 'frontiers_molbiosci_multiomics_2022_chunk_0013', 'nccn_breast_v2_2026_chunk_0319']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q054  (clinical_practice, answerable=True)
+Q: How can multigene assays like Oncotype DX help a clinician decide whether a patient needs chemotherapy in addition to hormone therapy?
+GOLD notes: chunk_0032: multigene assays classify patients into risk subgroups to help physicians decide whether hormone therapy alone is sufficient or chemotherapy is also needed; currently employed in practice guidelines
+GOLD chunk(s): ['frontiers_molbiosci_multiomics_2022_chunk_0032']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Multigene assays like Oncotype DX help clinicians decide whether a patient needs chemotherapy in addition to hormone therapy by estimating the risk of recurrence and predicting the benefit of adding chemotherapy. For example, the 21-gene assay (Oncotype DX) uses a 21-gene signature to conclude whether a patient with a certain breast cancer type would benefit from chemotherapy [SOURCE 1]. 
+
+In patients with node-negative, HR-positive, HER2-negative disease, the 21-gene recurrence score (RS) is particularly helpful in determining prognosis and guiding treatment decisions. A secondary analysis of the SWOG 8814 trial using the 21-gene assay demonstrated no benefit for chemotherapy in patients with 1-3 involved axillary lymph nodes and a low RS, while showing a significant benefit for those with a high RS (≥ 31). Similarly, the RxPONDER trial demonstrated that for premenopausal patients with hormone receptor-positive, HER2-negative, node-positive breast cancer, a 21-gene assay Recurrence Score up to 25 had an added benefit of adjuvant chemotherapy to endocrine therapy for improving invasive disease-free survival [SOURCE 2].
+
+These assays are currently employed in practice guidelines and have been validated for predicting the benefit of adding adjuvant chemotherapy to further reduce the risk of recurrence [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_molbiosci_multiomics_2022_chunk_0032', 'nccn_breast_v2_2026_chunk_0342', 'nccn_breast_v2_2026_chunk_0334', 'nccn_breast_v2_2026_chunk_0341', 'sci_reports_nact_hr_pos_2025_chunk_0025']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q055  (factoid_numeric, answerable=True)
+Q: What was the incremental cost-effectiveness ratio (ICER) for trastuzumab deruxtecan versus chemotherapy in all patients, based on this Chinese healthcare system analysis?
+GOLD notes: chunk_0012: ICER $336,026.77 per QALY, more than 9x the WTP threshold of $35,796.83/QALY in China
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0012']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The incremental cost-effectiveness ratio (ICER) for trastuzumab deruxtecan (T-Dxd) versus chemotherapy in all patients, based on the Chinese healthcare system analysis, was $336,026.77 per QALY [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0012', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0013', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0016']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q056  (exact_term, answerable=True)
+Q: What was the assumed cost of T-DXd per 100mg used in this cost-effectiveness model?
+GOLD notes: chunk_0012 Table 3: T-DXd per 100mg = $2,431.37
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0012']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The assumed cost of T-DXd per 100mg used in this cost-effectiveness model was $2,431.37 [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0012', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0013', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0015']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q057  (definitional, answerable=True)
+Q: What is a partitioned-survival model, and what health states did this study use to structure it?
+GOLD notes: chunk_0005: three mutually exclusive health states - progression-free survival (PFS), progressive disease (PD), and death
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0005']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A partitioned-survival model is a type of economic model used to estimate the costs and health outcomes of different treatment strategies over time. In this study, the model was structured using three mutually exclusive health states: progression-free survival (PFS), progressive disease (PD), and death [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0005', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0014', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0020', 'monaleesa2_subanalysis_2018_chunk_0007']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q058  (comparative, answerable=True)
+Q: How did median overall survival and progression-free survival compare between T-DXd and chemotherapy in the DESTINY-Breast04 clinical data used for this model?
+GOLD notes: chunk_0010 Table 2: OS all patients T-DXd 23.4mo vs chemo 16.8mo; PFS all patients T-DXd 9.9mo vs chemo 5.1mo
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0010']   retrieval_hit: False
+--------------------------------------------------------------------------------
+In the HR+ cohort of DESTINY-Breast04, T-DXd improved progression-free survival (PFS) with a median of 10.1 months compared to 5.4 months with chemotherapy treatment of physician's choice (TPC) (hazard ratio 0.51, P < 0.001). For overall survival (OS), T-DXd had a median of 23.9 months compared to 17.5 months with TPC (hazard ratio 0.64, P = 0.003) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0004', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0004', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0012', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0006']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q059  (clinical_practice, answerable=True)
+Q: How is a willingness-to-pay (WTP) threshold used to determine whether a cancer treatment is considered cost-effective?
+GOLD notes: chunk_0015: when ICER is lower than WTP, treatment is considered favorably cost-effective; WHO standard sets WTP at 1-3x GDP per capita
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0015']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A willingness-to-pay (WTP) threshold is used to determine whether a cancer treatment is considered cost-effective by comparing the incremental cost-effectiveness ratio (ICER) to the WTP value. If the ICER is lower than the WTP threshold, the treatment is considered favorably cost-effective [SOURCE 1]. 
+
+In the context of this study, the WTP threshold was set at three times the Chinese per capita GDP, which equated to $357,96.83 per quality-adjusted life-year (QALY) [SOURCE 2]. The ICER for trastuzumab deruxtecan (T-Dxd) was calculated as $336,026.77 per QALY in all patients, which is significantly higher than the WTP threshold, indicating that T-Dxd is not considered cost-effective [SOURCE 3]. 
+
+The WTP threshold is a critical parameter in cost-effectiveness analysis, as it reflects the maximum amount a healthcare system is willing to pay for an additional QALY [SOURCE 1]. In this study, even with a 50% price decrease for T-Dxd, the resulting ICER of $162,768.63 per QALY was still much higher than the preset WTP threshold [SOURCE 1]. 
+
+Additionally, the study noted that the WTP threshold can vary, with some suggesting that three times GDP per capita might be too high for certain patient populations, such as those at the end of life [SOURCE 1]. Despite potential variations in WTP, the results of this study showed that T-Dxd remains non-cost-effective under the current payment threshold in China [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0015', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0005', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0012']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q060  (clinical_practice, answerable=True)
+Q: Even with a 50% price reduction, would T-DXd be considered cost-effective for HER2-low breast cancer in China according to this analysis?
+GOLD notes: chunk_0015: even with a 50% price decrease, resulting ICER of $162,768.63/QALY was still much higher than the WTP threshold - not cost-effective
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0015']   retrieval_hit: True
+--------------------------------------------------------------------------------
+No, even with a 50% price reduction, T-DXd would still not be considered cost-effective for HER2-low breast cancer in China according to this analysis. The resulting incremental cost-effectiveness ratio (ICER) was $162,768.63 per quality-adjusted life-year (QALY), which is still much higher than the preset willingness-to-pay (WTP) threshold [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0015', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0014']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q061  (factoid_numeric, answerable=True)
+Q: What was the 3-year invasive disease-free survival with adjuvant T-DM1 versus trastuzumab alone in the KATHERINE trial, as cited in this NCCN guideline?
+GOLD notes: chunk_0358: KATHERINE trial, invasive DFS at 3 years 88.3% (T-DM1) vs 77.0% (trastuzumab), HR 0.50 (95% CI 0.39-0.64), P < .001
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0358']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the KATHERINE trial, the 3-year invasive disease-free survival with adjuvant T-DM1 was 88.3%, compared to 77.0% with trastuzumab alone [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0358', 'nccn_breast_v2_2026_chunk_0397', 'nccn_breast_v2_2026_chunk_0355', 'nccn_breast_v2_2026_chunk_0398', 'nccn_breast_v2_2026_chunk_0361']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q062  (exact_term, answerable=True)
+Q: Which patients should receive genetic counseling and testing according to this NCCN workup guidance?
+GOLD notes: chunk_0204 WORKUP: genetic counseling/testing recommended if at risk for hereditary breast cancer, has TNBC at any age, or is a candidate for adjuvant olaparib
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0204']   retrieval_hit: False
+--------------------------------------------------------------------------------
+According to the NCCN workup guidance, genetic counseling and testing should be recommended for the following patients:
+
+1. Patients considered to be at high risk for hereditary breast cancer as defined by the NCCN Guidelines for Genetic/Familial High-Risk Assessment: Breast, Ovarian, and Pancreatic [SOURCE 1].
+
+2. Patients with recurrent or metastatic breast cancer, as germline BRCA1/2 mutations should be assessed to identify candidates for PARP inhibitor therapy [SOURCE 2].
+
+3. Patients with breast cancer diagnosed at age ≤ 65 years who do not meet other testing criteria, testing may be considered, including breast cancer genes plus other inherited cancer genes consistent with family phenotype [SOURCE 5].
+
+4. Patients with ER-negative breast cancer or triple-negative breast cancer, as these groups have a higher prevalence of pathogenic/likely pathogenic (P/LP) variants in high-penetrance breast cancer susceptibility genes [SOURCE 5].
+
+5. Patients with multiple primary breast cancers (synchronous or metachronous), as these individuals may be more likely to harbor a P/LP variant associated with breast cancer [SOURCE 5].
+
+6. Patients diagnosed with a malignant phyllodes tumor, as this may prompt consideration of testing [SOURCE 5].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0267', 'nccn_breast_v2_2026_chunk_0370', 'nccn_breast_v2_2026_chunk_0248', 'nccn_genetic_familial_risk_v3_2026_chunk_0044', 'nccn_genetic_familial_risk_v3_2026_chunk_0240']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q063  (definitional, answerable=True)
+Q: What is the treatment implication of an Oncotype DX recurrence score of 26 or higher in a postmenopausal, node-positive, HR-positive/HER2-negative patient?
+GOLD notes: chunk_0149: postmenopausal pT1-3/pN1 patients with recurrence score >=26 - addition of chemotherapy to endocrine therapy is recommended, per RxPONDER
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0149']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In a postmenopausal, node-positive, HR-positive/HER2-negative patient with an Oncotype DX recurrence score (RS) of 26 or higher, the addition of chemotherapy to endocrine therapy is recommended [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0149', 'nccn_breast_v2_2026_chunk_0336', 'nccn_breast_v2_2026_chunk_0335', 'nccn_breast_v2_2026_chunk_0150', 'nccn_breast_v2_2026_chunk_0334']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q064  (comparative, answerable=True)
+Q: How do the treatment strategies validated by the APHINITY and KATHERINE trials differ in terms of patient population and regimen?
+GOLD notes: chunk_0357: APHINITY adds pertuzumab to adjuvant trastuzumab+chemo upfront for node-positive/high-risk node-negative disease (HR 0.81 for iDFS); KATHERINE gives T-DM1 instead of trastuzumab specifically for patients with residual invasive disease after neoadjuvant therapy (HR 0.50) - both trials discussed in one chunk
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0357']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The APHINITY trial evaluated adjuvant trastuzumab plus pertuzumab with trastuzumab-placebo, both in combination with standard adjuvant chemotherapy in patients with node-positive or high-risk node-negative HER2-positive, operable tumors. The study demonstrated that trastuzumab plus pertuzumab significantly improved 3-year iDFS (HR 0.81, 95% CI 0.66-1.00, P = .045). With long-term (8-year) follow-up, the node positive subgroup maintained a clear invasive DFS benefit favoring the dual HER-2 agent arm [SOURCE 1].
+
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0357', 'nccn_breast_v2_2026_chunk_0362', 'nccn_breast_v2_2026_chunk_0330', 'sci_reports_nact_hr_pos_2025_chunk_0025', 'nccn_breast_v2_2026_chunk_0117']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q065  (clinical_practice, answerable=True)
+Q: When is chemotherapy and radiation therapy safe to administer to a patient diagnosed with breast cancer during pregnancy?
+GOLD notes: chunk_0428: chemotherapy should not be given in the first trimester; RT should not be given during any trimester; BCS can be considered in the first trimester with adjuvant RT delayed until after delivery
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0428']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Chemotherapy should not be administered during the first trimester of pregnancy due to the greatest risk of fetal malformation during this period. It may be given during the second and third trimesters with relative safety, as long as it is not given after week 35 of pregnancy or within 3 weeks of planned delivery to avoid potential hematologic complications during delivery [SOURCE 2]. Radiation therapy (RT) should not be administered during any trimester of pregnancy [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0029', 'nccn_breast_v2_2026_chunk_0428', 'nccn_breast_v2_2026_chunk_0205', 'nccn_breast_v2_2026_chunk_0427', 'nccn_breast_v2_2026_chunk_0572']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q066  (clinical_practice, answerable=True)
+Q: What cardiac safety precaution should a clinician take when using trastuzumab and pertuzumab together with chemotherapy?
+GOLD notes: chunk_0126: trastuzumab combined with an anthracycline is associated with significant cardiac toxicity; concurrent use of trastuzumab and pertuzumab with an anthracycline should be avoided
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0126']   retrieval_hit: True
+--------------------------------------------------------------------------------
+When using trastuzumab and pertuzumab together with chemotherapy, clinicians should be aware that the concurrent use of trastuzumab and pertuzumab with an anthracycline is associated with significant cardiac toxicity and should be avoided [SOURCE 1]. Additionally, regular cardiac monitoring is recommended for patients with current or prior use of anthracyclines or HER2-targeted therapy [SOURCE 5].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0173', 'nccn_breast_v2_2026_chunk_0357', 'nccn_breast_v2_2026_chunk_0398', 'nccn_breast_v2_2026_chunk_0126', 'nccn_breast_v2_2026_chunk_0165']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q067  (factoid_numeric, answerable=True)
+Q: What is the estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant, compared to typical BRCA1 pathogenic variants?
+GOLD notes: chunk_0011 GENE-A: BRCA1 R1699Q variant carries lower breast cancer risk (24% by age 70) than typical BRCA1 PVs; risk-appropriate management should be considered based on the specific variant
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0011']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The estimated breast cancer risk by age 70 for carriers of the BRCA1 R1699Q missense variant is 24%, which is lower compared to the typical BRCA1 pathogenic variants, where the lifetime risk for primary breast cancer ranges from 60% to 72% [SOURCE 1, SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0011', 'nccn_genetic_familial_risk_v3_2026_chunk_0169', 'nccn_genetic_familial_risk_v3_2026_chunk_0066', 'nccn_genetic_familial_risk_v3_2026_chunk_0080', 'nccn_genetic_familial_risk_v3_2026_chunk_0176']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q068  (exact_term, answerable=True)
+Q: How does the prostate cancer screening recommendation differ between BRCA1 and BRCA2 carriers starting at age 40?
+GOLD notes: chunk_0098 BRCA-A: BRCA2 carriers - recommend annual PSA screening starting age 40; BRCA1 carriers - consider (not recommend) annual PSA screening starting age 40
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0098']   retrieval_hit: True
+--------------------------------------------------------------------------------
+For individuals starting prostate cancer screening at age 40, the recommendations differ between BRCA1 and BRCA2 carriers. Specifically, BRCA2 carriers are recommended to undergo annual prostate cancer screening with PSA. In contrast, for BRCA1 carriers, annual prostate cancer screening with PSA is considered but not explicitly recommended [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0098', 'nccn_genetic_familial_risk_v3_2026_chunk_0206', 'nccn_genetic_familial_risk_v3_2026_chunk_0005', 'nccn_genetic_familial_risk_v3_2026_chunk_0227', 'nccn_genetic_familial_risk_v3_2026_chunk_0080']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q069  (definitional, answerable=True)
+Q: What is a 'founder mutation' in the context of hereditary cancer genetic testing, and which populations are given as examples for BRCA1/BRCA2 founder mutations?
+GOLD notes: chunk_0006: founder mutations are population-specific recurring pathogenic variants; examples given include Ashkenazi, Polish, Icelandic, French Canadian, Spanish/Mexican/Central-South American, Bahamian, and Hungarian ancestries for BRCA1/2
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0006']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A "founder mutation" in the context of hereditary cancer genetic testing refers to a specific pathogenic/likely pathogenic (P/LP) variant that occurs at a higher frequency in a particular population due to historical genetic drift or other factors. These mutations are often associated with increased cancer risk and may influence decisions about genetic testing based on ancestry, family history, clinical features, and age of cancer diagnosis [SOURCE 1].
+
+Examples of populations with BRCA1/BRCA2 founder mutations include:
+- Those of Ashkenazi Jewish ancestry (with three founder P/LP variants in BRCA1/BRCA2).
+- Those of Polish ancestry (BRCA1 PV).
+- Those of Icelandic ancestry (BRCA2 PV).
+- Those of French Canadian ancestry (BRCA1 and BRCA2 PV).
+- Those of Spanish, Mexican, Central American, and South American descent (numerous BRCA1 and BRCA2 PV).
+- Those of Bahamian ancestry (BRCA1 and BRCA2 PV).
+- Those of Hungarian ancestry (BRCA1 and BRCA2 PV) [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0006', 'nccn_genetic_familial_risk_v3_2026_chunk_0236', 'nccn_genetic_familial_risk_v3_2026_chunk_0237', 'nccn_genetic_familial_risk_v3_2026_chunk_0044', 'nccn_genetic_familial_risk_v3_2026_chunk_0024']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q070  (comparative, answerable=True)
+Q: What are the two different pathways by which a patient could become eligible for pancreatic cancer screening under this guideline, based on genetic testing versus family history alone?
+GOLD notes: chunk_0016: pathway 1 - known P/LP variant in a pancreatic cancer susceptibility gene plus family history; pathway 2 - family history of exocrine pancreatic cancer in >=1 first-degree and >=1 second-degree relatives even without a known variant
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0016']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Under the guideline, a patient could become eligible for pancreatic cancer screening through two different pathways:
+
+1. **Genetic Testing Pathway**: A patient with a known P/LP germline variant in a pancreatic cancer susceptibility gene (such as ATM, BRCA1, BRCA2, CDKN2A, MLH1, MSH2, MSH6, EPCAM, PALB2, STK11, and TP53) and a family history of pancreatic cancer (first-degree or second-degree relative) from the same side of the family as the germline P/LP variant [SOURCE 4].
+
+2. **Family History Pathway**: A patient with a family history of exocrine pancreatic cancer in ≥1 first-degree and ≥1 second-degree relatives from the same side of the family, even in the absence of a known P/LP germline variant [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0103', 'nccn_genetic_familial_risk_v3_2026_chunk_0266', 'nccn_genetic_familial_risk_v3_2026_chunk_0236', 'nccn_genetic_familial_risk_v3_2026_chunk_0016', 'nccn_genetic_familial_risk_v3_2026_chunk_0031']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q071  (clinical_practice, answerable=True)
+Q: When multiple family members are affected by cancer and only one can be tested first, which family member should a clinician prioritize for initial genetic testing?
+GOLD notes: chunk_0022: prioritize testing the family member with youngest age at diagnosis, bilateral disease, multiple primary cancers, or other syndrome-associated cancers, or most closely related to the proband
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0022']   retrieval_hit: True
+--------------------------------------------------------------------------------
+When multiple family members are affected by cancer and only one can be tested first, the clinician should prioritize testing the family member with the youngest age at diagnosis, bilateral disease, multiple primary cancers, or other cancers associated with the suspected hereditary syndrome [SOURCE 2]. This individual has the highest likelihood of a positive test result [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0153', 'nccn_genetic_familial_risk_v3_2026_chunk_0022', 'nccn_genetic_familial_risk_v3_2026_chunk_0034', 'nccn_genetic_familial_risk_v3_2026_chunk_0152', 'nccn_genetic_familial_risk_v3_2026_chunk_0266']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q072  (clinical_practice, answerable=True)
+Q: Why should a patient with a recent hematologic malignancy or allogeneic bone marrow transplant avoid blood-based germline genetic testing, and what alternative sample source is recommended?
+GOLD notes: chunk_0022: blood/saliva/buccal samples risk unreliable results from contamination or somatic variants from the malignancy; DNA should be extracted from a fibroblast culture instead if available
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0022']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A patient with a recent hematologic malignancy or allogeneic bone marrow transplant should avoid blood-based germline genetic testing due to the risk of unreliable test results from contamination or somatic pathogenic variants (PVs) associated with the hematologic malignancy [SOURCE 1]. Blood samples may be contaminated with donor DNA or malignant cells, which can compromise the accuracy of genetic testing [SOURCE 2].
+
+The recommended alternative sample source is DNA extracted from a fibroblast culture, if available. If fibroblast culture is not possible, buccal samples can be considered, although they carry the risk of donor DNA contamination or malignant cells from the hematologic malignancy [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0022', 'nccn_genetic_familial_risk_v3_2026_chunk_0153', 'nccn_genetic_familial_risk_v3_2026_chunk_0108', 'nccn_genetic_familial_risk_v3_2026_chunk_0109', 'nccn_genetic_familial_risk_v3_2026_chunk_0246']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q073  (unanswerable, answerable=False)
+Q: What was the median overall survival with ribociclib plus letrozole in the de novo advanced breast cancer subgroup of the MONALEESA-2 trial?
+GOLD notes: Near-miss: chunk_0010 explicitly states 'Overall survival results were immature at the time of this interim analysis' - OS was not reached/reported, only PFS data is given for this subgroup
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0014', 'monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0019']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q074  (unanswerable, answerable=False)
+Q: What is the recommended starting dose of trastuzumab deruxtecan for patients with HER2-low breast cancer?
+GOLD notes: This document covers HER2 IHC/ISH testing methodology and scoring criteria exclusively (verified across all 31 chunks) - it never discusses drug dosing anywhere
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0001', 'destiny_breast06_2025_chunk_0004', 'esmo_metastatic_bc_guideline_2026_chunk_0010', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'asco_her2_testing_guideline_2023_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q075  (unanswerable, answerable=False)
+Q: What was the pathological complete response rate specifically in patients who received neoadjuvant endocrine therapy (not chemotherapy) in this SEER cohort study?
+GOLD notes: Near-miss: chunk_0028 mentions neoadjuvant endocrine therapy (NET) only as an emerging future research direction not analyzed in this retrospective SEER cohort, which compared NACT (chemotherapy) vs ACT only - no NET patients were included
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0007', 'sci_reports_nact_hr_pos_2025_chunk_0002', 'sci_reports_nact_hr_pos_2025_chunk_0005', 'sci_reports_nact_hr_pos_2025_chunk_0023']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q076  (unanswerable, answerable=False)
+Q: What is the FDA-approved starting dose of olaparib for patients with germline BRCA-mutated breast cancer?
+GOLD notes: This is a multiomics review article (verified across all 45 chunks) - drug names appear in a resistance-mechanism table but no dosing regimens are given anywhere
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0409', 'olympia_brca_os_2022_chunk_0004', 'nccn_genetic_familial_risk_v3_2026_chunk_0234', 'olympia_brca_os_2022_chunk_0000', 'esmo_metastatic_bc_guideline_2026_chunk_0008']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q077  (unanswerable, answerable=False)
+Q: What was the exact incremental cost-effectiveness ratio (in dollars per QALY) for T-DXd in the United States healthcare system, according to the Zhu et al. study cited in this paper?
+GOLD notes: Near-miss: chunk_0014 cites Zhu et al.'s US cost-effectiveness study and its qualitative conclusion ('not cost-effective') but never reproduces Zhu et al.'s specific numeric ICER value - only this paper's own China-based ICER ($336,026.77/QALY) is given
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0012', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0016', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0014', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0015']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q078  (unanswerable, answerable=False)
+Q: What was the 5-year overall survival rate with T-DXd compared to TPC in the DESTINY-Breast06 trial?
+GOLD notes: This is a patient-reported-outcomes-focused paper (verified across all 41 chunks) - only PFS (13.2 vs 8.1 months, chunk_0005) and PRO/QoL endpoints are reported, no overall survival data at any timepoint
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0001', 'destiny_breast06_2025_chunk_0005', 'destiny_breast06_2025_chunk_0006', 'destiny_breast06_2025_chunk_0015', 'destiny_breast06_2025_chunk_0031']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q079  (unanswerable, answerable=False)
+Q: What was the pathological complete response rate for the subgroup of patients with PD-L1 combined positive score less than 1 in KEYNOTE-522?
+GOLD notes: Near-miss: chunk_0004 reports only the overall population pCR rate (64.8% vs 51.2%) - no PD-L1 CPS-stratified subgroup breakdown of pCR appears anywhere in this PRO-focused paper
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0019', 'keynote522_tnbc_qol_2025_chunk_0004', 'keynote522_tnbc_qol_2025_chunk_0002', 'olympia_brca_os_2022_chunk_0015', 'keynote522_tnbc_qol_2025_chunk_0010']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q080  (unanswerable, answerable=False)
+Q: What was the pathological complete response rate in patients who received neoadjuvant olaparib in the OlympiA trial?
+GOLD notes: Olaparib in OlympiA was given exclusively as 1-year adjuvant (post-surgery) therapy, never neoadjuvantly (chunk_0004) - pCR is a neoadjuvant-response concept and is not discussed anywhere in this trial's paper
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0015', 'olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0012', 'nccn_breast_v2_2026_chunk_0344', 'nccn_genetic_familial_risk_v3_2026_chunk_0047']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q081  (unanswerable, answerable=False)
+Q: What was the pooled median progression-free survival in months for palbociclib plus fulvestrant across the trials included in this network meta-analysis?
+GOLD notes: Near-miss: chunk_0018 reports only relative measures (hazard ratios, SUCRA ranking probabilities e.g. 37.65% for palbociclib+fulvestrant) - no pooled absolute median PFS duration in months is calculated for any regimen anywhere in this meta-analysis
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0014', 'cdk46i_meta_analysis_2023_chunk_0002', 'nccn_breast_v2_2026_chunk_0388', 'cdk46i_meta_analysis_2023_chunk_0020']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q082  (unanswerable, answerable=False)
+Q: What is the recommended first-line chemotherapy regimen for extensive-stage small cell lung cancer?
+GOLD notes: Cross-domain (out-of-corpus cancer type) negative. Verified absent across all 12 docs: no lung-cancer treatment content exists - etoposide/osimertinib/SCLC/NSCLC give 0 hits, and 'lung' appears only as a metastasis site while 'small cell' appears only in NCCN-genetic syndrome-spectrum context, never as a treatment regimen. Deliberately a different cancer type (not a breast near-miss) so it stays unanswerable even as the breast corpus grows - the lesson from the retired q082, which was answerable from NCCN once that doc joined the corpus.
+GOLD chunk(s): []   retrieval_hit: None
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0007', 'nccn_breast_v2_2026_chunk_0432', 'nccn_breast_v2_2026_chunk_0411', 'nccn_breast_v2_2026_chunk_0171', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0021']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q083  (factoid_numeric, answerable=True)
+Q: ribo+letrozole PFS HR vs placebo, de novo pts, MONALEESA-2?
+GOLD notes: Clinical-shorthand phrasing variant of q001, same target chunk
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0010']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the MONALEESA-2 trial, the hazard ratio (HR) for progression-free survival (PFS) in patients with de novo HR+, HER2− advanced breast cancer treated with ribociclib plus letrozole versus placebo plus letrozole was 0.45 (95% confidence interval 0.27-0.75) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0001', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0011', 'monaleesa2_subanalysis_2018_chunk_0014', 'monaleesa2_subanalysis_2018_chunk_0010']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q084  (exact_term, answerable=True)
+Q: % ECOG 0 at baseline, ribo+letrozole vs placebo arm?
+GOLD notes: Clinical-shorthand phrasing variant of q002, same target chunk
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0008']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the ribociclib plus letrozole arm, 66% of patients had an ECOG performance status of 0 at baseline, compared with 54% in the placebo plus letrozole arm [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0008', 'monaleesa2_subanalysis_2018_chunk_0011', 'monaleesa2_subanalysis_2018_chunk_0010', 'monaleesa2_subanalysis_2018_chunk_0009', 'monaleesa2_subanalysis_2018_chunk_0001']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q085  (exact_term, answerable=True)
+Q: HER2 IHC criteria for T-DXd eligibility, DB04?
+GOLD notes: Clinical-shorthand phrasing variant of q008, same target chunk
+GOLD chunk(s): ['asco_her2_testing_guideline_2023_chunk_0005']   retrieval_hit: False
+--------------------------------------------------------------------------------
+Trastuzumab deruxtecan (T-DXd) eligibility in the DESTINY-Breast04 (DB04) trial is based on HER2 immunohistochemistry (IHC) 1+ or 2+ and in situ hybridization (ISH)-negative results [SOURCE 1]. These cases are referred to as HER2-low in the trial, defined as HER2 IHC 1+ or 2+ and ISH-negative [SOURCE 4]. Importantly, the terminology "HER2-low" was used in the trial as shorthand for these IHC and ISH results, and there is no evidence that this represents a distinct subtype of breast cancer with unique prognostic or predictive implications [SOURCE 5]. HER2 IHC 0 results do not qualify for T-DXd eligibility [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'destiny_breast06_2025_chunk_0004', 'asco_her2_testing_guideline_2023_chunk_0024', 'asco_her2_testing_guideline_2023_chunk_0003', 'asco_her2_testing_guideline_2023_chunk_0006']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q086  (factoid_numeric, answerable=True)
+Q: OlympiA IA2: OS HR olaparib vs placebo?
+GOLD notes: Clinical-shorthand phrasing variant of q013, same target chunk
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0007']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The second interim analysis (IA2) of overall survival (OS) in the OlympiA trial demonstrated a hazard ratio (HR) of 0.68 for olaparib versus placebo [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0012', 'olympia_brca_os_2022_chunk_0018', 'olympia_brca_os_2022_chunk_0001', 'olympia_brca_os_2022_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q087  (clinical_practice, answerable=True)
+Q: olaparib + anemia - mgmt per OlympiA protocol?
+GOLD notes: Clinical-shorthand phrasing variant of q017, same target chunk
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0015']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the OlympiA trial, management of anemia included holding study medication until recovery of hemoglobin (Hb) to >9.5 g/dl. If recovery took >2 weeks, olaparib was reduced to 250 mg b.i.d. Study therapy was discontinued if repeated RBC transfusions were required to maintain the Hb >9.5 g/dl [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0015', 'olympia_brca_os_2022_chunk_0012', 'nccn_breast_v2_2026_chunk_0303', 'olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0010']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q088  (factoid_numeric, answerable=True)
+Q: KEYNOTE-522 pCR: pembro+chemo vs placebo+chemo?
+GOLD notes: Clinical-shorthand phrasing variant of q019, same target chunk
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0004']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the KEYNOTE-522 study, the pathological complete response (pCR) rate was 64.8% in the pembrolizumab plus chemotherapy group compared with 51.2% in the placebo plus chemotherapy group (P < .001) [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0002', 'nccn_breast_v2_2026_chunk_0316', 'keynote522_tnbc_qol_2025_chunk_0021', 'keynote522_tnbc_qol_2025_chunk_0004', 'keynote522_tnbc_qol_2025_chunk_0023']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q089  (clinical_practice, answerable=True)
+Q: pembro irAEs to monitor in early TNBC + freq?
+GOLD notes: Clinical-shorthand phrasing variant of q023, same target chunk
+GOLD chunk(s): ['keynote522_tnbc_qol_2025_chunk_0021']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['keynote522_tnbc_qol_2025_chunk_0003', 'keynote522_tnbc_qol_2025_chunk_0002', 'keynote522_tnbc_qol_2025_chunk_0004', 'olympia_brca_os_2022_chunk_0015', 'keynote522_tnbc_qol_2025_chunk_0019']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q090  (factoid_numeric, answerable=True)
+Q: best CDK4/6i+ET combo for PFS per this NMA?
+GOLD notes: Clinical-shorthand phrasing variant of q025, same target chunk
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0019']   retrieval_hit: False
+--------------------------------------------------------------------------------
+According to the network meta-analysis (NMA), palbociclib plus fulvestrant and abemaciclib plus fulvestrant were likely the most effective regimes in terms of progression-free survival (PFS) [SOURCE 1]. No statistical differences were detected between various combinations of the three CDK4/6 inhibitors and the two endocrine therapies [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0020', 'cdk46i_meta_analysis_2023_chunk_0021', 'cdk46i_meta_analysis_2023_chunk_0016', 'nccn_breast_v2_2026_chunk_0384', 'cdk46i_meta_analysis_2023_chunk_0017']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q091  (comparative, answerable=True)
+Q: palbo+AI vs abema+fulv - severe AE risk comparison?
+GOLD notes: Clinical-shorthand phrasing variant of q028, same target chunk
+GOLD chunk(s): ['cdk46i_meta_analysis_2023_chunk_0018']   retrieval_hit: True
+--------------------------------------------------------------------------------
+According to the network meta-analysis, patients receiving palbociclib plus AI had a higher risk of severe adverse events (AEs) with a hazard ratio (HR) of 10.83 (95% confidence interval [CI] = 2.3 to 52.51), whereas those receiving abemaciclib plus fulvestrant had a hazard ratio of 4.8 (95%CI = 1.41 to 16.21) [SOURCE 1]. This indicates that the combination of palbociclib plus AI is associated with a higher risk of severe AEs compared to abemaciclib plus fulvestrant.
+--------------------------------------------------------------------------------
+Sources the model saw: ['cdk46i_meta_analysis_2023_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0018', 'cdk46i_meta_analysis_2023_chunk_0021', 'cdk46i_meta_analysis_2023_chunk_0022', 'cdk46i_meta_analysis_2023_chunk_0002']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q092  (factoid_numeric, answerable=True)
+Q: DB06 HER2-low: T-DXd vs TPC PFS HR?
+GOLD notes: Clinical-shorthand phrasing variant of q037, same target chunk
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0005']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the HER2-low metastatic breast cancer (mBC) population of the DESTINY-Breast06 trial, trastuzumab deruxtecan (T-DXd) significantly improved progression-free survival (PFS) compared to treatment of physician's choice (TPC), with a hazard ratio (HR) of 0.62 (P < 0.001) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['destiny_breast06_2025_chunk_0005', 'destiny_breast06_2025_chunk_0004', 'destiny_breast06_2025_chunk_0035', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'destiny_breast06_2025_chunk_0001']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q093  (clinical_practice, answerable=True)
+Q: T-DXd - premeds for n/v ppx + actual use rate?
+GOLD notes: Clinical-shorthand phrasing variant of q041, same target chunk
+GOLD chunk(s): ['destiny_breast06_2025_chunk_0033']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0008', 'destiny_breast06_2025_chunk_0004', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0016', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q094  (factoid_numeric, answerable=True)
+Q: bone mets RT fractionation - uncomplicated, per ESMO?
+GOLD notes: Clinical-shorthand phrasing variant of q043, same target chunk
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0029']   retrieval_hit: True
+--------------------------------------------------------------------------------
+A single 8 Gy RT fraction is recommended for uncomplicated bone metastases [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0029', 'esmo_metastatic_bc_guideline_2026_chunk_0034', 'esmo_metastatic_bc_guideline_2026_chunk_0016', 'nccn_breast_v2_2026_chunk_0036', 'esmo_metastatic_bc_guideline_2026_chunk_0009']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q095  (clinical_practice, answerable=True)
+Q: capecitabine - pretreatment testing required?
+GOLD notes: Clinical-shorthand phrasing variant of q048, same target chunk
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0011']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Yes, dihydropyrimidine dehydrogenase testing is recommended before initiating capecitabine treatment [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0010', 'esmo_metastatic_bc_guideline_2026_chunk_0011', 'nccn_breast_v2_2026_chunk_0123', 'nccn_breast_v2_2026_chunk_0402', 'nccn_breast_v2_2026_chunk_0195']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q096  (factoid_numeric, answerable=True)
+Q: T-DXd ICER vs chemo, China, all pts?
+GOLD notes: Clinical-shorthand phrasing variant of q055, same target chunk
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0012']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The incremental cost-effectiveness ratio (ICER) of trastuzumab deruxtecan (T-DXd) compared to chemotherapy for all patients with HER2-low metastatic breast cancer in China was $336,026.77 per quality-adjusted life-year (QALY) gained [SOURCE 1]. This ICER is significantly higher than the commonly accepted willingness-to-pay threshold in China, which is $357,96.83 per QALY [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0013', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0012', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0018', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0014']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q097  (factoid_numeric, answerable=True)
+Q: KATHERINE: 3yr iDFS T-DM1 vs trastuzumab?
+GOLD notes: Clinical-shorthand phrasing variant of q061, same target chunk
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0358']   retrieval_hit: True
+--------------------------------------------------------------------------------
+In the KATHERINE trial, the 3-year invasive disease-free survival (iDFS) with T-DM1 was 88.3%, compared to 77.0% with trastuzumab [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0358', 'nccn_breast_v2_2026_chunk_0357', 'esmo_metastatic_bc_guideline_2026_chunk_0020', 'nccn_breast_v2_2026_chunk_0397', 'nccn_breast_v2_2026_chunk_0400']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q098  (clinical_practice, answerable=True)
+Q: trastuzumab+pertuzumab+chemo - cardiac precautions?
+GOLD notes: Clinical-shorthand phrasing variant of q066, same target chunk
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0126']   retrieval_hit: True
+--------------------------------------------------------------------------------
+Trastuzumab given in combination with an anthracycline is associated with significant cardiac toxicity, and concurrent use of trastuzumab and pertuzumab with an anthracycline should be avoided [SOURCE 1] [SOURCE 2]. Regular cardiac monitoring is recommended for patients with current or prior use of anthracyclines or HER2-targeted therapy [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0173', 'nccn_breast_v2_2026_chunk_0126', 'nccn_breast_v2_2026_chunk_0357', 'nccn_breast_v2_2026_chunk_0165', 'nccn_breast_v2_2026_chunk_0398']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q099  (factoid_numeric, answerable=True)
+Q: BRCA1 R1699Q - breast CA risk by age 70?
+GOLD notes: Clinical-shorthand phrasing variant of q067, same target chunk
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0011']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The risk for breast cancer by age 70 for individuals with the BRCA1 R1699Q variant is reported to be 24% [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0011', 'nccn_genetic_familial_risk_v3_2026_chunk_0066', 'nccn_genetic_familial_risk_v3_2026_chunk_0067', 'nccn_genetic_familial_risk_v3_2026_chunk_0169', 'nccn_genetic_familial_risk_v3_2026_chunk_0080']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q100  (exact_term, answerable=True)
+Q: prostate CA screening: BRCA1 vs BRCA2 carriers, start age 40?
+GOLD notes: Clinical-shorthand phrasing variant of q068, same target chunk
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0098']   retrieval_hit: True
+--------------------------------------------------------------------------------
+For prostate cancer screening, the NCCN guidelines recommend that carriers of a pathogenic/likely pathogenic (P/LP) BRCA2 variant should start annual prostate cancer screening with PSA at age 40 years. For carriers of a P/LP BRCA1 variant, annual prostate cancer screening with PSA may be considered starting at age 40 years [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_genetic_familial_risk_v3_2026_chunk_0098', 'nccn_genetic_familial_risk_v3_2026_chunk_0206', 'nccn_genetic_familial_risk_v3_2026_chunk_0005', 'nccn_genetic_familial_risk_v3_2026_chunk_0080', 'nccn_genetic_familial_risk_v3_2026_chunk_0195']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q101  (multi_hop, answerable=True)
+Q: How does the progression-free survival benefit of trastuzumab deruxtecan in DESTINY-Breast04 compare to the benefit seen in DESTINY-Breast06?
+GOLD notes: Cross-document, 2 chunks needed: frontiers_pubhealth chunk_0010 (Table 2) has DESTINY-Breast04 PFS 9.9 vs 5.1 months; destiny_breast06 chunk_0005 has DESTINY-Breast06 PFS HR 0.62, median 13.2 vs 8.1 months - neither document alone gives both trials' numbers
+GOLD chunk(s): ['frontiers_pubhealth_tdxd_cea_2023_chunk_0010', 'destiny_breast06_2025_chunk_0005']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The progression-free survival (PFS) benefit of trastuzumab deruxtecan (T-DXd) in the HR+ HER2-low cohort of DESTINY-Breast04 was characterized by a hazard ratio (HR) of 0.51 (P < 0.001), with a median PFS of 10.1 months for T-DXd versus 5.4 months for the physician's choice of chemotherapy [SOURCE 2]. In contrast, the provided sources do not contain enough information to answer this question regarding the PFS benefit in DESTINY-Breast06.
+--------------------------------------------------------------------------------
+Sources the model saw: ['frontiers_pubhealth_tdxd_cea_2023_chunk_0002', 'destiny_breast06_2025_chunk_0004', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0003', 'frontiers_pubhealth_tdxd_cea_2023_chunk_0004', 'destiny_breast06_2025_chunk_0001']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q102  (multi_hop, answerable=True)
+Q: Does the hazard ratio for MONALEESA-2 reported in the network meta-analysis's summary table match the hazard ratio reported in the original trial's own subgroup analysis paper?
+GOLD notes: Cross-document, 2 chunks needed: monaleesa2 chunk_0014 gives the trial's own ITT population HR (0.56); cdk46i chunk_0012 Table 1 gives the meta-analysis's tabulated MONALEESA-2 HR (0.568) - requires both to compare
+GOLD chunk(s): ['monaleesa2_subanalysis_2018_chunk_0014', 'cdk46i_meta_analysis_2023_chunk_0012']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The hazard ratio for MONALEESA-2 reported in the network meta-analysis's summary table is 0.568 (0.457, 0.704) [SOURCE 4]. In the original trial's subgroup analysis paper, the hazard ratio for progression-free survival in patients with de novo advanced breast cancer is reported as 0.45 (0.27-0.75) [SOURCE 1], and in the intent-to-treat population, the hazard ratio is 0.56 (0.43-0.72, p < 0.001) [SOURCE 1]. 
+
+Thus, the hazard ratio in the network meta-analysis (0.568) is closer to the intent-to-treat hazard ratio (0.56) than to the subgroup analysis hazard ratio (0.45).
+--------------------------------------------------------------------------------
+Sources the model saw: ['monaleesa2_subanalysis_2018_chunk_0014', 'monaleesa2_subanalysis_2018_chunk_0003', 'monaleesa2_subanalysis_2018_chunk_0001', 'cdk46i_meta_analysis_2023_chunk_0012', 'monaleesa2_subanalysis_2018_chunk_0011']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q103  (multi_hop, answerable=True)
+Q: According to NCCN guidance, when should a breast cancer patient be referred for genetic counseling, and if multiple family members are affected, who should be tested first?
+GOLD notes: Cross-document, 2 chunks needed: nccn_breast chunk_0204 gives referral triggers (hereditary risk, TNBC at any age, olaparib candidacy); nccn_genetic chunk_0022 gives family-member testing prioritization - answer spans both NCCN guidelines
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0204', 'nccn_genetic_familial_risk_v3_2026_chunk_0022']   retrieval_hit: True
+--------------------------------------------------------------------------------
+According to NCCN guidance, a breast cancer patient should be referred for genetic counseling if they are considered to be at high risk for hereditary breast cancer, as defined by the NCCN Guidelines for Genetic/Familial High-Risk Assessment: Breast, Ovarian, and Pancreatic [SOURCE 1].
+
+If multiple family members are affected, it is best to consider testing an affected family member first, especially a family member with early-onset disease, bilateral disease, or multiple primaries, because that individual has the highest likelihood of a positive test result [SOURCE 3].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0370', 'nccn_genetic_familial_risk_v3_2026_chunk_0240', 'nccn_genetic_familial_risk_v3_2026_chunk_0153', 'nccn_genetic_familial_risk_v3_2026_chunk_0232', 'nccn_genetic_familial_risk_v3_2026_chunk_0022']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q104  (multi_hop, answerable=True)
+Q: For a patient with PIK3CA-mutated, ER-positive/HER2-negative metastatic breast cancer, what are the recommended first-line and second-line treatment options in sequence?
+GOLD notes: Same document, 2 chunks needed: chunk_0005 gives first-line (fulvestrant-palbociclib-inavolisib); chunk_0008 gives second-line (fulvestrant-alpelisib) specifically for PIK3CA-mutated tumors - tracing the sequence needs both
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0005', 'esmo_metastatic_bc_guideline_2026_chunk_0008']   retrieval_hit: False
+--------------------------------------------------------------------------------
+For a patient with PIK3CA-mutated, ER-positive/HER2-negative metastatic breast cancer, the recommended first-line treatment is not explicitly stated in the provided sources. However, the sources indicate that for such tumors, fulvestrant with alpelisib is a preferred second-line option [SOURCE 1].
+
+In the second-line setting, the recommended treatment for patients with PIK3CA-mutated tumors includes fulvestrant with alpelisib [SOURCE 1]. Additionally, the ESMO guidelines mention that fulvestrant with capivasertib is recommended for patients with tumours harbouring PIK3CA, AKT1 or PTEN alterations who experience relapse or disease progression [SOURCE 3].
+
+The provided sources do not contain enough information to answer this question regarding the first-line treatment options in sequence.
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0393', 'esmo_metastatic_bc_guideline_2026_chunk_0009', 'esmo_metastatic_bc_guideline_2026_chunk_0006', 'esmo_metastatic_bc_guideline_2026_chunk_0014', 'nccn_breast_v2_2026_chunk_0024']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q105  (multi_hop, answerable=True)
+Q: For a HER2-positive, node-positive patient receiving adjuvant trastuzumab, pertuzumab, and chemotherapy based on the APHINITY trial data, what cardiac safety precaution applies?
+GOLD notes: Same document, 2 chunks needed: chunk_0357 establishes APHINITY-based rationale for trastuzumab+pertuzumab in node-positive disease; chunk_0126 gives the cardiac toxicity precaution for this combination with anthracyclines - connecting regimen choice to its safety precaution needs both
+GOLD chunk(s): ['nccn_breast_v2_2026_chunk_0357', 'nccn_breast_v2_2026_chunk_0126']   retrieval_hit: True
+--------------------------------------------------------------------------------
+For a HER2-positive, node-positive patient receiving adjuvant trastuzumab, pertuzumab, and chemotherapy, the NCCN panel recommends evaluation of left ventricular ejection fraction (LVEF) prior to and during treatment. The FDA label recommends LVEF measurements prior to initiation of trastuzumab and every 3 months during therapy [SOURCE 2].
+--------------------------------------------------------------------------------
+Sources the model saw: ['nccn_breast_v2_2026_chunk_0357', 'nccn_breast_v2_2026_chunk_0362', 'nccn_breast_v2_2026_chunk_0398', 'nccn_breast_v2_2026_chunk_0127', 'nccn_breast_v2_2026_chunk_0126']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q106  (multi_hop, answerable=True)
+Q: Trace the recommended anti-HER2 therapy sequence across first-, second-, and third-line treatment for HER2-positive metastatic breast cancer in this guideline, noting when trastuzumab deruxtecan should be used if not given earlier.
+GOLD notes: Same document, 3 chunks needed: chunk_0014 (first-line, T-DXd-pertuzumab option), chunk_0016 (second-line, T-DXd preferred after taxane-trastuzumab), chunk_0019 (third-line, T-DXd/tucatinib-trastuzumab-capecitabine/T-DM1 'if not already used') - genuine 3-hop synthesis across sequential treatment lines
+GOLD chunk(s): ['esmo_metastatic_bc_guideline_2026_chunk_0014', 'esmo_metastatic_bc_guideline_2026_chunk_0016', 'esmo_metastatic_bc_guideline_2026_chunk_0019']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The recommended anti-HER2 therapy sequence across first-, second-, and third-line treatment for HER2-positive metastatic breast cancer (MBC) is as follows:
+
+**First-line treatment:**
+- Docetaxel + Pertuzumab + Trastuzumab with maintenance Pertuzumab + Trastuzumab [SOURCE 4].
+- Alternatively, Paclitaxel + Pertuzumab + Trastuzumab with maintenance Pertuzumab + Trastuzumab [SOURCE 4].
+- Another option is Fam-trastuzumab deruxtecan-nxki (T-DXd) + Pertuzumab [SOURCE 4].
+
+**Second-line and third-line treatment:**
+- Capecitabine/Tucatinib + Trastuzumab [SOURCE 4].
+- Fam-trastuzumab deruxtecan-nxki (T-DXd) [SOURCE 4].
+- Trastuzumab emtansine (T-DM1) [SOURCE 4].
+
+**Fourth line and beyond:**
+- Docetaxel or Vinorelbine + Trastuzumab [SOURCE 4].
+
+Regarding the use of trastuzumab deruxtecan (T-DXd), it is recommended in the first-line setting in combination with Pertuzumab [SOURCE 4]. If not given earlier, it is also listed as a preferred option in the second-line and third-line treatment settings [SOURCE 4].
+--------------------------------------------------------------------------------
+Sources the model saw: ['esmo_metastatic_bc_guideline_2026_chunk_0014', 'esmo_metastatic_bc_guideline_2026_chunk_0016', 'esmo_metastatic_bc_guideline_2026_chunk_0019', 'nccn_breast_v2_2026_chunk_0171', 'nccn_breast_v2_2026_chunk_0395']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q107  (multi_hop, answerable=True)
+Q: How does the OlympiA trial's adjuvant olaparib-eligible population compare to the ESMO guideline's criteria for PARP inhibitor monotherapy in the metastatic setting?
+GOLD notes: Cross-document, 2 chunks needed: olympia chunk_0004 gives the adjuvant (early breast cancer) eligibility criteria; esmo chunk_0008 gives the metastatic-setting PARPi monotherapy recommendation for germline BRCA1/2 mutation - contrasting the two settings needs both
+GOLD chunk(s): ['olympia_brca_os_2022_chunk_0004', 'esmo_metastatic_bc_guideline_2026_chunk_0008']   retrieval_hit: False
+--------------------------------------------------------------------------------
+The provided sources do not contain enough information to answer this question.
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0013', 'nccn_genetic_familial_risk_v3_2026_chunk_0047', 'nccn_breast_v2_2026_chunk_0408', 'nccn_breast_v2_2026_chunk_0344', 'olympia_brca_os_2022_chunk_0006']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q108  (multi_hop, answerable=True)
+Q: How does the overall survival disadvantage associated with NACT compare when stratified by tumor size (T stage)?
+GOLD notes: Same document, 2 chunks needed: chunk_0008 gives the overall post-PSM OS/BCSS figures; chunk_0013 gives the T-stage-stratified hazard ratios (T1 HR 1.945, T2 HR 1.851, T3 HR 2.034, T4 not significant) - comparing overall vs stratified needs both
+GOLD chunk(s): ['sci_reports_nact_hr_pos_2025_chunk_0008', 'sci_reports_nact_hr_pos_2025_chunk_0013']   retrieval_hit: True
+--------------------------------------------------------------------------------
+The overall survival (OS) disadvantage associated with neoadjuvant chemotherapy (NACT) compared to adjuvant chemotherapy (ACT) varies by tumor size (T stage). Patients with T1, T2, and T3 tumors experienced significantly worse OS when treated with NACT versus ACT, with hazard ratios (HRs) of 1.945 (95% CI 1.606-2.355, p < 0.001) for T1 tumors, 1.851 (95% CI 1.625-2.109, p < 0.001) for T2 tumors, and 2.034 (95% CI 1.462-2.829, p < 0.001) for T3 tumors [SOURCE 1]. In contrast, no significant differences in OS were observed for patients with T4 tumors (HR 1.535, 95% CI 0.888-2.654, p = 0.125) [SOURCE 1].
+--------------------------------------------------------------------------------
+Sources the model saw: ['sci_reports_nact_hr_pos_2025_chunk_0013', 'sci_reports_nact_hr_pos_2025_chunk_0001', 'sci_reports_nact_hr_pos_2025_chunk_0022', 'sci_reports_nact_hr_pos_2025_chunk_0026', 'sci_reports_nact_hr_pos_2025_chunk_0009']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___
+
+================================================================================
+q109  (multi_hop, answerable=True)
+Q: For a patient identified as a germline BRCA2 pathogenic variant carrier under NCCN genetic testing criteria, what treatment benefit would be expected from adjuvant olaparib based on the OlympiA trial?
+GOLD notes: Cross-document, 2 chunks needed: nccn_genetic chunk_0068 characterizes BRCA2 gene-specific risk; olympia chunk_0007 gives the OS benefit of adjuvant olaparib (HR 0.68) - connecting a genetic finding to its treatment implication needs both
+GOLD chunk(s): ['nccn_genetic_familial_risk_v3_2026_chunk_0068', 'olympia_brca_os_2022_chunk_0007']   retrieval_hit: False
+--------------------------------------------------------------------------------
+Based on the OlympiA trial, adjuvant olaparib provides a statistically significant improvement in overall survival (OS) for patients with germline BRCA2 pathogenic variants and high-risk, early breast cancer. With a median follow-up of 3.5 years, the hazard ratio (HR) for OS was 0.68 (98.5% CI 0.47-0.97; P = 0.009), corresponding to an absolute improvement in 4-year OS of 3.4% (89.8% in the olaparib group versus 86.4% in the placebo group) [SOURCE 1]. Additionally, the trial demonstrated sustained absolute improvements in invasive disease-free survival (IDFS) and distant disease-free survival (DDFS) of 7.3% and 7.4%, respectively, at 4 years [SOURCE 1]. These benefits were observed across major subgroups, including those with hormone receptor-positive disease [SOURCE 5].
+--------------------------------------------------------------------------------
+Sources the model saw: ['olympia_brca_os_2022_chunk_0000', 'olympia_brca_os_2022_chunk_0012', 'olympia_brca_os_2022_chunk_0003', 'nccn_breast_v2_2026_chunk_0349', 'olympia_brca_os_2022_chunk_0018']
+SCORE  faithfulness (0/1/2): ___   correctness (0/1/2): ___   abstention ok (y/n/NA): ___

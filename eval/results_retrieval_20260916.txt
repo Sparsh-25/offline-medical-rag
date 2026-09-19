@@ -1,0 +1,14 @@
+eval/gold.jsonl: 99 answerable, 10 unanswerable  (top_k=10, candidate_pool=50, max_per_doc=5, rrf_k=60, hybrid_alpha=0.5, embedding_model={'query': 'ncbi/MedCPT-Query-Encoder', 'article': 'ncbi/MedCPT-Article-Encoder'})
+
+[dense]
+  overall       n= 99  MRR=0.314  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.588
+  unanswerable top-1 scores: min=0.618 max=0.720 avg=0.681  (n=10)
+
+[hybrid]
+  overall       n= 99  MRR=0.480  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.741
+  unanswerable top-1 scores: min=0.599 max=1.000 avg=0.830  (n=10)
+
+[rrf]
+  overall       n= 99  MRR=0.458  R@1=0.313  R@3=0.556  R@5=0.670  R@10=0.704
+  unanswerable top-1 scores: min=0.030 max=0.033 avg=0.031  (n=10)
+

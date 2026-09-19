@@ -1,0 +1,26 @@
+=== Sweep: candidate_pool (others held at config defaults) ===
+
+[dense]
+  candidate_pool=10  n= 99  MRR=0.310  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.554
+               unanswerable top-1 avg=0.681
+  candidate_pool=20  n= 99  MRR=0.313  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.577
+               unanswerable top-1 avg=0.681
+  candidate_pool=50  n= 99  MRR=0.314  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.588
+               unanswerable top-1 avg=0.681
+
+[hybrid]
+  candidate_pool=10  n= 99  MRR=0.470  R@1=0.322  R@3=0.529  R@5=0.640  R@10=0.685
+               unanswerable top-1 avg=0.661
+  candidate_pool=20  n= 99  MRR=0.466  R@1=0.311  R@3=0.559  R@5=0.640  R@10=0.709
+               unanswerable top-1 avg=0.742
+  candidate_pool=50  n= 99  MRR=0.480  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.741
+               unanswerable top-1 avg=0.830
+
+[rrf]
+  candidate_pool=10  n= 99  MRR=0.466  R@1=0.337  R@3=0.549  R@5=0.630  R@10=0.684
+               unanswerable top-1 avg=0.029
+  candidate_pool=20  n= 99  MRR=0.465  R@1=0.323  R@3=0.576  R@5=0.685  R@10=0.695
+               unanswerable top-1 avg=0.031
+  candidate_pool=50  n= 99  MRR=0.458  R@1=0.313  R@3=0.556  R@5=0.670  R@10=0.704
+               unanswerable top-1 avg=0.031
+

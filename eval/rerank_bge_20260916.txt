@@ -1,0 +1,16 @@
+Retrieving candidate pools for 99 answerable queries ...
+Loading reranker: BAAI/bge-reranker-v2-m3 (max_length=1024)
+
+=== overall (top-5) ===
+  baseline         n= 99  MRR=0.470  R@1=0.301  R@3=0.579  R@5=0.665
+  bge-v2-m3        n= 99  MRR=0.628  R@1=0.483  R@3=0.722  R@5=0.813
+
+=== by query type (R@5) — baseline vs reranker ===
+  clinical_practice    0.828 -> 0.931
+  comparative          0.731 -> 0.808
+  definitional         0.750 -> 1.000
+  exact_term           0.533 -> 0.667
+  factoid_numeric      0.619 -> 0.810
+  multi_hop            0.259 -> 0.444
+
+Saved -> /workspace/offline-medical-rag/eval/rerank_results.json   (run --summary to compare all rerankers)

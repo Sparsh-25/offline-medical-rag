@@ -1,0 +1,30 @@
+gold: 109 queries | already done: 109 | to generate now: 0
+
+Saved -> /workspace/offline-medical-rag/eval/answers_gold.jsonl
+
+=== answer-generation metrics (109 queries) ===
+
+negatives (should abstain): 9/10 correctly abstained
+    MISSED abstention: q082 -> The recommended adjuvant treatment regimen for a patient with early-st...
+
+answerable (should answer): 89/99 answered, 10 wrongly abstained
+    over-abstained: q003 (gold chunk WAS retrieved)
+    over-abstained: q026 (gold chunk was NOT retrieved)
+    over-abstained: q037 (gold chunk was NOT retrieved)
+    over-abstained: q048 (gold chunk was NOT retrieved)
+    over-abstained: q050 (gold chunk was NOT retrieved)
+    over-abstained: q067 (gold chunk was NOT retrieved)
+    over-abstained: q070 (gold chunk was NOT retrieved)
+    over-abstained: q093 (gold chunk was NOT retrieved)
+    over-abstained: q101 (gold chunk was NOT retrieved)
+    over-abstained: q107 (gold chunk was NOT retrieved)
+
+retrieval support: 69/99 answerable queries had a gold chunk in the 5 sources the model saw
+    clinical_practice    24/29
+    comparative          10/13
+    definitional         9/12
+    exact_term           8/15
+    factoid_numeric      13/21
+    multi_hop            5/9
+
+Faithfulness & correctness are not auto-graded — use --show to score them by reading.

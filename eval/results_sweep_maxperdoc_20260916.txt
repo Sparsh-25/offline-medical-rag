@@ -1,0 +1,32 @@
+=== Sweep: max_per_doc (others held at config defaults) ===
+
+[dense]
+  max_per_doc=1  n= 99  MRR=0.196  R@1=0.177  R@3=0.192  R@5=0.212  R@10=0.212
+               unanswerable top-1 avg=0.681
+  max_per_doc=2  n= 99  MRR=0.273  R@1=0.177  R@3=0.308  R@5=0.372  R@10=0.402
+               unanswerable top-1 avg=0.681
+  max_per_doc=5  n= 99  MRR=0.314  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.588
+               unanswerable top-1 avg=0.681
+  max_per_doc=10  n= 99  MRR=0.323  R@1=0.177  R@3=0.343  R@5=0.505  R@10=0.650
+               unanswerable top-1 avg=0.681
+
+[hybrid]
+  max_per_doc=1  n= 99  MRR=0.357  R@1=0.301  R@3=0.372  R@5=0.372  R@10=0.372
+               unanswerable top-1 avg=0.830
+  max_per_doc=2  n= 99  MRR=0.439  R@1=0.301  R@3=0.539  R@5=0.549  R@10=0.559
+               unanswerable top-1 avg=0.830
+  max_per_doc=5  n= 99  MRR=0.480  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.741
+               unanswerable top-1 avg=0.830
+  max_per_doc=10  n= 99  MRR=0.484  R@1=0.301  R@3=0.579  R@5=0.665  R@10=0.776
+               unanswerable top-1 avg=0.830
+
+[rrf]
+  max_per_doc=1  n= 99  MRR=0.352  R@1=0.313  R@3=0.374  R@5=0.374  R@10=0.374
+               unanswerable top-1 avg=0.031
+  max_per_doc=2  n= 99  MRR=0.401  R@1=0.313  R@3=0.465  R@5=0.475  R@10=0.485
+               unanswerable top-1 avg=0.031
+  max_per_doc=5  n= 99  MRR=0.458  R@1=0.313  R@3=0.556  R@5=0.670  R@10=0.704
+               unanswerable top-1 avg=0.031
+  max_per_doc=10  n= 99  MRR=0.467  R@1=0.313  R@3=0.556  R@5=0.670  R@10=0.764
+               unanswerable top-1 avg=0.031
+

@@ -1,0 +1,16 @@
+Retrieving candidate pools for 99 answerable queries ...
+Loading reranker: ncbi/MedCPT-Cross-Encoder (max_length=512)
+
+=== overall (top-5) ===
+  baseline         n= 99  MRR=0.470  R@1=0.301  R@3=0.579  R@5=0.665
+  medcpt           n= 99  MRR=0.529  R@1=0.372  R@3=0.628  R@5=0.722
+
+=== by query type (R@5) — baseline vs reranker ===
+  clinical_practice    0.828 -> 0.862
+  comparative          0.731 -> 0.692
+  definitional         0.750 -> 0.667
+  exact_term           0.533 -> 0.600
+  factoid_numeric      0.619 -> 0.810
+  multi_hop            0.259 -> 0.389
+
+Saved -> /workspace/offline-medical-rag/eval/rerank_results.json   (run --summary to compare all rerankers)
