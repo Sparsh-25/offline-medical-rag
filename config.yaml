@@ -11,17 +11,22 @@ api:
   # See .secrets/secrets.yaml.example for the format.
   entrez_email: "your@email.com"   # override in .secrets/secrets.yaml
 
-  # LLM backend: "groq" (cloud, 14,400 req/day free) | "ollama" (local, unlimited)
-  llm_backend: "groq"
+  # LLM backend for the one-time metadata clinical-field extraction:
+  #   "llamacpp" — local Qwen3-32B via llama-cpp (fully offline; reuses the top-level `llm:` section)
+  #   "groq"     — cloud (needs a key; model availability not guaranteed)
+  #   "ollama"   — local ollama daemon
+  llm_backend: "llamacpp"
 
   groq:
     # api_key set in .secrets/secrets.yaml or GROQ_API_KEY env var
-    model: "llama-3.1-8b-instant"     # 14,400 req/day free
-    # model: "llama-3.3-70b-versatile" # 1,000 req/day free — higher quality
+    model: "openai/gpt-oss-120b"      # (fallback cloud option; llama-3.1-8b-instant was retired)
 
   ollama:
     base_url: "http://localhost:11434"
     model:    "llama3.1"              # brew install ollama && ollama pull llama3.1
+
+  llamacpp:
+    model: "Qwen3-32B (local GGUF)"   # display label only; real path is in the top-level `llm:` section
 
 extraction:
   export_figures:    true

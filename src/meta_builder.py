@@ -444,13 +444,50 @@ def _extract_via_ollama(context: str) -> dict:
         return json.loads(json.loads(r.read())["response"])
 
 
+# ── Local offline LLM backend (Qwen3-32B via llama-cpp) ──────────────────────
+# Reuses the top-level `llm:` config that answer.py uses, so the one-time metadata
+# step needs no cloud API. Must run in the GPU venv where llama-cpp + the GGUF live.
+_LLAMACPP = None
+
+def _get_llamacpp():
+    global _LLAMACPP
+    if _LLAMACPP is None:
+        from llama_cpp import Llama
+        lc = CFG.get("llm", {})
+        _LLAMACPP = Llama(
+            model_path=lc["model_path"],
+            n_ctx=lc.get("n_ctx", 8192),
+            n_gpu_layers=lc.get("n_gpu_layers", -1),
+            chat_format=lc.get("chat_format"),
+            verbose=False,
+        )
+    return _LLAMACPP
+
+
+def _extract_via_llamacpp(context: str) -> dict:
+    lc     = CFG.get("llm", {})
+    prompt = PROMPT_V2.format(context=context)
+    if lc.get("no_think"):
+        prompt += "\n\n/no_think"          # Qwen3: skip the thinking block
+    out = _get_llamacpp().create_chat_completion(
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.0,
+        max_tokens=700,
+        response_format={"type": "json_object"},   # GBNF grammar -> valid JSON
+    )
+    text = out["choices"][0]["message"]["content"]
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+    return json.loads(text)
+
+
 def run_llm_extraction(pdf_text: str, abstract: Optional[str]) -> dict:
-    """Route to Groq or Ollama. Returns raw dict; sets _error key on failure."""
+    """Route to the local llama-cpp model, Groq, or Ollama. Sets _error on failure."""
     backend = API_CFG.get("llm_backend", "groq").lower()
     context = _build_context(pdf_text, abstract)
     try:
-        if backend == "groq":   return _extract_via_groq(context)
-        if backend == "ollama": return _extract_via_ollama(context)
+        if backend == "llamacpp": return _extract_via_llamacpp(context)
+        if backend == "groq":     return _extract_via_groq(context)
+        if backend == "ollama":   return _extract_via_ollama(context)
         return {"_llm_confidence": 0.0, "_error": f"Unknown backend: {backend}"}
     except Exception as e:
         return {"_llm_confidence": 0.0, "_error": str(e)}
