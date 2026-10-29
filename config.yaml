@@ -86,6 +86,14 @@ reranker:
   enabled: true
   model:   "bge-v2-m3"   # short name from src/rerank.py RERANKERS
   pool:    50            # how many top candidates to rerank (matches retrieval.candidate_pool)
+  safety_net:
+    # The reranker is better on average but occasionally demotes a chunk that plain
+    # hybrid retrieval ranked highly (gold eval q020: retrieval #5, reranked #15, so it
+    # fell out of the top-5 the LLM saw and the answer was wrongly abstained). When on,
+    # we append any of retrieval's own top-N chunks that the reranker dropped, so the
+    # LLM still sees them. Experiment — see decisions.md D68. Off = D66 behavior.
+    enabled:         false
+    retrieval_top_n: 5     # how many of plain-hybrid's top chunks to guarantee survive
 
 vlm:
   # Ollama model used by caption.py for figure extraction.

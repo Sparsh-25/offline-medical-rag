@@ -68,7 +68,22 @@ def retrieve_top_k(query: str, top_k: int) -> list[dict]:
     pool = retrieve(query, top_k=RERANK_CFG.get("pool", 50), max_per_doc=10**6)  # 10**6 = no cap
     reordered = rerank(query, pool, load_reranker_once())
     top = cap_top_k(reordered, max_per_doc=MAX_PER_DOC, top_k=top_k)
-    for i, chunk in enumerate(top, start=1):   # renumber rank to the reranked order
+
+    # Safety net (optional): the reranker wins on average but occasionally demotes a chunk
+    # that plain retrieval ranked highly (gold eval q020). If enabled, append retrieval's
+    # own top-N chunks that the reranker dropped, so they still reach the LLM. `pool` is
+    # still in retrieval order here (rerank/cap_top_k both return new lists), so we take
+    # retrieval's top-N straight from it with the same per-doc cap. See decisions.md D68.
+    sn = RERANK_CFG.get("safety_net", {})
+    if sn.get("enabled"):
+        retrieval_top = cap_top_k(pool, max_per_doc=MAX_PER_DOC, top_k=sn.get("retrieval_top_n", 5))
+        seen = {c["chunk_id"] for c in top}
+        for chunk in retrieval_top:
+            if chunk["chunk_id"] not in seen:
+                top.append(chunk)
+                seen.add(chunk["chunk_id"])
+
+    for i, chunk in enumerate(top, start=1):   # renumber rank to the final order
         chunk["rank"] = i
     return top
 
