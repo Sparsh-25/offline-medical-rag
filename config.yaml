@@ -91,8 +91,9 @@ reranker:
     # hybrid retrieval ranked highly (gold eval q020: retrieval #5, reranked #15, so it
     # fell out of the top-5 the LLM saw and the answer was wrongly abstained). When on,
     # we append any of retrieval's own top-N chunks that the reranker dropped, so the
-    # LLM still sees them. Experiment — see decisions.md D68. Off = D66 behavior.
-    enabled:         false
+    # LLM still sees them. Adopted — decisions.md D68: answered 95 -> 98/100, negatives
+    # held 9/9, no new fabrication, no answer degraded. Set false for plain D66 behavior.
+    enabled:         true
     retrieval_top_n: 5     # how many of plain-hybrid's top chunks to guarantee survive
 
 vlm:
