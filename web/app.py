@@ -18,7 +18,9 @@ Then open the proxied URL (e.g. https://<jupyter-host>/proxy/8000/) in your brow
 
 from __future__ import annotations
 
+import argparse
 import json
+import os
 import time
 from pathlib import Path
 
@@ -69,15 +71,20 @@ def ask():
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Serve the live RAG test UI.")
+    # 8000 is often already taken on the box; pick any free port and reach it the same way.
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8050)))
+    args = parser.parse_args()
+
     _load_chunk_texts()
     # Warm the heavy models once at startup so the first browser request isn't a cold load.
     print("Warming models (Qwen3-32B + reranker) — the first load is slow ...", flush=True)
     load_reranker_once()
     load_llm()
-    print("Ready. Serving on port 8000.", flush=True)
+    print(f"Ready. Serving on port {args.port}.", flush=True)
     # threaded=False: the 32B model answers one request at a time anyway, and this keeps
     # the single shared llama-cpp context from being hit concurrently.
-    app.run(host="0.0.0.0", port=8000, threaded=False)
+    app.run(host="0.0.0.0", port=args.port, threaded=False)
 
 
 if __name__ == "__main__":
